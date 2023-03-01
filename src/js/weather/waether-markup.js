@@ -21,7 +21,6 @@ class WeatherMarkupApi {
 	getWeatherMurkup(data) {
 		const dsecripton = data.weather.map(({ description }) => description).join(", ");
 		const temp = Math.round(data.main.temp);
-		// const temp = -5;
 		const date = new Date();
 		const currentDate = `${this.addLeadingZero(date.getDate())} ${this.months[date.getMonth()]} ${date.getFullYear()}`;
 
