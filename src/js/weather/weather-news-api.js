@@ -10,13 +10,22 @@ const USER_LOCATION_ITEM = "User-location";
 function checkWeather() {
 	if (weatherElem.children.length === 0) {
 		addSpinner(weatherElem);
-		weatherElem.classList.add("load");
+		addClassLoad(weatherElem)
 	} else {
 		removeSpinner(weatherElem);
 	}
 }
 
-navigator.geolocation.getCurrentPosition(async position => {
+function addClassLoad(parent) {
+	parent.classList.add("load");
+}
+
+function removeClassLoad(parent) {
+	parent.classList.remove("load");
+}
+
+
+const getSuccsess = async position => {
 	try {
 		const preloadWrapper = document.querySelector(".preload-wrapper");
 		const latitude = await position.coords.latitude;
@@ -28,17 +37,36 @@ navigator.geolocation.getCurrentPosition(async position => {
 
 		const resopnse = await fetch(BASE_URL);
 		const data = await resopnse.json();
-		await console.log(data);
 		await weatherElem.insertAdjacentHTML("beforeend", getWeatherMurkup(data));
 
 		if (weatherElem.children.length > 0) {
-			weatherElem.classList.remove("load");
-			preloadWrapper.classList.remove("load");
+			removeClassLoad(weatherElem);
+			removeClassLoad(preloadWrapper);
 			removeSpinner(preloadWrapper);
 		}
 	} catch (error) {
 		console.log(error);
 	}
-});
+}
+
+const getError = async error => {
+	const msg = error.message;
+
+	const errorUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=Kyiv&appid=${API_KEY}`;
+
+	fetch(errorUrl)
+		.then(res => res.json())
+		.then(data => {
+			const preloadWrapper = document.querySelector(".preload-wrapper");
+			removeClassLoad(weatherElem);
+			removeClassLoad(preloadWrapper)
+			preloadWrapper.innerHTML = "";
+			weatherElem.insertAdjacentHTML("beforeend", getWeatherMurkup(data));
+		});
+
+	console.log(msg);
+}
+
+navigator.geolocation.getCurrentPosition(getSuccsess, getError);
 
 checkWeather();
