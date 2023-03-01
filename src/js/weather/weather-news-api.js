@@ -1,6 +1,8 @@
 import { setLocalItem } from "./local-storage-api";
-import { getWeatherMurkup } from "./waether-markup";
 import { addSpinner, removeSpinner } from "./spinner";
+import WeatherMarkupApi from "./waether-markup";
+
+const weatherMarkupApi = new WeatherMarkupApi();
 
 const weatherElem = document.querySelector(".weather");
 
@@ -37,7 +39,7 @@ const getSuccsess = async position => {
 
 		const resopnse = await fetch(BASE_URL);
 		const data = await resopnse.json();
-		await weatherElem.insertAdjacentHTML("beforeend", getWeatherMurkup(data));
+		await weatherElem.insertAdjacentHTML("beforeend", weatherMarkupApi.getWeatherMurkup(data));
 
 		if (weatherElem.children.length > 0) {
 			removeClassLoad(weatherElem);
@@ -61,7 +63,7 @@ const getError = async error => {
 			removeClassLoad(weatherElem);
 			removeClassLoad(preloadWrapper)
 			preloadWrapper.innerHTML = "";
-			weatherElem.insertAdjacentHTML("beforeend", getWeatherMurkup(data));
+			weatherElem.insertAdjacentHTML("beforeend", weatherMarkupApi.getWeatherMurkup(data));
 		});
 
 	console.log(msg);
