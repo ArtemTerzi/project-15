@@ -1,4 +1,3 @@
-import { setLocalItem } from "./local-storage-api";
 import { addSpinner, removeSpinner } from "./spinner";
 import WeatherMarkupApi from "./waether-markup";
 
@@ -32,8 +31,6 @@ const getSuccsess = async position => {
 		const preloadWrapper = document.querySelector(".preload-wrapper");
 		const latitude = await position.coords.latitude;
 		const longitude = await position.coords.longitude;
-		const locationObj = { latitude, longitude };
-		setLocalItem(USER_LOCATION_ITEM, JSON.stringify(locationObj));
 
 		const BASE_URL = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
 
