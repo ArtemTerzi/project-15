@@ -48,22 +48,23 @@ class WeatherNewsApi {
 		}
 	}
 
-	async getError (error) {
-		const msg = error.message;
+	async getError(error) {
+		try {
+			const msg = error.message;
+			const preloadWrapper = document.querySelector(".preload-wrapper");
+			const errorUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=Kyiv&appid=${this.apiKey}`;
+			const resopnse = await fetch(errorUrl);
+			const data = await resopnse.json();
 
-		const errorUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=Kyiv&appid=${this.apiKey}`;
+			await this.removeClassLoad(this.weatherElem);
+			await this.removeClassLoad(preloadWrapper);
+			preloadWrapper.innerHTML = "";
+			await this.weatherElem.insertAdjacentHTML("beforeend", weatherMarkupApi.getWeatherMurkup(data));
 
-		fetch(errorUrl)
-			.then(res => res.json())
-			.then(data => {
-				const preloadWrapper = document.querySelector(".preload-wrapper");
-				this.removeClassLoad(this.weatherElem);
-				this.removeClassLoad(preloadWrapper);
-				preloadWrapper.innerHTML = "";
-				this.weatherElem.insertAdjacentHTML("beforeend", weatherMarkupApi.getWeatherMurkup(data));
-			});
-
-		console.log(msg);
+			console.log(msg);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }
 

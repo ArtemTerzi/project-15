@@ -21,6 +21,7 @@ class WeatherMarkupApi {
 	getWeatherMurkup(data) {
 		const dsecripton = data.weather.map(({ description }) => description).join(", ");
 		const temp = Math.round(data.main.temp);
+		// const temp = -5;
 		const date = new Date();
 		const currentDate = `${this.addLeadingZero(date.getDate())} ${this.months[date.getMonth()]} ${date.getFullYear()}`;
 
@@ -28,7 +29,7 @@ class WeatherMarkupApi {
 
 		if (temp > 10) {
 			setClassOfWeather = "sun";
-		} else if (temp > 0 & temp <= 10) {
+		} else if (temp >= 0 & temp <= 10) {
 			setClassOfWeather = "cloudy";
 		} else if (temp < 0) {
 			setClassOfWeather = "cold";
