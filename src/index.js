@@ -5,6 +5,7 @@ import './js/favorite';
 import './js/fetchData';
 import './js/filter';
 import './js/themeSwaper';
+import './js/paginator';
 // import './js/weather/weather';
 import { startWeather } from './js/weather/weather';
 
