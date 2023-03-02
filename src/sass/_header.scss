@@ -87,21 +87,19 @@
     color: #111321;
     
     @include mobile {
-    
     }
     
     @include tablet {
-
     }
     
     @include desktop {
-
     }
 }
     
 .search {
     display: flex;
     align-items: center;
+    position: relative;
 
     @include mobile {
         opacity: 0;
@@ -118,6 +116,7 @@
     
 .search__logo {
     background-color: aqua;
+    position: absolute;
 
     @include mobile {
 
@@ -136,15 +135,21 @@
     border: 1px solid #111321;
     border-radius: 20px;
     opacity: 0;
+    padding-left: 48px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     
     @include mobile {
+        margin-right: 14px;
     }
 
     @include tablet {
         opacity: 1;
+        margin-right: 24px;
     }
 
     @include desktop {
+        margin-right: 147px;
         min-width: 288px;
         min-height: 31px;
     }
