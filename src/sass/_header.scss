@@ -1,0 +1,158 @@
+.header {
+    display: flex;
+    align-items: center;
+    
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    
+.header__link {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+
+    color: #111321;
+
+    @include mobile {
+        padding-left: 16px;
+        padding-top: 24px;
+        padding-bottom: 24px;
+
+        font-size: 24px;
+        line-height: 33px;
+    }
+
+    @include tablet {
+        padding-left: 16px;
+        padding-top: 32px;
+        padding-bottom: 30px;
+    
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    @include desktop {
+        padding-left: 16px;
+        padding-top: 28px;
+        padding-bottom: 28px;
+    
+        font-size: 42px;
+        line-height: 57px;
+    }
+}
+
+.navigation__list {
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+        opacity: 0;
+        // visibility: hidden;
+    }
+
+    @include tablet {
+        opacity: 1;
+        // visibility: visible;
+        padding-top: 48px;
+        padding-bottom: 36px;
+        margin-left: 48px;
+        margin-right: 32px;
+    }
+
+    @include desktop {
+        margin-left: 102px;
+        margin-right: 147px;
+        padding-top: 55px;
+        padding-bottom: 33px;
+    }
+}
+
+.navigation__item {
+    @include mobile {
+
+    }
+    
+    @include tablet {
+
+    }
+
+    @include desktop {
+
+    }
+}
+    
+.navigation__link {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    
+    color: #111321;
+    
+    @include mobile {
+    
+    }
+    
+    @include tablet {
+        margin-right: 44px;
+    }
+    
+    @include desktop {
+        margin-right: 69px;
+    }
+}
+    
+.search {
+    display: flex;
+    align-items: center;
+
+    @include mobile {
+        opacity: 0;
+         // visibility: hidden;
+    }
+    
+    @include tablet {
+        opacity: 1;
+        // visibility: visible;
+    }
+
+    @include desktop {
+        margin-right: 147px;
+    }
+}
+    
+.search__logo {
+    // display: block;
+    background-color: aqua;
+
+    @include mobile {
+
+    }
+
+    @include tablet {
+
+    }
+
+    @include desktop {
+
+    }
+}
+    
+.search__input {
+    border: 1px solid #111321;
+    border-radius: 20px;
+    
+    @include mobile {
+        opacity: 0;
+        // visibility: hidden;
+    }
+
+    @include tablet {
+        opacity: 1;
+    }
+
+    @include desktop {
+        min-width: 288px;
+        min-height: 31px;
+    }
+}
