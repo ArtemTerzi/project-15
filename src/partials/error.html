@@ -1,20 +1,29 @@
 <div class="error">
-  <h1>We haven’t found news from this category</h1>
+  <h1 class="error-text">We haven’t found news from this category</h1>
   <li class="error-image">
     <picture>
       <source
-        srcset="./img/img4-min.jpg 1x, ./img/img4_2x.jpg 2x"
+        srcset="
+          ./images/error_screen_min.png 1x,
+          ./images/error_screen_x2.png  2x
+        "
         media="(min-width: 1200px)"
       />
       <source
-        srcset="./img/img4-tab.jpg 1x, ./img/img4-tab_2x.jpg 2x"
+        srcset="
+          ./images/error_tablet_min.png 1x,
+          ./images/error_tablet_x2.png  2x
+        "
         media="(min-width: 768px)"
       />
       <source
-        srcset="./img/img4-mob.jpg 1x, ./img/img4-mob_2x.jpg 2x"
+        srcset="
+          ./images/error_mobile_min.png 1x,
+          ./images/error_mobile_x2.png  2x
+        "
         media="(max-width: 767px)"
       />
-      <img src="./img/img4-min.jpg" alt="Ігор Дем'яненко" width="450" />
+      <img src="./images/error_screen_min.png" alt="Error page" width="601" />
     </picture>
   </li>
 </div>
