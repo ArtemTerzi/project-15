@@ -46,12 +46,10 @@
 
     @include mobile {
         opacity: 0;
-        // visibility: hidden;
     }
 
     @include tablet {
         opacity: 1;
-        // visibility: visible;
         padding-top: 48px;
         padding-bottom: 36px;
         margin-left: 48px;
@@ -68,7 +66,6 @@
 
 .navigation__item:not(:last-child) {
     @include mobile {
-
     }
     
     @include tablet {
