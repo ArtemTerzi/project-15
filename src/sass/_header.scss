@@ -12,6 +12,7 @@
 .section {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .section__link {
@@ -123,6 +124,9 @@
     &__logo {
         background-color: aqua;
         position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
     
         @include mobile {
         }
@@ -149,12 +153,16 @@
         @include tablet {
             display: flex;
             margin-right: 24px;
+            width: 100%;
+            max-width: 213px;
+            height: 31px;
         }
     
         @include desktop {
             margin-right: 147px;
-            min-width: 288px;
-            min-height: 31px;
+            width: 100%;
+            max-width: 288px;
+            height: 31px;
         }
     }
 }
@@ -187,7 +195,6 @@
         background-color: greenyellow;
     
         @include mobile {
-            margin-left: 14px;
         }
     
         @include tablet {
