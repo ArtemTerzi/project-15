@@ -1,12 +1,10 @@
 .header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    width: 100%;
 }
 
 .container {
-    max-width: 1200px;
-    padding-left: 15px;
-    padding-right: 15px;
+    width: 100%;
+    padding: 15px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -14,7 +12,6 @@
 .section {
     display: flex;
     align-items: center;
-
 }
 
 .section__link {
@@ -25,25 +22,24 @@
     color: #111321;
 
     @include mobile {
-        padding-left: 16px;
         padding-top: 24px;
         padding-bottom: 24px;
+        margin-right: 167px;
 
         font-size: 24px;
         line-height: 33px;
     }
 
     @include tablet {
-        padding-left: 16px;
         padding-top: 32px;
         padding-bottom: 30px;
+        margin-right: 0;
     
         font-size: 32px;
         line-height: 44px;
     }
 
     @include desktop {
-        padding-left: 16px;
         padding-top: 28px;
         padding-bottom: 28px;
     
@@ -57,11 +53,11 @@
     align-items: center;
 
     @include mobile {
-        opacity: 0;
+        display: none;
     }
 
     @include tablet {
-        opacity: 1;
+        display: flex;
         padding-top: 48px;
         padding-bottom: 36px;
         margin-left: 48px;
@@ -114,11 +110,11 @@
     position: relative;
 
     @include mobile {
-        opacity: 0;
+        // display: none;
     }
     
     @include tablet {
-        opacity: 1;
+        display: flex;
     }
 
     @include desktop {
@@ -129,22 +125,19 @@
         position: absolute;
     
         @include mobile {
-    
         }
     
         @include tablet {
-    
         }
     
         @include desktop {
-    
         }
     }
 
     &__input {
         border: 1px solid #111321;
         border-radius: 20px;
-        opacity: 0;
+        display: none;
         padding-left: 48px;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -154,7 +147,7 @@
         }
     
         @include tablet {
-            opacity: 1;
+            display: flex;
             margin-right: 24px;
         }
     
@@ -173,13 +166,13 @@
         @include mobile {
             width: 98px;
             height: 21px;
-            opacity: 0;
+            display: none;
         }
     
         @include tablet {
             width: 98px;
             height: 21px;
-            opacity: 1;
+            display: block;
         }
     
         @include desktop {
@@ -194,14 +187,14 @@
         background-color: greenyellow;
     
         @include mobile {
+            margin-left: 14px;
         }
     
         @include tablet {
-            opacity: 0;
+            display: none;
         }
     
         @include desktop {
-    
         }
     }
 }
