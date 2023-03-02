@@ -141,10 +141,9 @@
 .search__input {
     border: 1px solid #111321;
     border-radius: 20px;
+    opacity: 0;
     
     @include mobile {
-        opacity: 0;
-        // visibility: hidden;
     }
 
     @include tablet {
@@ -154,5 +153,50 @@
     @include desktop {
         min-width: 288px;
         min-height: 31px;
+    }
+}
+
+// .switch {
+
+// }
+
+.switch__logo {
+    background-color: rgb(169, 238, 30);
+
+
+    @include mobile {
+        width: 98px;
+        height: 21px;
+        opacity: 0;
+    }
+
+    @include tablet {
+        width: 98px;
+        height: 21px;
+        opacity: 1;
+    }
+
+    @include desktop {
+        width: 148px;
+        height: 24px;
+    }
+}
+
+// .modalbtn {
+
+// }
+
+.modalbtn__logo {
+    background-color: greenyellow;
+
+    @include mobile {
+    }
+
+    @include tablet {
+        opacity: 0;
+    }
+
+    @include desktop {
+
     }
 }
