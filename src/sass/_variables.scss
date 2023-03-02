@@ -1,12 +1,33 @@
-  root{
-    --primary-color: #111321;
-    --backgraund-color: #686868;
-    --light-backgraund-color: #F4F4F4;;
-    --footer-backgraund-color: #7A7A7A;
-    --dark-backgraund-color: #2E2E2E;
-    --icon-fill-color: #4440F6;
-    --border-icon-color: #4440F7;
-    --switches-color:#4B48DB;
-  }
+root{
+  --primary-color: #111321;
+
+  // --backgraund-color: #686868;
+
+  --light-backgraund-color: #F4F4F4;;
+  --footer-backgraund-color: #7A7A7A;
+  --dark-backgraund-color: #2E2E2E;
+
+  --icon-fill-color: #4440F6;
+  --border-icon-color: #4440F7;
+
+  --color-activ:#4440F6;
+
+  --color-switches-activ:  #4B48DB;
+  --color-inactive-switches: #5F6775;
+  --color-first-ellipse: #4440F6;
+  --color-second-ellipse: #111321;
+  --color-third-ellipse:  #A8A8A8;
+  --color-fourth-ellipse: #FFFFFF;
+
+  
+  --color-card-data: #A8A8A8;
+  --color-card-button: #4440F7;
+  --color-card-text: #111321;
+
+  --color-text-white: #FFFFFF;
+  
+  --color-texr-read-already: #00DD73;
+
+}
   
   
