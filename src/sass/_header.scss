@@ -2,43 +2,45 @@
     display: flex;
     align-items: center;
     
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    }
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+    &__link {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 700;
     
-.header__link {
-    font-family: 'Manrope';
-    font-style: normal;
-    font-weight: 700;
-
-    color: #111321;
-
-    @include mobile {
-        padding-left: 16px;
-        padding-top: 24px;
-        padding-bottom: 24px;
-
-        font-size: 24px;
-        line-height: 33px;
-    }
-
-    @include tablet {
-        padding-left: 16px;
-        padding-top: 32px;
-        padding-bottom: 30px;
+        color: #111321;
     
-        font-size: 32px;
-        line-height: 44px;
-    }
-
-    @include desktop {
-        padding-left: 16px;
-        padding-top: 28px;
-        padding-bottom: 28px;
+        @include mobile {
+            padding-left: 16px;
+            padding-top: 24px;
+            padding-bottom: 24px;
     
-        font-size: 42px;
-        line-height: 57px;
+            font-size: 24px;
+            line-height: 33px;
+        }
+    
+        @include tablet {
+            padding-left: 16px;
+            padding-top: 32px;
+            padding-bottom: 30px;
+        
+            font-size: 32px;
+            line-height: 44px;
+        }
+    
+        @include desktop {
+            padding-left: 16px;
+            padding-top: 28px;
+            padding-bottom: 28px;
+        
+            font-size: 42px;
+            line-height: 57px;
+        }
     }
 }
+    
+
 
 .navigation__list {
     display: flex;
@@ -110,92 +112,88 @@
     }
 
     @include desktop {
-        margin-right: 147px;
     }
-}
+
+    &__logo {
+        background-color: aqua;
+        position: absolute;
     
-.search__logo {
-    background-color: aqua;
-    position: absolute;
-
-    @include mobile {
-
-    }
-
-    @include tablet {
-
-    }
-
-    @include desktop {
-
-    }
-}
+        @include mobile {
     
-.search__input {
-    border: 1px solid #111321;
-    border-radius: 20px;
-    opacity: 0;
-    padding-left: 48px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+        }
     
-    @include mobile {
-        margin-right: 14px;
+        @include tablet {
+    
+        }
+    
+        @include desktop {
+    
+        }
     }
 
-    @include tablet {
-        opacity: 1;
-        margin-right: 24px;
-    }
-
-    @include desktop {
-        margin-right: 147px;
-        min-width: 288px;
-        min-height: 31px;
-    }
-}
-
-// .switch {
-
-// }
-
-.switch__logo {
-    background-color: rgb(169, 238, 30);
-
-
-    @include mobile {
-        width: 98px;
-        height: 21px;
+    &__input {
+        border: 1px solid #111321;
+        border-radius: 20px;
         opacity: 0;
+        padding-left: 48px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        
+        @include mobile {
+            margin-right: 14px;
+        }
+    
+        @include tablet {
+            opacity: 1;
+            margin-right: 24px;
+        }
+    
+        @include desktop {
+            margin-right: 147px;
+            min-width: 288px;
+            min-height: 31px;
+        }
     }
+}
+    
 
-    @include tablet {
-        width: 98px;
-        height: 21px;
-        opacity: 1;
-    }
 
-    @include desktop {
-        width: 148px;
-        height: 24px;
+.switch {
+    &__logo {
+        background-color: rgb(169, 238, 30);
+    
+        @include mobile {
+            width: 98px;
+            height: 21px;
+            opacity: 0;
+        }
+    
+        @include tablet {
+            width: 98px;
+            height: 21px;
+            opacity: 1;
+        }
+    
+        @include desktop {
+            width: 148px;
+            height: 24px;
+        }
     }
 }
 
-// .modalbtn {
-
-// }
-
-.modalbtn__logo {
-    background-color: greenyellow;
-
-    @include mobile {
-    }
-
-    @include tablet {
-        opacity: 0;
-    }
-
-    @include desktop {
-
+.modalbtn {
+    &__logo {
+        background-color: greenyellow;
+    
+        @include mobile {
+        }
+    
+        @include tablet {
+            opacity: 0;
+        }
+    
+        @include desktop {
+    
+        }
     }
 }
