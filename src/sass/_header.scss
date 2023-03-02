@@ -9,13 +9,13 @@
     margin-right: auto;
 }
 
-.section {
+.header__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.section__link {
+.header__inner-link {
     font-family: 'Manrope';
     font-style: normal;
     font-weight: 700;
