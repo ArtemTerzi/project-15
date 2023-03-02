@@ -5,3 +5,4 @@ import './js/favorite';
 import './js/fetchData';
 import './js/filter';
 import './js/themeSwaper';
+import './js/weather/weather-news-api'
