@@ -5,3 +5,7 @@ import './js/favorite';
 import './js/fetchData';
 import './js/filter';
 import './js/themeSwaper';
+import './js/fetchMostPopular';
+import './js/fetchByInputAndDate';
+import './js/fetchNewsCategories';
+import './js/fetchByCategories';
