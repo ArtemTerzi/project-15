@@ -72,3 +72,5 @@ function createThreePoints(str) {
   }
   return str;
 }
+
+export { fetchMostPopular };

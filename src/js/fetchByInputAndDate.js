@@ -97,3 +97,5 @@ function createThreePoints(str) {
   }
   return str;
 }
+
+export { fetchByInputSerchAndDate };

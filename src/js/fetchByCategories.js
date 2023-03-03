@@ -15,7 +15,7 @@ function fetchByChoosenCategories(category) {
     });
 }
 
-fetchByChoosenCategories('food');
+// fetchByChoosenCategories('food');
 
 function markupForSearchByCategories(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
@@ -86,3 +86,5 @@ function comparedTagAltInImgOnNull(news) {
   }
   return news.des_facet[0];
 }
+
+export { fetchByChoosenCategories };
