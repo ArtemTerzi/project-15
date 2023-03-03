@@ -1,0 +1,200 @@
+.card {
+  width: 100%;
+  @media screen and (min-width: 480px) {
+    .container {
+      max-width: 288px;
+      margin-top: 28px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .container {
+      max-width: 353px;
+      margin-top: 30px;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .container {
+      max-width: 395px;
+      margin-top: 40px;
+    }
+  }
+}
+
+.card-container {
+  padding-left: 16px;
+  padding-right: 16px;
+  margin: 0 auto;
+  background-size: contain;
+}
+@media screen and (min-width: 480px) {
+  .card-container {
+    max-width: 320px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .card-container {
+    max-width: 385px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .card-container {
+    max-width: 427px;
+  }
+}
+
+.box {
+  position: relative;
+}
+
+.add-btn {
+  position: absolute;
+  width: 126px;
+  height: 28px;
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: center;
+  background: #fff;
+  border-radius: 20px;
+  color: #111321;
+  top: 355px;
+  left: 154px;
+  @media screen and (min-width: 768px) {
+    .add-btn {
+      top: 355px;
+      left: 215px;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .add-btn {
+      top: 355px;
+      left: 256px;
+    }
+  }
+}
+
+.remove-btn {
+  position: absolute;
+  width: 168px;
+  height: 28px;
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: center;
+  background: #fff;
+  color: #111321;
+  border-radius: 20px;
+  top: 355px;
+  left: 112px;
+  @media screen and (min-width: 768px) {
+    .remove-btn {
+      top: 355px;
+      left: 173px;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .remove-btn {
+      top: 355px;
+      left: 215px;
+    }
+  }
+}
+
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.box-img {
+  max-width: 288px;
+  max-height: 395px;
+  position: relative;
+
+  @media screen and (min-width: 768px) {
+    .box-img {
+      max-width: 353px;
+      max-height: 395px;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .box-img {
+      max-width: 394px;
+      max-height: 395px;
+    }
+  }
+}
+
+.card-header {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.37;
+  letter-spacing: -0.01em;
+  color: #111321;
+
+  @media screen and (min-width: 768px) {
+    .card-header {
+      font-size: 32px;
+      line-height: 1.37;
+    }
+  }
+}
+.card-text {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #111321;
+
+  @media screen and (min-width: 768px) {
+    .card-text {
+      font-size: 16px;
+      line-height: 1.37;
+    }
+  }
+}
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.card-date {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #a8a8a8;
+  @media screen and (min-width: 768px) {
+    .card-date {
+      font-size: 16px;
+      line-height: 1.37;
+    }
+  }
+}
+
+.card-link {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #4440f7;
+
+  @media screen and (min-width: 768px) {
+    .card-link {
+      font-family: 'Manrope';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.37;
+    }
+  }
+}
