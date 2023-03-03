@@ -8,9 +8,9 @@ import './js/themeSwaper';
 import './js/paginator';
 import { startWeather } from './js/weather/weather';
 import { formToJSON } from 'axios';
-// import './js/fetchMostPopular';
-// import './js/fetchByInputAndDate';
-// import './js/fetchNewsCategories';
-// import './js/fetchByCategories';
+import './js/fetchMostPopular';
+import './js/fetchByInputAndDate';
+import './js/fetchNewsCategories';
+import './js/fetchByCategories';
 
 startWeather();
