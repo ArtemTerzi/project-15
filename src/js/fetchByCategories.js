@@ -21,7 +21,6 @@ function markupForSearchByCategories(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
   const markup = arr
     .map(news => {
-      console.log(news);
       if (news.multimedia.length === 0) {
         return `
     <li class="news-item">
