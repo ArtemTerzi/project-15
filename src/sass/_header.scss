@@ -30,12 +30,6 @@
     line-height: 33px;
 
     @include mobile {
-        // padding-top: 24px;
-        // padding-bottom: 24px;
-        // margin-right: 167px;
-
-        // font-size: 24px;
-        // line-height: 33px;
     }
 
     @include tablet {
@@ -63,7 +57,6 @@
     display: none;
 
     @include mobile {
-        // display: none;
     }
 
     @include tablet {
@@ -147,7 +140,6 @@
     }
     
     @include tablet {
-        display: flex;
     }
 
     @include desktop {
@@ -164,11 +156,14 @@
     transform: translateY(-50%);
 }
 
-.search__logo {    
+.search__logo {
+    width: 0;
+
     @include mobile {
     }
 
     @include tablet {
+        width: 100%;
     }
 
     @include desktop {
@@ -186,7 +181,6 @@
     display: none;
     
     @include mobile {
-        // margin-right: 14px;
     }
 
     @include tablet {
@@ -207,11 +201,11 @@
 
 .search__mobile {
     @include mobile {
-        display: none;
     }
 
     @include tablet {
         display: block;
+        display: none;
     }
 }
 
