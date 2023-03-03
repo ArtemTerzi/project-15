@@ -10,9 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Poppins&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="./sass/index.scss" />
+    <link rel="stylesheet" href="./sass/_favorites.scss">
 </head>
 
 <body>
+    <form class="demo-form">
+        <button class="demo-btn" type="button">Search</button>
+        <input class="demo-input" type="text" placeholder="Search" id="articleName">
+    </form>
+
+    <section class="card">
+        <div class="card-container">
+        </div>
+    </section>
 
     <include src="./partials/header.html"></include>
     <include src="./partials/favorite.html"></include>
