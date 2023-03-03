@@ -1,6 +1,6 @@
 const cardContainer = document.querySelector('.card-container');
 
-export default function renderCards() {
+export function renderCards() {
   const cardObject = `<div class="box">
     <img class="box-img"
       src="https://images.pexels.com/photos/10937018/pexels-photo-10937018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -17,7 +17,7 @@ export default function renderCards() {
   cardContainer.insertAdjacentHTML('beforeend', cardObject);
 }
 
-export default function renderFavoriteCards() {
+export function renderFavoriteCards() {
   const cardObject = `<div class="box">
       <img class="box-img"
         src="https://images.pexels.com/photos/10937018/pexels-photo-10937018.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"

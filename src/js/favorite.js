@@ -1,5 +1,4 @@
-import renderCards from './renderCard.js';
-import renderFavoriteCards from './renderCard.js';
+import { renderCards, renderFavoriteCards } from './renderCard.js';
 import throttle from 'lodash.throttle';
 //1) adaptive
 //2) fetch(get news by input) Listener on Form
