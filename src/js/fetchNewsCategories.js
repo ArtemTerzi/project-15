@@ -8,7 +8,7 @@ function fetchNewsCategories() {
     const {
       data: { results },
     } = answer;
-    console.log(results);
+
     const allCategories = getCategories(results); // Возвращает массив категорий который будут идти в разметке Хедера, не делал маркап так как им занимается Антон.
   });
 }

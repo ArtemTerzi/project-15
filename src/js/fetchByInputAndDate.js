@@ -84,7 +84,6 @@ function markupForQuareByInput(arr) {
       `;
     })
     .join('');
-  console.log(markup);
 }
 // Эта функция для того, что бы отобразить дату ввиде как требует макет, так как приходит с каждых API разная.
 function convertoNormalDate(element) {

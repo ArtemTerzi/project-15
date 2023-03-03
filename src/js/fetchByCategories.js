@@ -11,7 +11,6 @@ function fetchByChoosenCategories(category) {
       const {
         data: { results },
       } = response;
-      console.log(results[0].des_facet[0]);
       markupForSearchByCategories(results);
     });
 }
@@ -63,7 +62,6 @@ function markupForSearchByCategories(arr) {
 `;
     })
     .join('');
-  console.log(markup);
   //Добавить маркап
 }
 
