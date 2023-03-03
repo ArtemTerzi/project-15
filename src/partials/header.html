@@ -15,12 +15,21 @@
             </ul>
             <form class="header__form">
                 <div class="search">
-                    <svg class="search__logo" width="20" height="19">
-                        <use href="./images/icons.svg#search"></use>
-                    </svg>
-                    <input class="search__input" type="text" placeholder="Search">
+                    <button class="search__btn-ds" type="submit">
+                        <svg class="search__logo" width="20" height="20">
+                            <use href="./images/icons.svg#search"></use>
+                        </svg>
+                    </button>
+                    <label for="search__input">
+                        <input class="search__input" type="text" placeholder="Search" id="search__input">
+                    </label>
                 </div>
             </form>
+            <div class="search__mobile">
+                <svg class="search__logo-mobile" width="20" height="20">
+                    <use href="./images/icons.svg#search"></use>
+                </svg>
+            </div>
             <div class="theme-swapper">
                 <div class="theme-wrapper theme-wrapper--light  switch-on">
                     <svg width="21px" height="21px" class="mobile-theme-svg mobile-theme-svg__light ">
