@@ -122,7 +122,7 @@
     }
 
     &__logo {
-        background-color: aqua;
+        // background-color: aqua;
         position: absolute;
         left: 5px;
         top: 50%;
@@ -167,28 +167,28 @@
     }
 }
 
-.switch {
-    &__logo {
-        background-color: rgb(169, 238, 30);
+// .switch {
+//     &__logo {
+//         background-color: rgb(169, 238, 30);
     
-        @include mobile {
-            width: 98px;
-            height: 21px;
-            display: none;
-        }
+//         @include mobile {
+//             width: 98px;
+//             height: 21px;
+//             display: none;
+//         }
     
-        @include tablet {
-            width: 98px;
-            height: 21px;
-            display: block;
-        }
+//         @include tablet {
+//             width: 98px;
+//             height: 21px;
+//             display: block;
+//         }
     
-        @include desktop {
-            width: 148px;
-            height: 24px;
-        }
-    }
-}
+//         @include desktop {
+//             width: 148px;
+//             height: 24px;
+//         }
+//     }
+// }
 
 .modalbtn {
     &__logo {
