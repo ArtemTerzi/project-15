@@ -111,7 +111,6 @@
     position: relative;
 
     @include mobile {
-        // display: none;
     }
     
     @include tablet {
@@ -167,29 +166,6 @@
     }
 }
 
-// .switch {
-//     &__logo {
-//         background-color: rgb(169, 238, 30);
-    
-//         @include mobile {
-//             width: 98px;
-//             height: 21px;
-//             display: none;
-//         }
-    
-//         @include tablet {
-//             width: 98px;
-//             height: 21px;
-//             display: block;
-//         }
-    
-//         @include desktop {
-//             width: 148px;
-//             height: 24px;
-//         }
-//     }
-// }
-
 .modalbtn {
     &__logo {
         background-color: greenyellow;
@@ -204,4 +180,21 @@
         @include desktop {
         }
     }
+}
+
+.header__link--current::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-bottom: -32px;
+
+    display: block;
+    width: 100%;
+    height: 5px;
+    border-radius: 4px;
+    background-color: $accent-color;
+
+    transition: $transition;
 }
