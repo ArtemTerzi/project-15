@@ -200,6 +200,9 @@
 }
 
 .search__mobile {
+    display: flex;
+    justify-content: space-between;
+
     @include mobile {
     }
 
