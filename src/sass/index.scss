@@ -9,10 +9,14 @@
 @import './pagination';
 
 @import './header';
+@import './themeSwapper';
 @import './home';
 @import './weather/weather';
 @import './favorites';
 @import './read';
 @import './footer';
-
 @import './modal';
+
+.weather {
+  display: none;
+}
