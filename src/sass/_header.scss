@@ -138,7 +138,6 @@
     align-items: center;
     color: inherit;
 
-
     background: none;
     box-shadow: none;
     border: none;
@@ -163,6 +162,7 @@
 }
 
 .search__logo {
+    cursor: pointer;
     position: absolute;
     left: 25px;
     top: 50%;
@@ -175,7 +175,7 @@
     border: 1px solid #111321;
     background-color: inherit;
     color: inherit;
-    line-height: 16px;
+    line-height: 14px;
 
     padding: 5px 35px 5px 35px;
     box-sizing: border-box;
