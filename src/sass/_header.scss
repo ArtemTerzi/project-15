@@ -121,7 +121,7 @@
     border-radius: 4px;
     background-color: #4440F6;
 }
-///////////////////////////////////////////////////////////////////
+
 .header__form {
     display: flex;
     align-items: center;
@@ -202,7 +202,7 @@
     }
 }
 
-.search__logo-mobile {
+.search__mobile-logo {
     margin-right: 30px;
 
     display: block;
@@ -231,8 +231,7 @@
         display: block;
     }
 
-    .search__logo-mobile {
+    .search__mobile-logo {
         display: none;
     }
 }
-/////////////////////////////////////////////////////////////////
