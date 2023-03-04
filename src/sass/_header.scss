@@ -180,16 +180,14 @@
 }
 
 .search__input {
-    // width: 170px;
+    border: 1px solid #111321;
+    background-color: inherit;
+    color: inherit;
+    line-height: 16px;
+
     padding: 5px 35px 5px 35px;
     box-sizing: border-box;
-    border: none;
-    line-height: 16px;
-    border-radius: 22px;
-    // position: absolute;
-    // left: -135px;
-    // top: -1px;
-    // left: 135px;
+    border-radius: 20px;
     opacity: 0;
     z-index: -1;
     transition-duration: 0.5s;
@@ -197,13 +195,19 @@
     appearance: none;
 
     @include mobile{
+        width: 173px;
+        height: 31px;
     }
 
     @include tablet{
+        width: 213px;
+        height: 31px;
         opacity: 1;
     }
 
     @include desktop{
+        width: 288px;
+        height: 31px;
     }
 }
 
