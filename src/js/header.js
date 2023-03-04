@@ -1,5 +1,5 @@
 const search = document.querySelector('.header__form');
-const header = document.querySelector('.header');
+const header = document.querySelector('.search__btn-ds');
 
 search.addEventListener('click', function(e) {
     e.stopPropagation();
