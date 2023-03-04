@@ -24,7 +24,6 @@
 
     padding-top: 24px;
     padding-bottom: 24px;
-    margin-right: 167px;
 
     font-size: 24px;
     line-height: 33px;
@@ -122,29 +121,21 @@
     border-radius: 4px;
     background-color: #4440F6;
 }
-
-
-
-
 ///////////////////////////////////////////////////////////////////
+.header__form {
+    display: flex;
+    align-items: center;
+}
 
-// .header__form {
-// }
 .search {
     display: flex;
     align-items: center;
-    // position: relative;
 }
 
 .search__btn-ds {
     display: flex;
     justify-content: center;
     align-items: center;
-    // position: absolute;
-    // left: 5px;
-    // top: 50%;
-    // transform: translateY(-50%);
-    // cursor: pointer;
 
 
     background: none;
@@ -211,10 +202,9 @@
     }
 }
 
-// .search__mobile {
-// }
-
 .search__logo-mobile {
+    margin-right: 30px;
+
     display: block;
     cursor: pointer;
     width: 20px;
@@ -231,7 +221,6 @@
     }
 }
 
-
 .search--active {
     .search__input {
         opacity: 1;
@@ -245,150 +234,5 @@
     .search__logo-mobile {
         display: none;
     }
-
-    @include mobile{
-    }
-
-    @include tablet{
-    }
-
-    @include desktop{
-    }
 }
-
-
 /////////////////////////////////////////////////////////////////
-// .header__form {
-//     width: 0;
-
-//     @include mobile {
-//         // opacity: 0;
-//     }
-
-//     @include tablet {
-//         width: 100%;
-//         // opacity: 1;
-//     }
-// }
-
-// .search {
-//     display: flex;
-//     align-items: center;
-//     position: relative;
-
-//     @include mobile {
-//     }
-    
-//     @include tablet {
-//     }
-
-//     @include desktop {
-//     }
-// }
-
-// .search--active {
-//     input {
-//         opacity: 1;
-//         z-index: 1;
-//     }
-
-//     button {
-//         display: block;
-//     }
-// }
-
-// .search__btn-ds {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     position: absolute;
-//     left: 5px;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     cursor: pointer;
-// }
-
-// .search__logo {
-//     display: block;
-//     cursor: pointer;
-//     width: 0;
-
-//     @include mobile {
-//     }
-
-//     @include tablet {
-//         width: 100%;
-//     }
-
-//     @include desktop {
-//     }
-// }
-
-// .search__input {
-//     border: 1px solid #111321;
-//     border-radius: 20px;
-//     padding-left: 48px;
-//     padding-top: 5px;
-//     padding-bottom: 5px;
-//     margin-right: 14px;
-//     display: none;
-
-//     background: inherit;
-    
-//     @include mobile {
-//     }
-
-//     @include tablet {
-//         display: flex;
-//         margin-right: 24px;
-//         width: 100%;
-//         max-width: 213px;
-//         height: 31px;
-//     }
-
-//     @include desktop {
-//         margin-right: 147px;
-//         width: 100%;
-//         max-width: 288px;
-//         height: 31px;
-//     }
-// }
-
-// .search__mobile {
-//     display: flex;
-//     justify-content: space-between;
-
-//     @include mobile {
-//     }
-
-//     @include tablet {
-//         display: block;
-//         display: none;
-//     }
-// }
-
-// .search__logo-mobile {
-//     display: block;
-//     cursor: pointer;
-// }
-
-
-
-
-
-
-.modalbtn {
-    &__logo {
-        background-color: greenyellow;
-    
-        @include mobile {
-        }
-    
-        @include tablet {
-            display: none;
-        }
-    
-        @include desktop {
-        }
-    }
-}
