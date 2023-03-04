@@ -123,97 +123,247 @@
     background-color: #4440F6;
 }
 
-.header__form {
-    width: 0;
 
-    @include tablet {
-        width: 100%;
-    }
-}
 
-.search {
-    display: flex;
-    align-items: center;
-    position: relative;
 
-    @include mobile {
-    }
-    
-    @include tablet {
-    }
+///////////////////////////////////////////////////////////////////
 
-    @include desktop {
-    }
-}
+// .header__form {
+// }
+// .search {
+//     display: flex;
+//     align-items: center;
+//     position: relative;
+// }
 
 .search__btn-ds {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
+    background: none;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    width: 20px;
+    position: relative;
+    z-index: 2;
+    display: none;
+
+    @include mobile{
+    }
+
+    @include tablet{
+        display: block;
+    }
+
+    @include desktop{
+        
+    }
 }
 
 .search__logo {
-    width: 0;
-
-    @include mobile {
-    }
-
-    @include tablet {
-        width: 100%;
-    }
-
-    @include desktop {
-    }
+    width: 20px;
+    height: 20px;
 }
 
 .search__input {
-    border: 1px solid #111321;
-    border-radius: 20px;
-    padding-left: 48px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    width: 170px;
+    padding: 5px 45px 5px 10px;
+    box-sizing: border-box;
+    border: none;
+    line-height: 16px;
+    border-radius: 22px;
+    // position: absolute;
+    // left: -135px;
+    // top: -1px;
+    // left: 135px;
+    opacity: 0;
+    z-index: -1;
+    transition-duration: 0.5s;
+    transition-property: opacity;
+    appearance: none;
 
-    margin-right: 14px;
-    display: none;
-    
-    @include mobile {
+    @include mobile{
+
     }
 
-    @include tablet {
-        display: flex;
-        margin-right: 24px;
-        width: 100%;
-        max-width: 213px;
-        height: 31px;
+    @include tablet{
+        
     }
 
-    @include desktop {
-        margin-right: 147px;
-        width: 100%;
-        max-width: 288px;
-        height: 31px;
+    @include desktop{
+        
+    }
+}
+// .search__mobile {
+// }
+.search__logo-mobile {
+    display: block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+
+    @include mobile{
+
+    }
+
+    @include tablet{
+        
+    }
+
+    @include desktop{
+        
     }
 }
 
-.search__mobile {
-    display: flex;
-    justify-content: space-between;
 
-    @include mobile {
+.search--active {
+    .search__input {
+        opacity: 1;
+        z-index: 1;
     }
 
-    @include tablet {
+    .search__btn-ds {
         display: block;
+    }
+
+    .search__logo-mobile {
         display: none;
     }
+
+    @include mobile{
+
+    }
+
+    @include tablet{
+        
+    }
+
+    @include desktop{
+        
+    }
 }
 
-// .search__logo-mobile {
+
+/////////////////////////////////////////////////////////////////
+// .header__form {
+//     width: 0;
+
+//     @include mobile {
+//         // opacity: 0;
+//     }
+
+//     @include tablet {
+//         width: 100%;
+//         // opacity: 1;
+//     }
 // }
+
+// .search {
+//     display: flex;
+//     align-items: center;
+//     position: relative;
+
+//     @include mobile {
+//     }
+    
+//     @include tablet {
+//     }
+
+//     @include desktop {
+//     }
+// }
+
+// .search--active {
+//     input {
+//         opacity: 1;
+//         z-index: 1;
+//     }
+
+//     button {
+//         display: block;
+//     }
+// }
+
+// .search__btn-ds {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position: absolute;
+//     left: 5px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     cursor: pointer;
+// }
+
+// .search__logo {
+//     display: block;
+//     cursor: pointer;
+//     width: 0;
+
+//     @include mobile {
+//     }
+
+//     @include tablet {
+//         width: 100%;
+//     }
+
+//     @include desktop {
+//     }
+// }
+
+// .search__input {
+//     border: 1px solid #111321;
+//     border-radius: 20px;
+//     padding-left: 48px;
+//     padding-top: 5px;
+//     padding-bottom: 5px;
+//     margin-right: 14px;
+//     display: none;
+
+//     background: inherit;
+    
+//     @include mobile {
+//     }
+
+//     @include tablet {
+//         display: flex;
+//         margin-right: 24px;
+//         width: 100%;
+//         max-width: 213px;
+//         height: 31px;
+//     }
+
+//     @include desktop {
+//         margin-right: 147px;
+//         width: 100%;
+//         max-width: 288px;
+//         height: 31px;
+//     }
+// }
+
+// .search__mobile {
+//     display: flex;
+//     justify-content: space-between;
+
+//     @include mobile {
+//     }
+
+//     @include tablet {
+//         display: block;
+//         display: none;
+//     }
+// }
+
+// .search__logo-mobile {
+//     display: block;
+//     cursor: pointer;
+// }
+
+
+
+
+
 
 .modalbtn {
     &__logo {
