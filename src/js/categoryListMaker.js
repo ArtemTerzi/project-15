@@ -58,9 +58,7 @@ function calendarMarkup(data) {
 }
 
 async function getDates() {
-    console.log(searchDate);
-  const myDates = await calendarDates.getDates(searchDate);
-    console.log(myDates);
+    const myDates = await calendarDates.getDates(searchDate);
     calendarMarkup(myDates);
 };
 
@@ -143,9 +141,7 @@ function handleDateClick(element) {
             newElement.classList.add('calendar-modal-day-curr');
         } else {
             getDates();
-            console.log(searchDay);
             newElement = findSpecDay(searchDay);
-            console.log(newElement);
             newElement.classList.add('calendar-modal-day-curr');
         };
         updateMarkupDates();
@@ -154,8 +150,13 @@ function handleDateClick(element) {
 };
 
 function getDaysInMonth(month, year) {
-  const date = new Date(year, month, 0);
-  return date.getDate();
+    month++;
+    if (month > 11) {
+        year++;
+        month = 0
+    };
+    const date = new Date(year, month, 0);
+    return date.getDate();
 };
 
 function addMonth() { 
@@ -172,7 +173,7 @@ function addMonth() {
             targetMonth = 0;
         };
         let targetDay = getDaysInMonth(targetMonth, targetYear);
-        if (targetDay > currentDay) {
+        if (targetMonth === currentMonth && searchYear === currentDate.getFullYear() && targetDay > currentDay) {
             targetDay = currentDay;
         } else if (targetDay > searchDay) {
             targetDay = searchDay;
@@ -247,3 +248,108 @@ calendarModal.addEventListener('click', onCalendarChange);
 
 getDates();
 export default dateString;
+
+// CATEGORIES PART
+import throttle from 'lodash.throttle';
+import { fetchNewsCategories } from './fetchNewsCategories.js';
+const filterSection = document.querySelector('.filter-section');
+const category = document.querySelector('.category');
+const otherCategoryItem = document.querySelector('.category-others-chosen');
+const visibleList = document.querySelector('.category-list');
+const hiddenList = document.querySelector('.category-modal-list');
+const otherBtn = document.querySelector('.category-others');
+const desktopWidth = 1248;
+const tabletWidth = 736;
+let categories = [];
+let selectedCategory = '';
+
+fetchNewsCategories().then(allCategories => {
+    categories = allCategories;
+    getCurrWidth();
+});
+
+function deactivateCategory() {
+    const currentActive = document.querySelector('.category-item-active');
+    if (currentActive) {
+        currentActive.classList.remove('category-item-active');
+        selectedCategory = '';
+        otherCategoryItem.textContent = '';
+    };
+};
+
+function onCategoryChose(event) {
+    const isVisibleCat = event.target.classList.contains('category-btn');
+    const isModalBtn = event.target.classList.contains('category-others');
+    const isHiddenCat = event.target.classList.contains('category-modal-item');
+    if ((isVisibleCat && !isModalBtn) || isHiddenCat) {
+        if (event.target.textContent === selectedCategory) {
+            deactivateCategory();
+        } else {
+            deactivateCategory();
+            if (isVisibleCat) {
+                event.target.classList.add('category-item-active');
+            } else {
+                otherCategoryItem.textContent = event.target.textContent;
+                otherCategoryItem.parentNode.classList.add('category-item-active');
+            }
+        }
+    };
+};
+
+function createHiddenCategoryMarkup(data) {
+    if (data.length === 0) {
+        hiddenList.innerHTML = '';
+    } else {
+        const markup = data
+            .map(category => (`<li class="category-modal-item">${category}</li>`))
+            .join('');
+        hiddenList.innerHTML = markup;
+    }
+};
+
+function createVisibleCategoryMarkup(data) {
+    let markup = '';
+    if (data.length === 0) {
+        visibleList.innerHTML = '';
+    } else {
+        markup = data
+            .map(category => (`<li class="category-btn">${category}</li>`))
+            .join('');
+        visibleList.innerHTML = markup;
+    }
+};
+
+function getCurrWidth() {
+    const widthInPx = filterSection.getBoundingClientRect().width;
+    const tempArray = categories;
+    if (widthInPx < tabletWidth) {
+        createVisibleCategoryMarkup([]);
+        createHiddenCategoryMarkup(categories);
+    } else if (widthInPx === tabletWidth) {
+        const visiblePart = tempArray.slice(0, 4);
+        const HiddenPart = tempArray.splice(4);
+        createVisibleCategoryMarkup(visiblePart);
+        createHiddenCategoryMarkup(HiddenPart);
+    } else if (widthInPx === desktopWidth) {
+        const visiblePart = tempArray.slice(0, 6);
+        const HiddenPart = tempArray.splice(6);
+        createVisibleCategoryMarkup(visiblePart);
+        createHiddenCategoryMarkup(HiddenPart);
+    }
+};
+
+function onOtherClick(event) {
+    otherBtn.classList.toggle('category-others-active');
+    document.addEventListener('click', onCloseCategory);
+};
+
+function onCloseCategory(event) {
+    if (!otherBtn.contains(event.target) & !hiddenList.contains(event.target)) {
+        otherBtn.classList.remove('category-others-active');
+        document.removeEventListener('click', onCloseCategory);
+    }
+};
+
+otherBtn.addEventListener('click', onOtherClick);
+category.addEventListener('click', onCategoryChose);
+window.addEventListener('resize', throttle(getCurrWidth, 500));
