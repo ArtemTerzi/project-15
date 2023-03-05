@@ -1,32 +1,30 @@
 .error {
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
 .error-text {
-  margin-left: 366px;
-  margin-right: 366px;
-  margin-top: 293px;
+  margin-left: 22px;
+  margin-right: 22px;
   font-weight: 700;
-  font-size: 40px;
-  line-height: 55px;
+  font-size: 20px;
+  line-height: 27px;
   text-align: center;
   @include tablet {
     margin-left: 110px;
     margin-right: 110px;
-    margin-top: 253px;
     font-weight: 700;
     font-size: 40px;
     line-height: 55px;
     text-align: center;
   }
-  @include mobile {
-    margin-left: 22px;
-    margin-right: 22px;
-    margin-top: 176px;
+  @include desktop {
+    margin-left: 366px;
+    margin-right: 366px;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 27px;
+    font-size: 40px;
+    line-height: 55px;
     text-align: center;
   }
 }

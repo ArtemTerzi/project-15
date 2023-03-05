@@ -2,8 +2,12 @@
 @import './reset';
 @import './variables';
 @import './vh';
-@import './container';
 @import './mixin';
+@import './container';
+
+@import './sign-in';
+@import './sign-up';
+@import './sign-out';
 
 @import './categoryBtn';
 @import './pagination';
@@ -11,10 +15,12 @@
 @import './header';
 @import './themeSwapper';
 @import './home';
+@import './newscard';
 @import './weather/weather';
 @import './favorites';
 @import './read';
 @import './footer';
+@import './modal';
 
 .weather {
   display: none;
