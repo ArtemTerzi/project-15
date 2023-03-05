@@ -1,9 +1,8 @@
 
-// const themeCheckBox = document.querySelector('.theme-swapper__checkbox');
 const body = document.querySelector('body');
 const themeWrapperLight = document.querySelector('.theme-wrapper--light');
 const themeWrapperDark = document.querySelector('.theme-wrapper--dark');
-const checkbox = document.querySelector('.checkbox');
+const checkbox = document.querySelectorAll('.checkbox');
 
 let checked = localStorage.getItem('checked');
 
