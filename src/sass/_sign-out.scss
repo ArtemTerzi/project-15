@@ -1,0 +1,13 @@
+.sign-out {
+  color: inherit;
+  font-family: Manrope;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: 0;
+  }
+}
