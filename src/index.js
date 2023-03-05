@@ -12,3 +12,4 @@ import './js/fetchMostPopular';
 import './js/fetchByInputAndDate';
 import './js/fetchNewsCategories';
 import './js/fetchByCategories';
+import './js/infinitiscroll';
