@@ -26,6 +26,7 @@ const signIn = document.querySelector('.sign-in');
 modalForm.addEventListener('submit', onClick);
 modalForm.addEventListener('input', onInput);
 window.addEventListener('keyup', onCloseEsc);
+
 function onClick(evt) {
   evt.preventDefault();
   const password = evt.target.elements.password.value.trim();

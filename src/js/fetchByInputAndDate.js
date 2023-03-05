@@ -41,6 +41,33 @@ function fetchByInputSerchAndDate(
     });
 }
 
+function createDataObjectByFetchDateAndInput(arr) {
+  const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
+  const attachURL = `https://www.nytimes.com/`;
+  const createObj = arr.map(news => {
+    if (news.multimedia.length === undefined) {
+      return [
+        {
+          img: `${defaultImg}`,
+          title: `${news.headline.main}`,
+          text: `${createThreePoints(news.snippet)}`,
+          date: `${convertoNormalDate(news.pub_date)}`,
+          link: `${news.web_url}`,
+        },
+      ];
+    }
+    return [
+      {
+        img: `${attachURL}${news.multimedia[0].url}`,
+        title: `${news.headline.main}`,
+        text: `${createThreePoints(news.snippet)}`,
+        date: `${convertoNormalDate(news.pub_date)}`,
+        link: `${news.web_url}`,
+      },
+    ];
+  });
+}
+
 function markupForQuareByInput(arr) {
   const markup = arr
     .map(news => {
@@ -79,7 +106,7 @@ function markupForQuareByInput(arr) {
         </div>
         <div class="news-item__wrapper-text">
           <b class="news-item__title">${news.headline.main}</b>
-          <p>${createThreePoints(news.snippet)}</p>
+          <p class="news-item__text">${createThreePoints(news.snippet)}</p>
         </div>
         <div class="news-item__wrapper-date">
           <p class="news-item__date">${convertoNormalDate(news.pub_date)}</p>
