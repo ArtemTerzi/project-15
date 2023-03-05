@@ -3,7 +3,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 24px 0px;
-    border: 1px solid red;
 
     @include tablet {
         padding: 28px 0px;
@@ -34,13 +33,55 @@
     text-align: center;
     border-radius: 20px;
     border: 1px solid #4B48DB;
+    cursor: pointer;
     &:hover {
         background-color: #4B48DB;
         color: #fff;
+        .category-icon-expand {
+            fill: #fff;
+        }
         }
 }
 
+.category-modal {
+    position: absolute;
+    display: none;
+    left: 0;
+    bottom: 0;
+    width: 148px;
+    @include tablet {
+        width: 168px;
+    }
+    max-height: 380px;
+    overflow-y: auto;
+    background: #F8F8F8;
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    cursor: default;
+    padding: 14px 24px;
+}
+
+.category-modal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-modal-item {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.33;
+    text-align: left;
+    letter-spacing: 0.01em;
+    color: #4440F7;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .category-others {
+    position: relative;
     display: flex;
     gap: 10px;
     align-items: center;
@@ -59,6 +100,40 @@
             display: inline;
         }
     }
+
+    .category-icon-expand {
+        fill: #4B48DB;
+    }
+
+    &-active {
+        .category-modal {
+            transform: translateY(100%);
+            display: block;
+            z-index: 2;
+        }
+        .category-icon-expand {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.category-others-chosen {
+    display: none;
+}
+
+.category-item-active {
+    .category-others-chosen {
+            display: inline;
+        }
+    .category-others-mobile, 
+    .category-others-tablet {
+        display: none;
+    }
+    background-color: #4B48DB;
+    color: #fff;
+    .category-icon-expand {
+        fill: #fff;
+    }
 }
 
 .calendar-modal {
@@ -67,12 +142,13 @@
     right: 0;
     bottom: 0;
     width: 250px;
-    // height: 250px;
+    max-height: 380px;
     background: #F8F8F8;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
 
     padding: 27px 16px 20px 16px;
+    overflow-y: auto;
 }
 
 .calendar-tool {
@@ -239,6 +315,3 @@
         }
     }
 }
-
-
-
