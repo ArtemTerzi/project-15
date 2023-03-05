@@ -1,6 +1,7 @@
 // Поиск происходит по дате и ключевому слову начальная дата и конечная дата совпадают так как по макету у нас поиск по дате, а не по диапазону дат.
 import { options } from './refs.js';
 import axios from 'axios';
+import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}`;
 
@@ -32,6 +33,10 @@ function fetchByInputSerchAndDate(
           response: { docs },
         },
       } = answer;
+      const responseURL = answer.config.url;
+      const paginator = new Paginator();
+      paginator.getURL(responseURL);
+      paginator.getRespForPagination(responseURL);
       markupForQuareByInput(docs);
     });
 }

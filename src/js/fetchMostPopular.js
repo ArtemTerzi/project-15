@@ -1,6 +1,7 @@
 // Поиск по популярным новостям за 30(можно 1,7 или 30) дней (максимальное количество которое можно использовать,возвращает массив из 20 новостей)
 import { options } from './refs.js';
 import axios from 'axios';
+import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 const mostPopularUrl = `https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=${API_KEY}`;
 function fetchMostPopular() {
@@ -8,6 +9,10 @@ function fetchMostPopular() {
     const {
       data: { results },
     } = response;
+    const responseURL = response.config.url;
+    const paginator = new Paginator();
+    paginator.getURL(responseURL);
+    paginator.getRespForPagination(responseURL);
     markupForMostPopular(results);
   });
 }

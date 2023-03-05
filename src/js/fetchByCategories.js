@@ -1,5 +1,6 @@
 import { options } from './refs.js';
 import axios from 'axios';
+import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 
 function fetchByChoosenCategories(category) {
@@ -11,6 +12,10 @@ function fetchByChoosenCategories(category) {
       const {
         data: { results },
       } = response;
+      const responseURL = response.config.url;
+      const paginator = new Paginator();
+      paginator.getURL(responseURL);
+      paginator.getRespForPagination(responseURL);
       markupForSearchByCategories(results);
     });
 }
@@ -26,8 +31,8 @@ function markupForSearchByCategories(arr) {
     <li class="news-item">
   <img src="${defaultImg}" alt="${news.des_facet[0]}" class="news-item__img"/> 
   <div class="news-item__buttons">
-   <button type="button" class="news-item__btn">Add to favorite</button>
-   <button type="button" class="news-item__category">Job searching </button>
+  <button type="button" class="news-item__btn">Add to favorite</button>
+  <button type="button" class="news-item__category">Job searching </button>
   </div>
   <div class="news-item__wrapper-text">
     <b class="news-item__title">${news.title}</b>
