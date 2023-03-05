@@ -6,13 +6,6 @@
     border-bottom: 1px solid rgba(244, 244, 244, 0.2)
 }
 
-.container {
-    width: 100%;
-    padding: 15px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .header__inner {
     display: flex;
     align-items: center;
@@ -205,6 +198,20 @@
         width: 288px;
         height: 31px;
     }
+}
+
+.search__input::placeholder {
+    width: 100px;
+    height: 20px;
+    left: 35px;
+    opacity: 0.4;
+    border-right: 1px solid #111321;
+}
+
+.dark-theme .search__input::placeholder {
+    opacity: 0.4;
+    border-right: 1px solid #F4F4F4;
+    color: #F4F4F4;
 }
 
 .search__mobile-logo {

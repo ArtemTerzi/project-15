@@ -1,0 +1,112 @@
+.btn-open-sign-up {
+  color: inherit;
+  font-family: Manrope;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: 0;
+  }
+}
+
+.backdrop-sign-up {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: 0;
+  }
+}
+.modal-sign-up {
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 250px;
+  padding: 40px;
+  background: #fff;
+  background-color: #4b48db;
+  border-radius: 4px;
+}
+
+.btn-close-sign-up {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 20px;
+  height: 20px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: black;
+  }
+}
+
+.btn-close-sign-up::before {
+  transform: rotate(45deg);
+}
+
+.btn-close-sign-up::after {
+  transform: rotate(-45deg);
+}
+
+.password-sign-up {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 12px 11px;
+  outline: none;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+}
+.email-sign-up {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 12px 11px;
+  outline: none;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+  margin-top: 15px;
+}
+.sign-up {
+  margin: 35px auto 0;
+  display: block;
+  width: 200px;
+  height: 40px;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #343287 0%, #2724a8 100%);
+
+  &:hover {
+    background: linear-gradient(90deg, #2c2b77 0%, #201e9d 100%);
+  }
+
+  &:disabled {
+    background-color: darkgrey;
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: black;
+  }
+}
