@@ -18,6 +18,33 @@ function fetchMostPopular() {
 }
 // Приходит 20 новостей
 
+function createDataObjectByFetchMostPopular(arr) {
+  const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
+  const createObj = arr.map(news => {
+    if (news.media.length === 0) {
+      return [
+        {
+          img: `${defaultImg}`,
+          title: `${news.title}`,
+          text: `${createThreePoints(news.abstract)}`,
+          date: `${convertoNormalDate(news.published_date)}`,
+          link: `${news.url}`,
+        },
+      ];
+    }
+    return [
+      {
+        img: `${news.media[0]['media-metadata'][2].url}`,
+        title: `${news.title}`,
+        text: `${createThreePoints(news.abstract)}`,
+        date: `${convertoNormalDate(news.published_date)}`,
+        link: `${news.url}`,
+      },
+    ];
+  });
+  console.log(createObj);
+}
+
 function markupForMostPopular(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
   const markup = arr
@@ -36,7 +63,7 @@ function markupForMostPopular(arr) {
   </div>
   <div class="news-item__wrapper-date">
     <p class="news-item__date">${convertoNormalDate(news.published_date)}</p>
-    <a href="${news.url} class="news-item__link">Read more</a>
+    <a href="${news.url}"class="news-item__link">Read more</a>
   </div>
 </li>
 `;
@@ -56,7 +83,7 @@ function markupForMostPopular(arr) {
   </div>
   <div class="news-item__wrapper-date">
     <p class="news-item__date">${convertoNormalDate(news.published_date)}</p>
-    <a href="${news.url} class="news-item__link"">Read more</a>
+    <a href="${news.url}" class="news-item__link"">Read more</a>
   </div>
 </li>
 `;

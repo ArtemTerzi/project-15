@@ -24,7 +24,6 @@ export class Paginator {
     // const URL = `https://api.nytimes.com/svc/news/v3/content/all/food.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&p=${this.page}`;
     const response = await axios.get(URL);
     const data = response.data.response;
-    console.log(response, 'resp get');
     const totalItems = response.data.num_results;
     const page = this.page;
     // const dataObj = {
@@ -34,7 +33,6 @@ export class Paginator {
     //   page,
     // };
 
-    console.log(totalItems);
     this.initPagination({ totalItems, page });
     return totalItems;
   }
