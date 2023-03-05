@@ -111,9 +111,11 @@
         margin-bottom: 12px;
     }
 
-    // .mobile-menu__item:active{
-    //     background-color: aqua;
-    // }
+    .mobile-menu__item:hover,
+    .mobile-menu__item:focus,
+    .mobile-menu__item:active{
+        background-color: #4440F6;
+    }
 
     .mobile-menu__icon{
         fill: #4440F6;
