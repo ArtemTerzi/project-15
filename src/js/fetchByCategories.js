@@ -40,7 +40,7 @@ function markupForSearchByCategories(arr) {
   </div>
   <div class="news-item__wrapper-date">
     <p class="news-item__date">${convertoNormalDate(news.published_date)}</p>
-    <a href="${news.url} class="news-item__link">Read more</a>
+    <a href="${news.url}" class="news-item__link">Read more</a>
   </div>
 </li>
 `;
