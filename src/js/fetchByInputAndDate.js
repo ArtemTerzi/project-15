@@ -1,6 +1,7 @@
 // Поиск происходит по дате и ключевому слову начальная дата и конечная дата совпадают так как по макету у нас поиск по дате, а не по диапазону дат.
 import { options } from './refs.js';
 import axios from 'axios';
+import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}`;
 
@@ -32,8 +33,39 @@ function fetchByInputSerchAndDate(
           response: { docs },
         },
       } = answer;
+      const responseURL = answer.config.url;
+      const paginator = new Paginator();
+      paginator.getURL(responseURL);
+      paginator.getRespForPagination(responseURL);
       markupForQuareByInput(docs);
     });
+}
+
+function createDataObjectByFetchDateAndInput(arr) {
+  const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
+  const attachURL = `https://www.nytimes.com/`;
+  const createObj = arr.map(news => {
+    if (news.multimedia.length === undefined) {
+      return [
+        {
+          img: `${defaultImg}`,
+          title: `${news.headline.main}`,
+          text: `${createThreePoints(news.snippet)}`,
+          date: `${convertoNormalDate(news.pub_date)}`,
+          link: `${news.web_url}`,
+        },
+      ];
+    }
+    return [
+      {
+        img: `${attachURL}${news.multimedia[0].url}`,
+        title: `${news.headline.main}`,
+        text: `${createThreePoints(news.snippet)}`,
+        date: `${convertoNormalDate(news.pub_date)}`,
+        link: `${news.web_url}`,
+      },
+    ];
+  });
 }
 
 function markupForQuareByInput(arr) {
@@ -74,7 +106,7 @@ function markupForQuareByInput(arr) {
         </div>
         <div class="news-item__wrapper-text">
           <b class="news-item__title">${news.headline.main}</b>
-          <p>${createThreePoints(news.snippet)}</p>
+          <p class="news-item__text">${createThreePoints(news.snippet)}</p>
         </div>
         <div class="news-item__wrapper-date">
           <p class="news-item__date">${convertoNormalDate(news.pub_date)}</p>
