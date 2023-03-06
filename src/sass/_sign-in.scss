@@ -1,15 +1,36 @@
 .btn-open-sign-in {
-  color: inherit;
-  font-family: Manrope;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 25px;
+  margin-right: 10px;
+  
+  font-family: 'Manrope';
+  font-style: normal;
+  
+  display: inline-block;
+  justify-content: center;
+  box-sizing: border-box;
+  outline: none;
+  border: none; 
+  border-radius: 20px;
+  height: 31px;
+  min-width: 65px;
+  line-height: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  background-color: #4b48db;
+  box-shadow: 0 2px #21487f;
+  cursor: pointer;
 
   &.is-hidden {
+    display: none;
     opacity: 0;
     visibility: hidden;
     pointer-events: 0;
   }
+}
+
+.btn-open-sign-in:hover {
+  background-color: #4b96e6;
 }
 
 .backdrop-sign-in {
@@ -21,6 +42,7 @@
   background: rgba(0, 0, 0, 0.3);
 
   &.is-hidden {
+    display: none;
     opacity: 0;
     visibility: hidden;
     pointer-events: 0;
