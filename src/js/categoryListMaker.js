@@ -12,9 +12,8 @@ let searchYear = new Date().getFullYear();
 let searchMonth = new Date().getMonth();
 let searchDay = new Date().getDate();
 let searchDate = new Date(searchYear, searchMonth);
-let dateString = `${searchYear}${(searchMonth + 1)
-  .toString()
-  .padStart(2, '0')}${searchDay.toString().padStart(2, '0')}`;
+let dateString = `${searchYear}${(searchMonth + 1).toString().padStart(2, '0')}${searchDay.toString().padStart(2, '0')}`;
+window.dateString = dateString;
 
 function getMonthName(monthNumber) {
   const monthNames = [
@@ -309,11 +308,12 @@ calendarFrame.addEventListener('click', onCalendar);
 calendarModal.addEventListener('click', onCalendarChange);
 
 getDates();
-export default dateString;
 
 // CATEGORIES PART
 import throttle from 'lodash.throttle';
 import { fetchNewsCategories } from './fetchNewsCategories.js';
+import { fetchByChoosenCategories } from './fetchByCategories.js';
+import { fetchMostPopular } from './fetchMostPopular';
 const filterSection = document.querySelector('.filter-section');
 const category = document.querySelector('.category');
 const otherCategoryItem = document.querySelector('.category-others-chosen');
@@ -324,20 +324,26 @@ const desktopWidth = 1248;
 const tabletWidth = 736;
 let categories = [];
 let selectedCategory = '';
+window.selectedCategory = selectedCategory;
 
 fetchNewsCategories().then(allCategories => {
   categories = allCategories;
   getCurrWidth();
 });
 
-function deactivateCategory() {
+export default function deactivateCategory() {
   const currentActive = document.querySelector('.category-item-active');
   if (currentActive) {
     currentActive.classList.remove('category-item-active');
     selectedCategory = '';
     otherCategoryItem.textContent = '';
   }
-}
+};
+
+function setCategory(newItem) {
+  selectedCategory = newItem;
+  fetchByChoosenCategories(selectedCategory);
+};
 
 function onCategoryChose(event) {
   const isVisibleCat = event.target.classList.contains('category-btn');
@@ -346,13 +352,16 @@ function onCategoryChose(event) {
   if ((isVisibleCat && !isModalBtn) || isHiddenCat) {
     if (event.target.textContent === selectedCategory) {
       deactivateCategory();
+      fetchMostPopular();
     } else {
       deactivateCategory();
       if (isVisibleCat) {
         event.target.classList.add('category-item-active');
+        setCategory(event.target.textContent);
       } else {
         otherCategoryItem.textContent = event.target.textContent;
         otherCategoryItem.parentNode.classList.add('category-item-active');
+        setCategory(event.target.textContent);
       }
     }
   }
