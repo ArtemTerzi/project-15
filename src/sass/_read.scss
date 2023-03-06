@@ -1,8 +1,18 @@
 
 .li-news {
-    width: 288px;
-    height: 630px;
+    width: 395px;
+    height: 675px;
     border: 1px solid gray;
     margin: 20px;
+    font-size: xx-small;
+};
 
+img {
+    width: 395px;
+    height: 395px;
+    object-fit: cover;
+};
+
+a {
+    font-size: medium;
 }
