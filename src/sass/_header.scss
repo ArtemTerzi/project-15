@@ -174,7 +174,6 @@
     color: inherit;
     line-height: 14px;
 
-    padding: 5px 35px 5px 35px;
     box-sizing: border-box;
     border-radius: 20px;
     opacity: 0;
@@ -184,18 +183,20 @@
     appearance: none;
 
     @include mobile{
-        max-width: 153px;
+        padding: 5px 20px 5px 25px;
+        width: 123px;
         height: 31px;
     }
 
     @include tablet{
-        max-width: 193px;
+        padding: 5px 35px 5px 35px;
+        width: 193px;
         height: 31px;
         opacity: 1;
     }
 
     @include desktop{
-        max-width: 268px;
+        width: 268px;
         height: 31px;
     }
 }
