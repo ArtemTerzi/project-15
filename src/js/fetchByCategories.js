@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 
-function fetchByChoosenCategories(category) {
+export function fetchByChoosenCategories(category) {
   return axios
     .get(
       `https://api.nytimes.com/svc/news/v3/content/all/${category}.json?api-key=${API_KEY}`
@@ -20,8 +20,6 @@ function fetchByChoosenCategories(category) {
     });
 }
 
-// fetchByChoosenCategories('food');
-
 function createDataObjectByFetchCategories(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
   const createObj = arr.map(news => {
@@ -30,6 +28,7 @@ function createDataObjectByFetchCategories(arr) {
         {
           img: `${defaultImg}`,
           title: `${news.title}`,
+          section: `${news.section}`,
           text: `${createThreePoints(news.abstract)}`,
           date: `${convertoNormalDate(news.published_date)}`,
           link: `${news.url}`,
@@ -40,6 +39,7 @@ function createDataObjectByFetchCategories(arr) {
       {
         img: `${news.multimedia[2].url}`,
         title: `${news.title}`,
+        section: `${news.section}`,
         text: `${createThreePoints(news.abstract)}`,
         date: `${convertoNormalDate(news.published_date)}`,
         link: `${news.url}`,
@@ -117,4 +117,4 @@ function comparedTagAltInImgOnNull(news) {
   return news.des_facet[0];
 }
 
-export { fetchByChoosenCategories };
+
