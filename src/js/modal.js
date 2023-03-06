@@ -5,11 +5,7 @@
   modalBtn.addEventListener('click', toggleModal);
 
   function toggleModal(e) {
-    modalBtn.classList.toggle('active');
-    mobMenu.classList.toggle('is-closed');
-  }
-
-  // if(modalBtn.classList.includes('active')){
-  //   mobMenu.classList.toggle('is-closed');
-  // }
-})();
+      modalBtn.classList.toggle('active'); 
+      mobMenu.classList.toggle('is-closed'); 
+    }
+  });
