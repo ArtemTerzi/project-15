@@ -2,8 +2,32 @@
 import { options } from './refs.js';
 import axios from 'axios';
 import { Paginator } from './paginator.js';
+import Notiflix from 'notiflix';
+import  dateString from './categoryListMaker.js';
 const { API_KEY } = options;
 const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}`;
+// ----------------------------------search by date and input
+
+const searchForm = document.querySelector('.header__form');
+const span = document.querySelector('.calendar-date');
+let query = '';
+
+searchForm.addEventListener('submit', handleSubmit)
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const date = span.textContent.split('/').reverse().join('').toString();
+
+  const { elements: { value } } = e.currentTarget;
+  query = value.value.trim();
+  console.log(query)
+  if (query === '') {
+    Notiflix.Notify.warning('Please enter request')
+    return
+  }
+  fetchByInputSerchAndDate(query,date)
+}
+// ----------------------------------
 
 const today = {
   todayDate: new Date(),
@@ -21,10 +45,8 @@ const dayAwaliableForBackend = `${today.year()}${today.month()}${today.date()}`;
 
 //Дата передается в виде строки 00000000. По порядку: где 0000 - год, 00- месяц , 00- день Например: 20210122
 // Приходит 10 новостей
-function fetchByInputSerchAndDate(
-  query = 'Ukraine',
-  date = dayAwaliableForBackend
-) {
+function fetchByInputSerchAndDate(query,date) {
+
   return axios
     .get(`${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`)
     .then(answer => {
@@ -89,7 +111,9 @@ function markupForQuareByInput(arr) {
       `;
     })
     .join('');
+  return markup;
 }
+
 // Эта функция для того, что бы отобразить дату ввиде как требует макет, так как приходит с каждых API разная.
 function convertoNormalDate(element) {
   const date = new Date(element);
