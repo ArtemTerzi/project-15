@@ -190,13 +190,13 @@
 
     @include tablet{
         padding: 5px 35px 5px 35px;
-        max-width: 193px;
+        width: 193px;
         height: 31px;
         opacity: 1;
     }
 
     @include desktop{
-        max-width: 268px;
+        width: 268px;
         height: 31px;
     }
 }
