@@ -3,24 +3,22 @@ import axios from 'axios';
 import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 
-function fetchByChoosenCategories(category) {
-  return axios
-    .get(
-      `https://api.nytimes.com/svc/news/v3/content/all/${category}.json?api-key=${API_KEY}`
-    )
-    .then(response => {
-      const {
-        data: { results },
-      } = response;
-      const responseURL = response.config.url;
-      const paginator = new Paginator();
-      //   paginator.getURL(responseURL);
-      paginator.getRespForPagination(responseURL);
-      markupForSearchByCategories(results);
-    });
+async function fetchByChoosenCategories(category) {
+  const fetch = await axios.get(
+    `https://api.nytimes.com/svc/news/v3/content/all/${category}.json?api-key=${API_KEY}`
+  );
+  return fetch;
+  // .then(response => {
+  //   const {
+  //     data: { results },
+  //   } = response;
+  //   const responseURL = response.config.url;
+  //   const paginator = new Paginator();
+  //   //   paginator.getURL(responseURL);
+  //   paginator.getRespForPagination(responseURL);
+  //   markupForSearchByCategories(results);
+  // });
 }
-
-// fetchByChoosenCategories('food');
 
 function createDataObjectByFetchCategories(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
@@ -49,7 +47,7 @@ function createDataObjectByFetchCategories(arr) {
 }
 function markupForSearchByCategories(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
-  const markup = arr
+  return arr
     .map(news => {
       if (news.multimedia.length === 0) {
         return `

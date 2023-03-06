@@ -21,24 +21,25 @@ const dayAwaliableForBackend = `${today.year()}${today.month()}${today.date()}`;
 
 //Дата передается в виде строки 00000000. По порядку: где 0000 - год, 00- месяц , 00- день Например: 20210122
 // Приходит 10 новостей
-function fetchByInputSerchAndDate(
+async function fetchByInputSerchAndDate(
   query = 'Ukraine',
   date = dayAwaliableForBackend
 ) {
-  return axios
-    .get(`${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`)
-    .then(answer => {
-      const {
-        data: {
-          response: { docs },
-        },
-      } = answer;
-      const responseURL = answer.config.url;
-      const paginator = new Paginator();
-      paginator.getURL(responseURL);
-      paginator.getRespForPagination(responseURL);
-      markupForQuareByInput(docs);
-    });
+  const fetch = await axios.get(
+    `${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`
+  );
+  return fetch;
+  // .then(answer => {
+  //   const {
+  //     data: {
+  //       response: { docs },
+  //     },
+  //   } = answer;
+  //   const responseURL = answer.config.url;
+  //   const paginator = new Paginator();
+  //   paginator.getURL(responseURL);
+  //   paginator.getRespForPagination(responseURL);
+  //   markupForQuareByInput(docs);
 }
 
 function createDataObjectByFetchDateAndInput(arr) {
@@ -69,7 +70,7 @@ function createDataObjectByFetchDateAndInput(arr) {
 }
 
 function markupForQuareByInput(arr) {
-  const markup = arr
+  return arr
     .map(news => {
       const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
       const attachURL = `https://www.nytimes.com/`;

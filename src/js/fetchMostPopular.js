@@ -4,17 +4,19 @@ import axios from 'axios';
 import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 const mostPopularUrl = `https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=${API_KEY}`;
-function fetchMostPopular() {
-  return axios.get(mostPopularUrl).then(response => {
-    const {
-      data: { results },
-    } = response;
-    const responseURL = response.config.url;
-    const paginator = new Paginator();
-    paginator.getURL(responseURL);
-    paginator.getRespForPagination(responseURL);
-    markupForMostPopular(results);
-  });
+
+async function fetchMostPopular() {
+  const fetch = await axios.get(mostPopularUrl);
+  return fetch;
+  //   then(response => {
+  //     const {
+  //       data: { results },
+  //     } = response;
+  //     const responseURL = response.config.url;
+  //     const paginator = new Paginator();
+  //     paginator.getURL(responseURL);
+  //     paginator.getRespForPagination(responseURL);
+  //     markupForMostPopular(results);
 }
 // Приходит 20 новостей
 
@@ -47,7 +49,7 @@ function createDataObjectByFetchMostPopular(arr) {
 
 function markupForMostPopular(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
-  const markup = arr
+  return arr
     .map(news => {
       if (news.media.length === 0) {
         return `
