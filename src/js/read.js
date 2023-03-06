@@ -1,5 +1,12 @@
+import getMarkupError from './error';
+import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
+// isReadForStyle("https://www.nytimes.com/2023/03/06/travel/taliesin-frank-lloyd-wright-wisconsin-baking-class.html");
+// isReadForStyle("https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByPages");
+// isFavoriteForStyle("https://www.nytimes.com/2023/03/06/travel/taliesin-frank-lloyd-wright-wisconsin-baking-class.html");
+// isReadForStyle("https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByPages");
 
 // =======================  FOR TEST ==============================
+
 const URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`;
 const btnFetch = document.querySelector('.test-fetch');
 
@@ -75,13 +82,14 @@ const KEY_LOCAL_STORAGE = 'read-news-local-storage';
 const listNews = document.querySelector('.list-news');
 
 
-
 function createNewData() {
     return new Date(Date.now()).toLocaleString().split(',')[0];
 };
 
 
 listNews.addEventListener('click', onBtnReadMore);
+
+
 
 function onBtnReadMore(e) {
     // =======================  FOR TEST ==============================
@@ -110,7 +118,7 @@ function onBtnReadMore(e) {
         date,
         link,
     
-        isFavourite: false,
+        isFavorite: false,
         isRead: true,
         dateOfRead,
       };
@@ -171,7 +179,9 @@ function makeArrNewsForPageRead() {
 
 
     } catch (error) {
-        
+
+        const container = document.querySelector('.container');
+        container.innerHTML = getMarkupError();
     }
 };
 
@@ -227,3 +237,6 @@ function makeMarkapPageRead(arrayNewsRead) {
 // function openListsReadNews(e) {
 //  cardDateRead.firstElementChild.classList.toggle('visually-hidden');
 // };
+
+
+
