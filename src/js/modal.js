@@ -10,10 +10,6 @@
       mobMenu.classList.toggle('is-closed'); 
     }
 
-    if(modalBtn.classList.includes('active')){
-      mobMenu.classList.toggle('is-closed');
-    }
-
   })();
 
 
