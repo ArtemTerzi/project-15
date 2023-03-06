@@ -18,27 +18,15 @@ const today = {
   },
 };
 const dayAwaliableForBackend = `${today.year()}${today.month()}${today.date()}`;
+const URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&"
 
 //Дата передается в виде строки 00000000. По порядку: где 0000 - год, 00- месяц , 00- день Например: 20210122
 // Приходит 10 новостей
-function fetchByInputSerchAndDate(
+export function fetchByInputSerchAndDate(
   query = 'Ukraine',
   date = dayAwaliableForBackend
 ) {
-  return axios
-    .get(`${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`)
-    .then(answer => {
-      const {
-        data: {
-          response: { docs },
-        },
-      } = answer;
-      const responseURL = answer.config.url;
-      const paginator = new Paginator();
-      paginator.getURL(responseURL);
-      paginator.getRespForPagination(responseURL);
-      markupForQuareByInput(docs);
-    });
+  return axios.get(`${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`);
 }
 
 function createDataObjectByFetchDateAndInput(arr) {
@@ -46,26 +34,26 @@ function createDataObjectByFetchDateAndInput(arr) {
   const attachURL = `https://www.nytimes.com/`;
   const createObj = arr.map(news => {
     if (news.multimedia.length === undefined) {
-      return [
-        {
+      return {
           img: `${defaultImg}`,
           title: `${news.headline.main}`,
+          section: `${news.section}`,
           text: `${createThreePoints(news.snippet)}`,
           date: `${convertoNormalDate(news.pub_date)}`,
           link: `${news.web_url}`,
-        },
-      ];
+        };
     }
-    return [
-      {
+    return {
         img: `${attachURL}${news.multimedia[0].url}`,
         title: `${news.headline.main}`,
+        section: `${news.section}`,
         text: `${createThreePoints(news.snippet)}`,
         date: `${convertoNormalDate(news.pub_date)}`,
         link: `${news.web_url}`,
-      },
-    ];
+      };
   });
+
+  return createObj;
 }
 
 function markupForQuareByInput(arr) {
@@ -130,4 +118,4 @@ function createThreePoints(str) {
   return str;
 }
 
-export { fetchByInputSerchAndDate };
+// export { fetchByInputSerchAndDate };

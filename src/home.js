@@ -1,5 +1,42 @@
+import { Paginator } from './js/paginator';
 import './js/categoryListMaker';
 import './js/paginator';
 import { startWeather } from './js/weather/weather';
+import { fetchMostPopular } from './js/fetchMostPopular';
+import { getNormalizeResponse } from './js/fetches/getNormalizeResponse';
+import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
+import { getMarkup } from './js/fetches/getMarkup';
+
+const list = document.querySelector(".home__list");
+
+const URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&"
+fetchMostPopular()
+	.then(response => {
+		const {
+			data: { results },
+			} = response;
+		const responseURL = response.config.url;
+		const paginator = new Paginator();
+		paginator.getURL(responseURL);
+		paginator.getRespForPagination(responseURL);
+		const data = getNormalizeResponse(results, responseURL);
+		list.insertAdjacentHTML("beforeend", getMarkup(data));
+	});
+
+fetchByInputSerchAndDate()
+	.then(answer => {
+		const {
+		data: {
+			response: { docs },
+		},
+		} = answer;
+		const responseURL = answer.config.url;
+		const paginator = new Paginator();
+		paginator.getURL(responseURL);
+		paginator.getRespForPagination(responseURL);
+		const data = getNormalizeResponse(docs, URL);
+		// list.insertAdjacentHTML("beforeend", getMarkup(data))
+		console.log(data);
+	});
 
 startWeather();
