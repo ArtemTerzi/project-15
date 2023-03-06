@@ -10,15 +10,11 @@ button {
 }
 
 .weather {
-  position: absolute;
-  top: 30px;
-  right: 15px;
   background-color: #4440f6;
   color: #ffffff;
   width: 100%;
-  height: 100%;
   max-width: 395px;
-  max-height: 675px;
+  height: 675px;
   padding: 40px 15px 60px;
   border-radius: 4px;
   z-index: 1;

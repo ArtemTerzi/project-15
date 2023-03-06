@@ -29,30 +29,59 @@ async function onOpenNews() {
 };
 
 function makeNews(arrNews) {
-    const markapNews = arrNews.map(({ abstract, web_url, pub_date, snippet }) => 
-        `<li class="li-news">
-        <h2 class="title-news">${abstract}</h2>
-        <p class="text">${snippet}</p>
-        <p class="data">${pub_date}</p>
-        <a href="${web_url}" class="link-news">
-            Read more...
-        </a>
-    </li>`).join('');
-    listNews.insertAdjacentHTML('beforeend',markapNews);
-
+     
+    try {
+        const markapNews = arrNews.map(({ headline, web_url, pub_date, snippet, multimedia, keywords }) =>
+        `<li class="news-item">
+        <img class="news-item__img" src="https://www.nytimes.com/${multimedia[2].url}" alt="${keywords[0].value}">
+        <div class="news-item__buttons">
+         <button type="button" class="news-item__btn">Add to favorite</button>
+         <button type="button" class="news-item__category">Job searching </button>
+        </div>
+        <div class="news-item__wrapper-text">
+          <h2 class="news-item__title">${headline.main}</h2>
+          <p class="news-item__text">${snippet}</p>
+        </div>
+        <div class="news-item__wrapper-date">
+          <p class="news-item__date">${new Date(pub_date).toLocaleString().split(',')[0]}</p>
+          <a href="${web_url}" class="news-item__link">Read more</a>
+        </div>
+        </li>`).join('');
+        listNews.insertAdjacentHTML('beforeend',markapNews);
+    } catch(err) {
+        const markapNews = arrNews.map(({ headline, web_url, pub_date, snippet, multimedia, keywords }) =>
+        `<li class="news-item">
+        <img class="news-item__img" src="https://cdn.pixabay.com/photo/2015/02/15/09/33/news-636978_960_720.jpg" alt="${keywords[0].value}">
+        <div class="news-item__buttons">
+         <button type="button" class="news-item__btn">Add to favorite</button>
+         <button type="button" class="news-item__category">Job searching </button>
+        </div>
+        <div class="news-item__wrapper-text">
+          <h2 class="news-item__title">${headline.main}</h2>
+          <p class="news-item__text">${snippet}</p>
+        </div>
+        <div class="news-item__wrapper-date">
+          <p class="news-item__date">${new Date(pub_date).toLocaleString().split(',')[0]}</p>
+          <a href="${web_url}" class="news-item__link">Read more</a>
+        </div>
+        </li>`).join('');
+        listNews.insertAdjacentHTML('beforeend',markapNews);
+    }
 };
 
 // =======================  FOR TEST ==============================
 
-const KEY_LOCAL_STORAGE = 'read-news-storage';
+const KEY_LOCAL_STORAGE = 'read-news-local-storage';
 const listNews = document.querySelector('.list-news');
-listNews.addEventListener('click', onBtnReadMore);
+
+
 
 function createNewData() {
     return new Date(Date.now()).toLocaleString().split(',')[0];
 };
 
 
+listNews.addEventListener('click', onBtnReadMore);
 
 function onBtnReadMore(e) {
     // =======================  FOR TEST ==============================
@@ -63,106 +92,138 @@ function onBtnReadMore(e) {
         return;
     };
 
-    const dateReadNews = createNewData();
-    const stringMarkupNews = (e.target.parentNode.innerHTML.trim());
+    // makeObjectNews(e);
+    let newsCard = e.target.parentNode.parentNode;
+    let img = newsCard.querySelector('.news-item__img').src;
+    let alt = newsCard.querySelector('.news-item__img').alt;
+    let title = newsCard.querySelector('.news-item__title').textContent;
+    let text = newsCard.querySelector('.news-item__text').textContent;
+    let date = newsCard.querySelector('.news-item__date').textContent;
+    let link = newsCard.querySelector('.news-item__link').href;
+    let dateOfRead = createNewData();
+
+    const newsObj = {
+        img,
+        alt,
+        title,
+        text,
+        date,
+        link,
     
+        isFavourite: false,
+        isRead: true,
+        dateOfRead,
+      };
+
     try {
-        const getObjLocalStorage = JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE));
+        const newsAllLocalStorage = JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE));
 
-        if(getObjLocalStorage !== null) {
-            if(Object.keys(getObjLocalStorage).includes(dateReadNews)) {
 
-                if(getObjLocalStorage[dateReadNews].includes(stringMarkupNews)) {
+        if(newsAllLocalStorage === null) {
+
+            localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify([newsObj]));
+            return;
+        };
+        
+        if (newsAllLocalStorage !== null) {
+
+            for (const news of newsAllLocalStorage) {
+                
+                if(news.link === newsObj.link) {
+                    news.dateOfRead = dateOfRead;
                     return;
-                };
-
-                getObjLocalStorage[dateReadNews].push(stringMarkupNews);
-                localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify(getObjLocalStorage));
-
-            } else {
-                getObjLocalStorage[dateReadNews] = [stringMarkupNews];
-                localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify(getObjLocalStorage));
-
+                }
             };
 
-        }  else {
-
-            const obgDataPlusMarkup = {};
-            obgDataPlusMarkup[dateReadNews] = [stringMarkupNews];
-            console.log(obgDataPlusMarkup);
-
-            localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify(obgDataPlusMarkup));
+            newsAllLocalStorage.push(newsObj);
+            localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify(newsAllLocalStorage));
         };
 
-    } catch(err) {
-        console.log('err parse');
+    } catch(error) {
+
+        console.log('Error parse date local storage');
     }
 };
-
 
 const btnReadPage = document.querySelector('.read-page');
+const listReadNews = document.querySelector('.readPage-list');
 
-btnReadPage.addEventListener('click', makeMarkapPageRead);
+btnReadPage.addEventListener('click', makeArrNewsForPageRead);
 
-const listReadNews = document.querySelector('.list-read-news');
+function makeArrNewsForPageRead() {
 
-
-function makeMarkapPageRead() {
     try {
-        const resultLocalStorage = JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE));
-        // console.log(resultLocalStorage);
-        // let arrAllNewsReadForPage = Object.kays(resultLocalStorage);
 
-        // const markapPageRead = arrAllNewsReadForPage.map(date => {
-        //     console.log(date);
-            
-        //     // return arrDate.map(elementsOneNewsRead => `<li>${elementsOneNewsRead}</li>`).join();
-        // });
-        for (key in resultLocalStorage) {
-            const dataTitle = `<li class="list-date">${key}<ul class="list-date-read visually-hidden"></ul></li>`;
-            listReadNews.insertAdjacentHTML('beforeend', dataTitle);
-            const itemDateRead = document.querySelector('.list-date');
-            const listDateRead = document.querySelector('.list-date-read');
-            // console.log(listDateRead);
-            // const arrForMarkupReadPage = resultLocalStorage[key].map(newsRead => `<li>${newsRead}</li>`).join();
-            
-            for (let i = 0; i < resultLocalStorage[key].length; i += 1) {
-                const element = resultLocalStorage[key][i];
-                console.log(element);
-
-                const arrForMarkupReadPage = `<li class="li-news">${element}</li>`;
-                listDateRead.insertAdjacentHTML('beforeend', arrForMarkupReadPage);
-            }
-
-            // listDateRead.insertAdjacentHTML('beforeend', arrForMarkupReadPage);
-
-            // itemDateRead.addEventListener('click', openListsReadNews);
+        const newsAllGetLocalStorage = JSON.parse(localStorage.getItem(KEY_LOCAL_STORAGE));
+        // console.log(newsAllGetLocalStorage);
         
-            function openListsReadNews(e) {
-                e.target.firstElementChild.classList.toggle('visually-hidden');
-            }
-        };
+        const arrNewsIsRead = newsAllGetLocalStorage.reduce((arrNews, news) => {
 
-        // console.log(markapPageRead);
-        // listReadNews.insertAdjacentHTML('beforeend', markapPageRead);
-    } catch(err) {
-        console.log(err);
+            if (news.isRead) {
+                arrNews.push(news);
+            };
+
+            return arrNews;
+        }, []);
+
+
+        makeMarkapPageRead(arrNewsIsRead);
+
+
+    } catch (error) {
+        
     }
 };
 
+function makeMarkapPageRead(arrayNewsRead) {
 
 
-listReadNews.addEventListener('click', openListsReadNews);
-        
-function openListsReadNews(e) {
+    const allDates = arrayNewsRead.flatMap(newsRead => newsRead.dateOfRead).
+    filter((date, idx, arr) => arr.indexOf(date) === idx);
 
-    if(e.target.nodeName !== 'LI') {
-        return;
-    };
 
-    const listDateRead = e.target.children;
+    const markapDatesRead = allDates.map(data => 
+            `<li class="readPage-list__item">${data}<ul class="readPage-list__list"></ul></li>`)
+            .join('');
 
-for (const element of listDateRead) {
-    element.classList.toggle("visually-hidden");
-}
+    listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
+    listReadNews.addEventListener('click', openListNews);
+
+    function openListNews(e) {
+
+        if(e.target.nodeName !== 'LI') {
+            return;
+        };
+
+        const cardDateRead = e.target;
+
+        const markapNewsAndDatesRead = arrayNewsRead.map(news => {
+            if(cardDateRead.textContent === news.dateOfRead) {
+
+        return `<li class="news-item">
+        <img class="news-item__img" src="${news.img}" alt="${news.alt}">
+        <div class="news-item__buttons">
+         <button type="button" class="news-item__btn">Add to favorite</button>
+         <button type="button" class="news-item__category">Job searching </button>
+        </div>
+        <div class="news-item__wrapper-text">
+          <h2 class="news-item__title">${news.title}</h2>
+          <p class="news-item__text">${news.text}</p>
+        </div>
+        <div class="news-item__wrapper-date">
+          <p class="news-item__date">${news.date}</p>
+          <a href="${news.link}" class="news-item__link">Read more</a>
+        </div>
+        </li>`;
+            };
+        });
+
+        cardDateRead.firstElementChild.insertAdjacentHTML('beforeend', markapNewsAndDatesRead); 
+
 };
+
+};
+
+// function openListsReadNews(e) {
+//  cardDateRead.firstElementChild.classList.toggle('visually-hidden');
+// };

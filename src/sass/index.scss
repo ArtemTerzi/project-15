@@ -14,14 +14,11 @@
 
 @import './header';
 @import './themeSwapper';
+@import './newscard';
 @import './home';
-// @import './newscard';
 @import './weather/weather';
 @import './favorites';
 @import './read';
 @import './footer';
 @import './modal';
-
-.weather {
-  display: none;
-}
+@import './home';
