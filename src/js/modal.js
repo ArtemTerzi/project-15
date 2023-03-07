@@ -1,4 +1,3 @@
-(() => {
   const modalBtn = document.querySelector('[data-menu-btn]');
   const mobMenu = document.querySelector('[data-menu]');
 
@@ -8,4 +7,3 @@
       modalBtn.classList.toggle('active'); 
       mobMenu.classList.toggle('is-closed'); 
     }
-  })();
