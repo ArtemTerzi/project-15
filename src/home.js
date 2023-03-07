@@ -7,6 +7,7 @@ import { getNormalizeResponse } from './js/fetches/getNormalizeResponse';
 import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
 import { fetchByChoosenCategories } from './js/fetchByCategories';
+import { renderMarkupError } from './js/renderMarkupError';
 
 const searchFormElem = document.querySelector(".header__form");
 
@@ -22,7 +23,11 @@ function renderByDefault() {
     const data = getNormalizeResponse(results, responseURL);
     const paginator = new Paginator();
     paginator.getRespForPagination(response, responseURL, data);
-  });
+  })
+  	.catch(error => {
+		console.log(error);
+		renderMarkupError(".home__inner");
+	});
 }
 
 // renderByDefault();
@@ -37,18 +42,23 @@ function renderByDefault() {
 // });
 
 function renderByInputAndDate() {
+
   fetchByInputSerchAndDate()
-    .then(answer => {
-      const {
-        data: {
-          response: { docs },
-        },
-      } = answer;
-      // const responseURL = answer.config.url;
-      // const paginator = new Paginator();
-      // const data = getNormalizeResponse(docs, responseURL);
-      // paginator.getRespForPagination(answer, responseURL, data);
-    });
+  .then(answer => {
+    const {
+      data: {
+        response: { docs },
+      },
+    } = answer;
+    const responseURL = answer.config.url;
+    const paginator = new Paginator();
+    const data = getNormalizeResponse(docs, responseURL);
+    paginator.getRespForPagination(answer, responseURL, data);
+  })
+  .catch(error => {
+		console.log(error);
+		renderMarkupError(".home__inner");
+	});;
 }
 
 renderByInputAndDate();
@@ -62,9 +72,6 @@ renderByInputAndDate();
 // 	// list.insertAdjacentHTML("beforeend", getMarkup(data))
 // 	console.log(data);
 // });
-
-// startWeather();
-
 
 function onSubmitSearchForm(event) {
   event.preventDefault();
@@ -82,3 +89,5 @@ function onSubmitSearchForm(event) {
 }
 
 searchFormElem.addEventListener("submit", onSubmitSearchForm);
+
+// startWeather();
