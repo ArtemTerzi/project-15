@@ -62,43 +62,22 @@ function onArticleLike(e) {
   // });
 
   const cardObject = `<div class="wrapper">
-  <div class="box">
-      <img class="box-img"
-          src="${myObject.img}"
-          alt="${myObject.imgName}" width="353" height="395">
-          <button type="button" id="like" class="add-button">Add to favorite</button>
-          <button type="button" id="dislike" class="remove-button invisible-button">Remove from favorite</button>
-  </div>
-  <h1 class="card-header">${myObject.title}</h1>
-  <p class="card-text">${myObject.text}</p>
-  <div class="card-details">
-      <p class="card-date">${myObject.date}</p>
-      <a class="card-link" href="">${myObject.link}</a>
-  </div>
+<div class="box home__list-top">
+<img class="box-img"
+src="${myObject.img}"
+alt="${myObject.imgName}" width="353" height="395">
+        <button type="button" id="like" class="add-button remove-button">Add to favorite</button>
+        <p class="img-label">Job searching </p>
 </div>
-`;
+<h1 class="card-header">${myObject.title}</h1>
+<p class="card-text">${myObject.text}</p>
+<div class="card-details">
+<p class="card-date">${myObject.date}</p>
+    <a class="card-link" href="">${myObject.link}</a>
+</div>
+</div>`;
   cardContainer.insertAdjacentHTML('beforeend', cardObject);
 }
-
-// class OnLoadPage {
-//   saveIntoLocal(item) {
-//     const items = this.getFromLocal();
-
-//     items.push(item);
-
-//     localStorage.setItem('myFavoriteItem', JSON.stringify(items));
-//   }
-
-//   getFromLocal() {
-//     let arr;
-//     if (localStorage.getItem('myFavoriteItem') === null) {
-//       arr = [];
-//     } else {
-//       arr = JSON.parse(localStorage.getItem(myFavoriteItem));
-//     }
-//     return;
-//   }
-// }
 
 const card = document.querySelector('.card-container');
 card.addEventListener('click', onLike);
@@ -134,43 +113,42 @@ function onLike(e) {
     isFavorite: true,
   };
 
-  // if (e.target.classList.contains('favorite-btn')) {
-  if (e.target.classList.contains('remove-button')) {
-    e.target.classList.toggle('remove-button');
-    e.target.textContent = 'Remove from favorite';
-    // localStorage.removeItem('myFavoriteItem');
-  } else {
-    e.target.textContent = 'Add to favorite';
-    e.target.classList.toggle('remove-button');
-    arr.push(myObject);
-    console.log(arr);
-    localStorage.setItem('myFavoriteItem', JSON.stringify(arr));
+  if (e.target.nodeName === 'BUTTON') {
+    if (e.target.classList.contains('remove-button')) {
+      e.target.classList.toggle('remove-button');
+      e.target.textContent = 'Remove from favorite';
+      arr.push(myObject);
+      console.log(arr);
+      localStorage.setItem('myFavoriteItem', JSON.stringify(arr));
+    } else {
+      e.target.classList.toggle('remove-button');
+      e.target.textContent = 'Add to favorite';
+    }
   }
 }
-// }
-
-// let markup = array.reduce((acc, { img, imgName, title, text, date, link })
 
 function onLoad() {
   const array = JSON.parse(localStorage.getItem('myFavoriteItem'));
   // let { img, imgName, title, text, date, link } = array;
   let markup = array.reduce((acc, el) => {
-    if (el.isFavorite) cardMarkup(el) + acc;
-    else acc;
+    if (el.isFavorite === true) {
+      cardMarkup(el) + acc;
+    } else acc;
   }, '');
   function cardMarkup({ img, imgName, title, text, date, link }) {
     return `<div class="wrapper">
-    <div class="box">
+    <div class="box home__list-top">
         <img class="box-img"
             src="${img}"
             alt="${imgName}" width="353" height="395">
-            <button type="button" id="like" class="add-button">Add to favorite</button>
+            <button type="button" id="like" class="add-button remove-button">Add to favorite</button>
+            <p class="img-label">Job searching </p>
     </div>
     <h1 class="card-header">${title}</h1>
     <p class="card-text">${text}</p>
     <div class="card-details">
         <p class="card-date">${date}</p>
-        <a class="card-link" href="">${link}</a>
+        <a id='news-link' class="card-link" href="">${link}</a>
     </div>
   </div>
   `;
@@ -180,4 +158,3 @@ function onLoad() {
 function renderCards() {
   cardContainer.innerHTML = onLoad();
 }
-// renderCards();

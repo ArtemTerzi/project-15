@@ -44,6 +44,7 @@
 
 .add-button {
   position: absolute;
+  padding-left: 12px;
   height: 28px;
   font-family: 'Manrope';
   font-style: normal;
@@ -54,20 +55,19 @@
   background: #fff;
   border-radius: 20px;
   color: #111321;
-  top: 355px;
-  left: 154px;
+  right: 8px;
+  bottom: 12px;
   @media screen and (min-width: 768px) {
-    top: 355px;
-    left: 215px;
+    right: 12px;
   }
   @media screen and (min-width: 1200px) {
-    top: 355px;
-    left: 256px;
+    right: 12px;
   }
 }
 
 .remove-button {
   position: absolute;
+  padding-left: 12px;
   height: 28px;
   font-family: 'Manrope';
   font-style: normal;
@@ -78,13 +78,13 @@
   background: #fff;
   border-radius: 20px;
   color: #111321;
-  top: 355px;
-  left: 112px;
+  right: 8px;
+  bottom: 12px;
   @media screen and (min-width: 768px) {
-    left: 173px;
+    right: 12px;
   }
   @media screen and (min-width: 1200px) {
-    left: 215px;
+    right: 12px;
   }
 }
 
@@ -186,4 +186,21 @@
       line-height: 1.37;
     }
   }
+}
+
+.img-label {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  padding-top: 4px;
+  text-align: center;
+  color: #ffffff;
+
+  position: absolute;
+  width: 112px;
+  height: 24px;
+  left: 0px;
+  top: 40px;
+  background-color: rgba(68, 64, 247, 0.7);
+  border-radius: 0px 4px 4px 0px;
 }
