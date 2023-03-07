@@ -45,6 +45,27 @@ export function getNormalizeResponse(arr, url) {
             link: `${news.web_url}`,
           };
       });
+  } else {
+    return arr.map(news => {
+      if (!news.multimedia) {
+      return {
+          img: `${defaultImg}`,
+          title: `${news.title}`,
+          section: `${news.section}`,
+          text: `${createThreePoints(news.abstract)}`,
+          date: `${convertoNormalDate(news.published_date)}`,
+          link: `${news.url}`,
+        };
+    }
+    return {
+        img: `${news.multimedia[2].url}`,
+        title: `${news.title}`,
+        section: `${news.section}`,
+        text: `${createThreePoints(news.abstract)}`,
+        date: `${convertoNormalDate(news.published_date)}`,
+        link: `${news.url}`,
+      };
+    })
   }
 
   return createObj;
