@@ -35,28 +35,25 @@ class WeatherMarkupApi {
 		}
 
 		return `
-		<li class="home__list-item">
 			<aside class="weather-wrapper">
-					<div class="weather-container">
-						<div class="weather-container__top">
-							<p class="weather-container__deg">${temp}${this.degrees}</p>
-							<div class="weather-container__top-wrapper">
-								<p class="weather-container__top-dsecr">${dsecripton}</p>
-								<p class="weather-container__top-location">${data.name}</p>
-							</div>
-						</div>
-						<div class="weather-container__img ${setClassOfWeather}">
-							
-						</div>
-
-						<div class="weather-container__footer">
-							<p class="weather-container__footer-day">${this.daysOfWeek[this.getDayNumber()]}</p>
-							<p class="weather-container__footer-date">${currentDate}</p>
-							<button class="btn__footer-week">weather for week</button>
+				<div class="weather-container">
+					<div class="weather-container__top">
+						<p class="weather-container__deg">${temp}${this.degrees}</p>
+						<div class="weather-container__top-wrapper">
+							<p class="weather-container__top-dsecr">${dsecripton}</p>
+							<p class="weather-container__top-location">${data.name}</p>
 						</div>
 					</div>
+					<div class="weather-container__img ${setClassOfWeather}">
+						
+					</div>
+					<div class="weather-container__footer">
+						<p class="weather-container__footer-day">${this.daysOfWeek[this.getDayNumber()]}</p>
+						<p class="weather-container__footer-date">${currentDate}</p>
+						<button class="btn__footer-week">weather for week</button>
+					</div>
+				</div>
 			</aside>
-		</li>
 		`
 	}
 }
