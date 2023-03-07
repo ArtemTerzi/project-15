@@ -1,6 +1,5 @@
 import { getMarkup } from './fetches/getMarkup';
 import { refs } from './refs';
-import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
 import RenderFavorites from './renderCard';
 import throttle from 'lodash.throttle';
 import { getMarkupError } from './error';
@@ -18,7 +17,7 @@ const favoriteMain = document.querySelector('.favorite-main');
 //   }, 300)
 // );
 
-function onArticleLike(e) {
+export function onArticleLike(e) {
   e.preventDefault();
 
   const form = e.currentTarget;
@@ -156,7 +155,7 @@ function onLike(e) {
   }
 }
 
-function onLoad() {
+export function onLoad() {
   const arr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
 
   if (arr === null) {
@@ -166,7 +165,7 @@ function onLoad() {
   return getMarkup(arr);
 }
 
-function renderCards() {
+export function renderCards() {
   cardContainer.innerHTML = onLoad();
 }
 
