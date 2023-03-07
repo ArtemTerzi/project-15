@@ -16,12 +16,7 @@
     font-family: 'Manrope';
     font-style: normal;
     font-weight: 700;
-
     color: inherit;
-
-    padding-top: 24px;
-    padding-bottom: 24px;
-
     font-size: 24px;
     line-height: 33px;
 
@@ -29,8 +24,6 @@
     }
 
     @include tablet {
-        padding-top: 32px;
-        padding-bottom: 30px;
         margin-right: 0;
     
         font-size: 32px;
@@ -38,28 +31,31 @@
     }
 
     @include desktop {
-        padding-top: 28px;
-        padding-bottom: 28px;
-    
         font-size: 42px;
         line-height: 57px;
     }
 }
 
-.navigation__list {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.header__inner-link:hover,
+.header__inner-link:focus {
+    text-shadow: 0 0 2px #fff,
+    -1px -1px 0 hsl(219, 79%, 46%),
+    -2px -2px 1px hsl(230, 30%, 96%),
+    -2px -2px 2px hsl(263, 89%, 42%),
+}
 
+.navigation__list {
     display: none;
 
     @include mobile {
+        margin: 0;
     }
 
     @include tablet {
         display: flex;
-        padding-top: 48px;
-        padding-bottom: 36px;
+        align-items: center;
+        justify-content: space-between;
+
         margin-left: 10px;
         margin-right: 10px;
     }
@@ -67,8 +63,6 @@
     @include desktop {
         margin-left: 10px;
         margin-right: 10px;
-        padding-top: 55px;
-        padding-bottom: 33px;
     }
 }
 
@@ -92,7 +86,6 @@
     font-weight: 700;
     font-size: 18px;
     line-height: 25px;
-    
     color: inherit;
     
     @include mobile {
@@ -105,15 +98,22 @@
     }
 }
 
+.navigation__link:hover,
+.navigation__link:focus {
+    text-shadow: 0 0 2px #fff,
+    -1px -1px 0 hsl(219, 79%, 46%),
+    -2px -2px 1px hsl(230, 30%, 96%),
+    -2px -2px 2px hsl(263, 89%, 42%),
+}
+
 .navigation__link--current::after {
     content: "";
-
     position: absolute;
     left: 0;
     bottom: 0;
     margin-bottom: -8px;
-
     display: block;
+
     width: 100%;
     height: 3px;
     border-radius: 4px;
@@ -173,7 +173,6 @@
     background-color: inherit;
     color: inherit;
     line-height: 14px;
-
     box-sizing: border-box;
     border-radius: 20px;
     opacity: 0;
@@ -184,7 +183,7 @@
 
     @include mobile{
         padding: 5px 20px 5px 25px;
-        width: 123px;
+        width: 103px;
         height: 31px;
     }
 
