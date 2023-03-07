@@ -335,7 +335,7 @@ fetchNewsCategories().then(allCategories => {
   getCurrWidth();
 });
 
-export default function deactivateCategory() {
+export function deactivateCategory() {
   const currentActive = document.querySelector('.category-item-active');
   if (currentActive) {
     currentActive.classList.remove('category-item-active');
