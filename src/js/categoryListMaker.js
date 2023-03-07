@@ -1,5 +1,6 @@
 // CALENDAR PART!!!
 import CalendarDates from 'calendar-dates';
+
 const calendarDates = new CalendarDates();
 const datesBlock = document.querySelector('.calendar-modal-days');
 const monthBlock = document.querySelector('.calendar-month');
@@ -330,6 +331,7 @@ window.selectedCategory = selectedCategory;
 
 fetchNewsCategories().then(allCategories => {
   categories = allCategories;
+  console.log(categories);
   getCurrWidth();
 });
 
