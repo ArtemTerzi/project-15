@@ -57,6 +57,10 @@
         padding-left: auto;
     }
 
+    .mobile-menu__button.active{
+        position: fixed;
+    }
+
     .mobile-menu__button span,
     .mobile-menu__button:before,
     .mobile-menu__button::after{
