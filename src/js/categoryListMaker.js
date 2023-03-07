@@ -1,5 +1,6 @@
 // CALENDAR PART!!!
 import CalendarDates from 'calendar-dates';
+
 const calendarDates = new CalendarDates();
 const datesBlock = document.querySelector('.calendar-modal-days');
 const monthBlock = document.querySelector('.calendar-month');
@@ -12,7 +13,10 @@ let searchYear = new Date().getFullYear();
 let searchMonth = new Date().getMonth();
 let searchDay = new Date().getDate();
 let searchDate = new Date(searchYear, searchMonth);
-let dateString = `${searchYear}${(searchMonth + 1).toString().padStart(2, '0')}${searchDay.toString().padStart(2, '0')}`;
+
+let dateString = `${searchYear}${(searchMonth + 1)
+  .toString()
+  .padStart(2, '0')}${searchDay.toString().padStart(2, '0')}`;
 window.dateString = dateString;
 
 function getMonthName(monthNumber) {
@@ -339,6 +343,11 @@ function setCategory(newItem) {
   selectedCategory = newItem;
   fetchByChoosenCategories(selectedCategory);
 };
+
+function setCategory(newItem) {
+  selectedCategory = newItem;
+  fetchByChoosenCategories(selectedCategory);
+}
 
 function onCategoryChose(event) {
   const isVisibleCat = event.target.classList.contains('category-btn');

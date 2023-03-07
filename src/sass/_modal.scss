@@ -27,9 +27,11 @@
         height: 100vh;
         top: 0;
         bottom: 0;
-        right: 16px;
-        left: 16px;
+        padding: 0 16px;
         background-color: #F4F4F4;
+    }
+    .menu-container .is-closed {
+        display: none;
     }
    
     .dark-theme .menu-container{
@@ -53,7 +55,7 @@
     }
 
 
-    .menu-container.is-closed{
+    .backdrop .is-closed{
         display: flex;
         flex-direction: column;
         position: absolute;

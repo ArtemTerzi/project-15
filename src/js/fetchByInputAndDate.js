@@ -2,8 +2,54 @@
 import { options } from './refs.js';
 import axios from 'axios';
 import { Paginator } from './paginator.js';
+import Notiflix from 'notiflix';
+import dateString from './categoryListMaker.js';
+import { getNormalizeResponse } from './fetches/getNormalizeResponse';
+import { renderMarkupError } from './renderMarkupError';
+import { Paginator } from './paginator';
+
 const { API_KEY } = options;
 const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}`;
+//! ----------------------------------search by date and input
+
+const searchForm = document.querySelector('.header__form');
+const span = document.querySelector('.calendar-date');
+let query = '';
+
+searchForm.addEventListener('submit', handleSubmit);
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const date = span.textContent.split('/').reverse().join('').toString();
+
+  const {
+    elements: { search },
+  } = e.currentTarget;
+  query = search.value.trim();
+  console.log(query);
+  if (query === '') {
+    Notiflix.Notify.warning('Please enter request');
+    return;
+  }
+  fetchByInputSerchAndDate(query, date)
+    .then(answer => {
+      const {
+        data: {
+          response: { docs },
+        },
+      } = answer;
+
+      if (docs.length == 0) throw new Error(response.status);
+      const responseURL = answer.config.url;
+      const paginator = new Paginator();
+      const data = getNormalizeResponse(docs, responseURL);
+      paginator.getRespForPagination(answer, responseURL, data);
+    })
+    .catch(error => {
+      renderMarkupError('.home__inner');
+    });
+}
+//! ----------------------------------
 
 const today = {
   todayDate: new Date(),
@@ -18,104 +64,16 @@ const today = {
   },
 };
 const dayAwaliableForBackend = `${today.year()}${today.month()}${today.date()}`;
-const URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&"
+const URL =
+  'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&';
 
 //Дата передается в виде строки 00000000. По порядку: где 0000 - год, 00- месяц , 00- день Например: 20210122
 // Приходит 10 новостей
-export function fetchByInputSerchAndDate(
-  query = 'Ukraine',
-  date = dayAwaliableForBackend
-) {
-  return axios.get(`${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`);
+
+export function fetchByInputSerchAndDate(query, date) {
+  // query = 'Ukraine',
+  // date = dayAwaliableForBackend
+  return axios.get(
+    `${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`
+  );
 }
-
-function createDataObjectByFetchDateAndInput(arr) {
-  const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
-  const attachURL = `https://www.nytimes.com/`;
-  const createObj = arr.map(news => {
-    if (news.multimedia.length === undefined) {
-      return {
-          img: `${defaultImg}`,
-          title: `${news.headline.main}`,
-          section: `${news.section}`,
-          text: `${createThreePoints(news.snippet)}`,
-          date: `${convertoNormalDate(news.pub_date)}`,
-          link: `${news.web_url}`,
-        };
-    }
-    return {
-        img: `${attachURL}${news.multimedia[0].url}`,
-        title: `${news.headline.main}`,
-        section: `${news.section}`,
-        text: `${createThreePoints(news.snippet)}`,
-        date: `${convertoNormalDate(news.pub_date)}`,
-        link: `${news.web_url}`,
-      };
-  });
-
-  return createObj;
-}
-
-function markupForQuareByInput(arr) {
-  const markup = arr
-    .map(news => {
-      const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
-      const attachURL = `https://www.nytimes.com/`;
-
-      if (news.multimedia[0] === undefined) {
-        return `
-          <li class="news-item">
-       <img  src="${defaultImg}" alt="${
-          news.adx_keywords
-        }" class="news-item__img"/>;
-          <div class="news-item__buttons">
-         <button type="button" class="news-item__btn">Add to favorite</button>
-         <button type="button" class="news-item__category">Job searching </button>
-        </div>
-        <div class="news-item__wrapper-text">
-          <b class="news-item__title">${news.headline.main}</b>
-          <p  class="news-item__text">${createThreePoints(news.snippet)}</p>
-        </div>
-        <div class="news-item__wrapper-date">
-          <p class="news-item__date">${convertoNormalDate(news.pub_date)}</p>
-          <a href="${news.web_url}" class="news-item__link">Read more</a>
-        </div>
-      </li>
-      `;
-      }
-      return `
-          <li class="news-item">
-       <img  src="${attachURL}${news.multimedia[0].url}" alt="${
-        news.adx_keywords
-      }" class="news-item__img"/>;
-            <div class="news-item__buttons">
-         <button type="button" class="news-item__btn">Add to favorite</button>
-         <button type="button" class="news-item__category">Job searching </button>
-        </div>
-        <div class="news-item__wrapper-text">
-          <b class="news-item__title">${news.headline.main}</b>
-          <p class="news-item__text">${createThreePoints(news.snippet)}</p>
-        </div>
-        <div class="news-item__wrapper-date">
-          <p class="news-item__date">${convertoNormalDate(news.pub_date)}</p>
-          <a href="${news.web_url}" class="news-item__link">Read more</a>
-        </div>
-      </li>
-      `;
-    })
-    .join('');
-}
-// Эта функция для того, что бы отобразить дату ввиде как требует макет, так как приходит с каждых API разная.
-function convertoNormalDate(element) {
-  const date = new Date(element);
-  return date.toLocaleDateString('en-GB');
-}
-
-function createThreePoints(str) {
-  if (str.length > 110) {
-    return str.slice(0, 110) + '...';
-  }
-  return str;
-}
-
-// export { fetchByInputSerchAndDate };
