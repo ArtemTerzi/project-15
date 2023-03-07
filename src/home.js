@@ -14,6 +14,7 @@ const homeList = document.querySelector(".home__list");
 // const URL =
 //   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
 
+
 function renderByDefault() {
   fetchMostPopular().then(response => {
     const {
@@ -67,7 +68,6 @@ function renderByInputAndDate() {
 
 
 function onSearchCatehories(event) {
-
   if (event.target.nodeName !== "LI") {
     return;
   }
@@ -82,6 +82,8 @@ function onSearchCatehories(event) {
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
       console.log(data);
+    }).catch(error => {
+      console.log(error);
     });
 }
 
