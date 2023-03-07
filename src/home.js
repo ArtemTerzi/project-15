@@ -8,7 +8,8 @@ import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
 import { fetchByChoosenCategories } from './js/fetchByCategories';
 
-const searchFormElem = document.querySelector(".header__form");
+const categoriesList = document.querySelector(".category-list");
+const homeList = document.querySelector(".home__list");
 
 // const URL =
 //   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
@@ -18,6 +19,7 @@ function renderByDefault() {
     const {
       data: { results },
     } = response;
+    // homeList.children[0] = 
     const responseURL = response.config.url;
     const data = getNormalizeResponse(results, responseURL);
     const paginator = new Paginator();
@@ -25,7 +27,7 @@ function renderByDefault() {
   });
 }
 
-// renderByDefault();
+renderByDefault();
 
 // 		} = response;
 // 	const responseURL = response.config.url;
@@ -51,7 +53,7 @@ function renderByInputAndDate() {
     });
 }
 
-renderByInputAndDate();
+// renderByInputAndDate();
 
 // 	} = answer;
 // 	const responseURL = answer.config.url;
@@ -63,14 +65,16 @@ renderByInputAndDate();
 // 	console.log(data);
 // });
 
-// startWeather();
 
+function onSearchCatehories(event) {
 
-function onSubmitSearchForm(event) {
-  event.preventDefault();
-  const inputSaerch = event.currentTarget.elements.search.value;
+  if (event.target.nodeName !== "LI") {
+    return;
+  }
 
-  fetchByChoosenCategories(inputSaerch)
+  const category = event.target.textContent;
+
+  fetchByChoosenCategories(category)
     .then(response => {
       const {
         data: { results },
@@ -81,4 +85,6 @@ function onSubmitSearchForm(event) {
     });
 }
 
-searchFormElem.addEventListener("submit", onSubmitSearchForm);
+// startWeather();
+
+categoriesList.addEventListener("click", onSearchCatehories);
