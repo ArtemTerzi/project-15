@@ -5,8 +5,8 @@ import RenderFavorites from './renderCard';
 import throttle from 'lodash.throttle';
 import { getMarkupError } from './error';
 
-const form = document.querySelector('.demo-form');
-const input = document.querySelector('.demo-input');
+// const form = document.querySelector('.demo-form');
+// const input = document.querySelector('.demo-input');
 const renderFavorites = new RenderFavorites();
 const cardContainer = document.querySelector('.card-container');
 const favoriteMain = document.querySelector('.favorite-main');
@@ -158,6 +158,11 @@ function onLike(e) {
 
 function onLoad() {
   const arr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
+
+  if (arr === null) {
+    const errorMarkup = getMarkupError();
+    favoriteMain.innerHTML = errorMarkup;
+  }
   return getMarkup(arr);
 }
 
@@ -165,7 +170,7 @@ function renderCards() {
   cardContainer.innerHTML = onLoad();
 }
 
-renderCards();
+if (onLoad() !== undefined) renderCards();
 
 // --------------------------------------------------------------------------------------------------------
 
