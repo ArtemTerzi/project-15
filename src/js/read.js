@@ -3,99 +3,99 @@ import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
 import { getMarkup } from "./fetches/getMarkup";
 import { refs } from './refs';
 
-// isReadForStyle("https://www.nytimes.com/2023/03/06/travel/taliesin-frank-lloyd-wright-wisconsin-baking-class.html");
-// isReadForStyle("https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByPages");
-// isFavoriteForStyle("https://www.nytimes.com/2023/03/06/travel/taliesin-frank-lloyd-wright-wisconsin-baking-class.html");
-// isReadForStyle("https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByPages");
-
 // =======================  FOR TEST ==============================
 
-const URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`;
-const btnFetch = document.querySelector('.test-fetch');
+// const URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`;
+// const btnFetch = document.querySelector('.test-fetch');
 
-btnFetch.addEventListener('click', onOpenNews);
+// btnFetch.addEventListener('click', onOpenNews);
 
-async function onFetch() {
-  try {
-    const response = await fetch(URL);
-    const newsAll = await response.json();
-    return newsAll;
-  } catch (err) {
-    console.log(err);
-  }
-}
+// async function onFetch() {
+//   try {
+//     const response = await fetch(URL);
+//     const newsAll = await response.json();
+//     return newsAll;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
-async function onOpenNews() {
-  try {
-    const newsAll = await onFetch();
-    makeNews(newsAll.response.docs);
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function onOpenNews() {
+//   try {
+//     const newsAll = await onFetch();
+//     makeNews(newsAll.response.docs);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
-function makeNews(arrNews) {
-  try {
-    const markapNews = arrNews
-      .map(
-        ({ headline, web_url, pub_date, snippet, multimedia, keywords }) =>
-          `<li class="news-item ${isReadForStyle(web_url)}">
-        <img class="news-item__img" src="https://www.nytimes.com/${
-          multimedia[2].url
-        }" alt="${keywords[0].value}">
-        <div class="news-item__buttons">
-         <button type="button" class="news-item__btn">Add to favorite</button>
-         <button type="button" class="news-item__category">Job searching </button>
-        </div>
-        <div class="news-item__wrapper-text">
-          <h2 class="news-item__title">${headline.main}</h2>
-          <p class="news-item__text">${snippet}</p>
-        </div>
-        <div class="news-item__wrapper-date">
-          <p class="news-item__date">${
-            new Date(pub_date).toLocaleString().split(',')[0]
-          }</p>
-          <a href="${web_url}" class="news-item__link">Read more</a>
-        </div>
-        </li>`
-      )
-      .join('');
-    listNews.insertAdjacentHTML('beforeend', markapNews);
-  } catch (err) {
-    const markapNews = arrNews
-      .map(
-        ({ headline, web_url, pub_date, snippet, multimedia, keywords }) =>
-          `<li class="news-item ${isReadForStyle(web_url)}">
-        <img class="news-item__img" src="https://cdn.pixabay.com/photo/2015/02/15/09/33/news-636978_960_720.jpg" alt="${
-          keywords[0].value
-        }">
-        <div class="news-item__buttons">
-         <button type="button" class="news-item__btn">Add to favorite</button>
-         <button type="button" class="news-item__category">Job searching </button>
-        </div>
-        <div class="news-item__wrapper-text">
-          <h2 class="news-item__title">${headline.main}</h2>
-          <p class="news-item__text">${snippet}</p>
-        </div>
-        <div class="news-item__wrapper-date">
-          <p class="news-item__date">${
-            new Date(pub_date).toLocaleString().split(',')[0]
-          }</p>
-          <a href="${web_url}" class="news-item__link">Read more</a>
-        </div>
-        </li>`
-      )
-      .join('');
-    listNews.insertAdjacentHTML('beforeend', markapNews);
-  }
-}
+// function makeNews(arrNews) {
+//   try {
+//     const markapNews = arrNews
+//       .map(
+//         ({ headline, web_url, pub_date, snippet, multimedia, keywords, section }) =>
+//           `<li class="news-item ${isReadForStyle(web_url)}">
+//           <p class="home__list-section">${section}</p>
+//         <img class="home__list-img" src="https://www.nytimes.com/${
+//           multimedia[2].url
+//         }" alt="${keywords[0].value}">
+//         <div class="news-item__buttons">
+//          <button type="button" class="news-item__btn">Add to favorite</button>
+//          <button type="button" class="news-item__category">Job searching </button>
+//         </div>
+//         <div class="news-item__wrapper-text">
+//           <h2 class="home__list-title">${headline.main}</h2>
+//           <p class="home__list-text">${snippet}</p>
+//         </div>
+//         <div class="news-item__wrapper-date">
+//           <p class="home__list-date">${
+//             new Date(pub_date).toLocaleString().split(',')[0]
+//           }</p>
+//           <a href="${web_url}" class="home__list-link">Read more</a>
+//         </div>
+//         </li>`
+//       )
+//       .join('');
+//     listNews.insertAdjacentHTML('beforeend', markapNews);
+//   } catch (err) {
+//     const markapNews = arrNews
+//       .map(
+//         ({ headline, web_url, pub_date, snippet, multimedia, keywords, section }) =>
+//           `<li class="news-item ${isReadForStyle(web_url)}">
+//           <p class="home__list-section">${section}</p>
+//         <img class="home__list-img" src="https://cdn.pixabay.com/photo/2015/02/15/09/33/news-636978_960_720.jpg" alt="${
+//           keywords[0].value
+//         }">
+//         <div class="news-item__buttons">
+//          <button type="button" class="news-item__btn">Add to favorite</button>
+//          <button type="button" class="news-item__category">Job searching </button>
+//         </div>
+//         <div class="news-item__wrapper-text">
+//           <h2 class="home__list-title">${headline.main}</h2>
+//           <p class="home__list-text">${snippet}</p>
+//         </div>
+//         <div class="news-item__wrapper-date">
+//           <p class="home__list-date">${
+//             new Date(pub_date).toLocaleString().split(',')[0]
+//           }</p>
+//           <a href="${web_url}" class="home__list-link">Read more</a>
+//         </div>
+//         </li>`
+//       )
+//       .join('');
+//     listNews.insertAdjacentHTML('beforeend', markapNews);
+//   };
+// };
 
 // =======================  FOR TEST ==============================
 
 // const KEY_LOCAL_STORAGE = 'read-news-local-storage';
-const listNews = document.querySelector('.list-news');
-const btnReadPage = document.querySelector('.read-page');
+// const listNews = document.querySelector('.list-news');
+// const btnReadPage = document.querySelector('.read-page');
+
+const container = document.querySelector('main');
 const listReadNews = document.querySelector('.readPage-list');
+
 
 
 
@@ -135,8 +135,8 @@ function onBtnReadMore(e) {
 
           news.dateOfRead = createNewData();
           return;
-        }
-      }
+        };
+      };
 
       newsAllLocalStorage.push(newsObj);
       localStorage.setItem(
@@ -145,12 +145,14 @@ function onBtnReadMore(e) {
       );
     }
   } catch (error) {
-    console.log('Error parse date local storage');
+
+    console.log(container);
+    container.innerHTML = getMarkupError();
   }
 }
 
 function makeObjectNews(newsCard) {
-    // const newsCard = e.target.parentNode.parentNode;
+
   const section = newsCard.querySelector('.home__list-section').textContent;
   const img = newsCard.querySelector('.home__list-img').src;
   const alt = newsCard.querySelector('.home__list-img').alt;
@@ -179,7 +181,7 @@ function makeObjectNews(newsCard) {
 };
 
 
-btnReadPage.addEventListener('click', makeArrNewsForPageRead);
+makeArrNewsForPageRead();
 
 function makeArrNewsForPageRead() {
   try {
@@ -197,10 +199,12 @@ function makeArrNewsForPageRead() {
 
     makeMarkapPageRead(arrNewsIsRead);
   } catch (error) {
-    const container = document.querySelector('.container');
+
+    console.log(container);
     container.innerHTML = getMarkupError();
-  }
-}
+  };
+};
+
 
 function makeMarkapPageRead(arrayNewsRead) {
 
@@ -214,13 +218,12 @@ function makeMarkapPageRead(arrayNewsRead) {
     };
 
 
-    
-
   const markapDatesRead = allDates
     .map(
       date =>
-        `<li class="readPage-list__item">${date}<ul class="readPage-list__list">${makeArrNewsDate(date, arrayNewsRead)}</ul></li>`
-    )
+        `<li class="readPage-list__item"><h2 class="readPage-list__title">${date.replaceAll('.','/')}</h2><svg class="readPage-list__svg" aria-label="open news" width="20px" height="20px">
+        <use href="/icons.adfc4680.svg#dilka-bottom"></use>
+    </svg><ul class="readPage-list__list  home__list">${makeArrNewsDate(date, arrayNewsRead)}</ul></li>`)
     .join('');
 
   listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
@@ -232,12 +235,13 @@ function makeMarkapPageRead(arrayNewsRead) {
 
   function openListsReadNews(e) {
 
-    if (e.target.nodeName !== 'LI') {
+    if (e.target.nodeName !== 'H2') {
         return;
       };
     
-    const itemListReadNews = e.target.firstElementChild;
-    itemListReadNews.classList.toggle('visually-hidden');
+    const titleDate = e.target;
+    titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
+    
    };
 
    export { onBtnReadMore };
