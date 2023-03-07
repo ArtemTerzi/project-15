@@ -329,13 +329,11 @@ let categories = [];
 let selectedCategory = '';
 window.selectedCategory = selectedCategory;
 
-export function GGWP() {
-  fetchNewsCategories().then(allCategories => {
-    categories = allCategories;
-    console.log(categories);
-    getCurrWidth();
-  });
-}
+fetchNewsCategories().then(allCategories => {
+  categories = allCategories;
+  console.log(categories);
+  getCurrWidth();
+});
 
 export default function deactivateCategory() {
   const currentActive = document.querySelector('.category-item-active');

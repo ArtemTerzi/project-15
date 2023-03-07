@@ -8,10 +8,7 @@ import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
 import { fetchByChoosenCategories } from './js/fetchByCategories';
 import { renderMarkupError } from './js/renderMarkupError';
-import { GGWP } from './js/categoryListMaker';
 // import './js/firebaseData';
-
-GGWP();
 
 const searchFormElem = document.querySelector('.header__form');
 
