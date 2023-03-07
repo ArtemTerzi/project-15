@@ -3,25 +3,46 @@ import axios from 'axios';
 import { Paginator } from './paginator.js';
 const { API_KEY } = options;
 
-function fetchByChoosenCategories(category) {
+export async function fetchByChoosenCategories(category) {
   return axios
     .get(
       `https://api.nytimes.com/svc/news/v3/content/all/${category}.json?api-key=${API_KEY}`
-    )
-    .then(response => {
-      const {
-        data: { results },
-      } = response;
-      const responseURL = response.config.url;
-      const paginator = new Paginator();
-      paginator.getURL(responseURL);
-      paginator.getRespForPagination(responseURL);
-      markupForSearchByCategories(results);
-    });
+  )
+    // .then(response => {
+    //   const {
+    //     data: { results },
+    //   } = response;
+    //   const responseURL = response.config.url;
+    //   const paginator = new Paginator();
+    //   //   paginator.getURL(responseURL);
+    //   paginator.getRespForPagination(responseURL);
+    //   markupForSearchByCategories(results);
+    // });
 }
 
-// fetchByChoosenCategories('food');
-
+function createDataObjectByFetchCategories(arr) {
+  const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
+  const createObj = arr.map(news => {
+    if (!news.multimedia) {
+      return {
+          img: `${defaultImg}`,
+          title: `${news.title}`,
+          section: `${news.section}`,
+          text: `${createThreePoints(news.abstract)}`,
+          date: `${convertoNormalDate(news.published_date)}`,
+          link: `${news.url}`,
+        };
+    }
+    return {
+        img: `${news.multimedia[2].url}`,
+        title: `${news.title}`,
+        section: `${news.section}`,
+        text: `${createThreePoints(news.abstract)}`,
+        date: `${convertoNormalDate(news.published_date)}`,
+        link: `${news.url}`,
+      };
+  });
+}
 function markupForSearchByCategories(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
   const markup = arr
@@ -40,7 +61,7 @@ function markupForSearchByCategories(arr) {
   </div>
   <div class="news-item__wrapper-date">
     <p class="news-item__date">${convertoNormalDate(news.published_date)}</p>
-    <a href="${news.url} class="news-item__link">Read more</a>
+    <a href="${news.url}" class="news-item__link">Read more</a>
   </div>
 </li>
 `;
@@ -60,7 +81,7 @@ function markupForSearchByCategories(arr) {
   </div>
   <div class="news-item__wrapper-date">
     <p class="news-item__date">${convertoNormalDate(news.published_date)}</p>
-    <a href="${news.url} class="news-item__link"">Read more</a>
+    <a href="${news.url}" class="news-item__link"">Read more</a>
   </div>
 </li>
 `;
@@ -80,7 +101,7 @@ function createThreePoints(str) {
   }
   return str;
 }
-//comparedTagAltInImgOnNull
+
 function comparedTagAltInImgOnNull(news) {
   if (
     news.des_facet === null ||
@@ -92,4 +113,4 @@ function comparedTagAltInImgOnNull(news) {
   return news.des_facet[0];
 }
 
-export { fetchByChoosenCategories };
+

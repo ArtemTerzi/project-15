@@ -1,0 +1,145 @@
+.btn-open-sign-in {
+  margin-right: 10px;
+  
+  font-family: 'Manrope';
+  font-style: normal;
+  
+  display: inline-block;
+  justify-content: center;
+  box-sizing: border-box;
+  outline: none;
+  border: none; 
+  border-radius: 20px;
+  height: 31px;
+  min-width: 65px;
+  line-height: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  background-color: #4b48db;
+  box-shadow: 0 2px #21487f;
+  cursor: pointer;
+
+  &.is-hidden {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: 0;
+  }
+}
+
+.btn-open-sign-in:hover {
+  background-color: #4b96e6;
+}
+
+.backdrop-sign-in {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+
+  &.is-hidden {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: 0;
+  }
+}
+
+.modal-sign-in {
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 275px;
+  padding: 40px;
+  background: #fff;
+  background-color: #4b48db;
+  border-radius: 4px;
+}
+
+.email-sign-in {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 12px 11px;
+  outline: none;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+  margin-top: 15px;
+}
+
+.password-sign-in {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 12px 11px;
+  outline: none;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+}
+
+.sign-in {
+  margin: 35px auto 0;
+  display: block;
+  width: 200px;
+  height: 40px;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #343287 0%, #2724a8 100%);
+
+  &:hover {
+    background: linear-gradient(90deg, #2c2b77 0%, #201e9d 100%);
+  }
+
+  &:disabled {
+    background-color: darkgrey;
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: black;
+  }
+}
+
+.btn-close-sign-in {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 20px;
+  height: 20px;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background-color: black;
+  }
+}
+
+.btn-close-sign-in::before {
+  transform: rotate(45deg);
+}
+
+.btn-close-sign-in::after {
+  transform: rotate(-45deg);
+}
+
+.valid-data {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: white;
+  margin-top: 5px;
+}

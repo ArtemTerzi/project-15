@@ -21,7 +21,7 @@
                         </svg>
                     </button>
                     <label for="search__input">
-                        <input class="search__input" type="text" placeholder="Search" id="search__input" name="value">
+                        <input name="search" class="search__input" type="text" placeholder="Search" id="search__input">
                     </label>
                 </div>
                 <div class="search__mobile">
@@ -37,7 +37,9 @@
                     </svg>
                     <span class="theme-swapper__title theme-swapper__title--light ">Light</span>
                 </div>
-                <div class="checkbox"> <div class="checkbox__switcher"></div></div>
+                <div class="checkbox">
+                    <div class="checkbox__switcher"></div>
+                </div>
                 </span>
                 <div class="theme-wrapper theme-wrapper--dark">
                     <svg width="16px" height="16px" class="mobile-theme-svg mobile-theme-svg__dark">
@@ -46,6 +48,9 @@
                     <span class="theme-swapper__title theme-swapper__title--dark ">Dark</span>
                 </div>
             </div>
+            <button type="submit" class="btn-open-sign-in" data-modal-open>Sign in</button>
+            <button type="submit" class="btn-open-sign-up">Sign up</button>
+            <button type="submit" class="sign-out is-hidden">Sign out</button>
             <div class="modalbtn">
                 <button type="button" class="mobile-menu__button " data-menu-btn>
                     <span></span>

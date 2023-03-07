@@ -4,45 +4,104 @@ import {
   fetchByChoosenCategories,
   markupForSearchByCategories,
 } from './fetchByCategories';
-import './fetchByInputAndDate';
-import './fetchMostPopular';
+import { fetchByInputSerchAndDate } from './fetchByInputAndDate';
+import { fetchMostPopular } from './fetchMostPopular';
+import { getMarkup } from './fetches/getMarkup';
+import { getNormalizeResponse } from './fetches/getNormalizeResponse';
 import './fetchNewsCategories';
 import { options } from './refs.js';
 
+/*
+ fetchByInputAndDate 
+ URL = https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&
+const responseURL = response.config.url;
+const totalItems = response.data.response.meta.hits;
+fetchByCategories
+URL = `https://api.nytimes.com/svc/news/v3/content/all/food.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`
+const responseURL = response.config.url;
+const totalItems = response.data.num_results;
+fetchMostPopular
+URL = `https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`
+const responseURL = response.config.url;
+const totalItems = response.data.num_results;
+fetchNewsCategories
+URL =
+  'https://api.nytimes.com/svc/news/v3/content/section-list.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g';
+  const responseURL = response.config.url;
+const totalItems = response.data.num_results;
+ */
+
 const containerPagination = document.querySelector('.tui-pagination'); // to refs
-const ENDPOINT_URL = `https://api.nytimes.com/svc/news/v3/content/all/food.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`; // to refs
-// `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&`;
+const list = document.querySelector('.home__list');
+// const ENDPOINT_URL = `https://api.nytimes.com/svc/news/v3/content/all/food.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`;
+// const ENDPOINT_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&`;
+// const ENDPOINT_URL = `https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`;
+// const ENDPOINT_URL =
+//   'https://api.nytimes.com/svc/news/v3/content/section-list.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g';
 export class Paginator {
   constructor() {
     this.page = 1;
-    // this.searchQuery = '';
-    this.URL = ENDPOINT_URL;
-    // this.totalItems = 100;
+    this.URL = '';
+    this.isSearchQuery = false;
+    this.totalItems = 10;
+    // this.data = [];
+    this.container = list;
   }
-  async getRespForPagination() {
+  getRespForPagination(response, responseURL, data) {
+    this.URL = responseURL;
+    // console.log(responseURL);
     const URL = this.URL;
-    // const URL = `https://api.nytimes.com/svc/news/v3/content/all/food.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&p=${this.page}`;
-    const response = await axios.get(URL);
-    const data = response.data.response;
-    console.log(response, 'resp get');
-    const totalItems = response.data.num_results;
-    const page = this.page;
-    // const dataObj = {
-    //   articles1,
-    //   totalHits,
-    //   totalPages,
-    //   page,
-    // };
+    // this.data = data;
 
-    console.log(totalItems);
-    this.initPagination({ totalItems, page });
-    return totalItems;
+    if (this.URL.includes('articlesearch')) this.isSearchQuery = true;
+
+    if (this.isSearchQuery) {
+      this.totalItems = response.data.response.meta.hits;
+      const docs = response.data.response.docs;
+      // console.log(docs);
+      const normalized = getNormalizeResponse(docs, responseURL);
+      this.container.innerHTML = getMarkup(normalized);
+      console.log(this.totalItems);
+      this.clearPageNumberToURL();
+      this.addPageNumberToURL();
+      console.log(this.totalItems);
+    } else {
+      this.totalItems = response.data.num_results;
+      console.log(this.totalItems);
+      this.container.innerHTML = getMarkup(data);
+    }
+    this.initPagination(this.page);
   }
 
-  initPagination(event) {
-    const { totalItems, page } = event;
+  getURL(URL) {
+    this.URL = URL;
+  }
+
+  addPageNumberToURL() {
+    this.URL = this.URL + `page=${this.page}`;
+    // console.log(this.URL, 'add pageNum');
+  }
+  clearPageNumberToURL() {
+    this.URL = this.URL.includes('page=')
+      ? this.URL.substring(0, this.URL.search('page='))
+      : (this.URL = this.URL);
+    // console.log(this.URL, 'del pageNum');
+  }
+
+  updatePageNumberToURL() {
+    this.URL = this.URL.includes('page=')
+      ? this.URL.substring(0, this.URL.search('page='))
+      : (this.URL = this.URL);
+    this.URL = this.URL + `page=${this.page}`;
+  }
+
+  changeCurrentPage(page) {
+    this.page = page;
+  }
+
+  initPagination(page) {
     const paginationOptions = {
-      totalItems,
+      totalItems: this.totalItems,
       page: 1,
       itemsPerPage: 10,
       visiblePages: 3,
@@ -69,8 +128,65 @@ export class Paginator {
     paginationOptions.page = pagination;
     pagination.on('afterMove', async event => {
       try {
+        const { page } = event;
+
+        // this.updatePageNumberToURL(page);
+        if (this.isSearchQuery) {
+          this.clearPageNumberToURL(page);
+          this.addPageNumberToURL(page);
+          console.log(this.URL, 'url');
+          axios.get(this.URL).then(answer => {
+            const {
+              data: {
+                response: { docs },
+              },
+            } = answer;
+            console.log(answer, 'new axios');
+            const responseURL = answer.config.url;
+            // console.log(responseURL, 'responseURL');
+            // const docs = answer.data.docs;
+            const data = getNormalizeResponse(docs, responseURL);
+
+            // this.container.innerHTML = getMarkup(data);
+            // console.log(data, 'last resp');
+            // fetchByInputSerchAndDate(this.URL).then(answer => {
+            //   const {
+            //     data: {
+            //       response: { docs },
+            //     },
+            //   } = answer;
+            //   const responseURL = answer.config.url;
+            //   const data = getNormalizeResponse(docs, responseURL);
+
+            this.container.innerHTML = '';
+            this.container.innerHTML = getMarkup(data);
+            // console.log(data);
+          });
+
+          // const URL = this.URL;
+          // fetchByInputSerchAndDate(URL).then(answer => {
+          //   const {
+          //     data: {
+          //       response: { docs },
+          //     },
+          //   } = answer;
+          //   const responseURL = answer.config.url;
+
+          //   // const paginator = new Paginator();
+          //   // paginator.getRespForPagination(answer, responseURL);
+          //   list.innerHTML = getMarkup(data);
+          //   //   console.log(data);
+          // });
+
+          // list.insertAdjacentHTML('beforeend', getMarkup(data));
+          // this.getRespForPagination();
+        }
+        this.page = page;
+        const list = document.querySelector('.home__list');
+        const data = this.data;
         // const data = await paginator.getRespForPagination();
-        const { page, totalItems } = event;
+
+        // const { page, totalItems } = event;
         // fetchByChoosenCategories('food'); // повинен викликатися фетч і розмітка, фетч для searchQuery викликається окремо для сторінок
         // this.getRespForPagination();
 
@@ -78,16 +194,18 @@ export class Paginator {
         // console.log(totalItems, 'data');
         // const totalItems = data.totalHits;
         // Paginator.totalItems = totalItems;
-        const pageCur = pagination.getCurrentPage();
-        console.log(pageCur, 'get curPg');
-        console.log(page, 'curPg');
+
+        // this.addPageNumberToURL();
+        // console.log(pageCur, 'get curPg');
+        // console.log(page, 'curPg');
+        // console.log(this.page, 'new curPg');
       } catch (err) {
         console.log(err);
       }
-      return page;
+      return pagination;
     });
   }
 }
 
-const paginator = new Paginator();
-paginator.getRespForPagination();
+// const paginator = new Paginator();
+// paginator.getRespForPagination();
