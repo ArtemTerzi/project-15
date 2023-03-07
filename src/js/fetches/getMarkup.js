@@ -1,7 +1,5 @@
 export function getMarkup(arr) {
-  const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
   return arr.map(({ img, title, text, date, link, section }) => {
-
     return `
     <li class="home__list-item">
       <div class="home__list-top">

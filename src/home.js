@@ -6,21 +6,26 @@ import { fetchMostPopular } from './js/fetchMostPopular';
 import { getNormalizeResponse } from './js/fetches/getNormalizeResponse';
 import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
+import { renderMarkupError } from './js/renderMarkupError';
 
 const list = document.querySelector(".home__list");
 
-const URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&"
+// const URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&"
 fetchMostPopular()
 	.then(response => {
 		const {
 			data: { results },
-			} = response;
+		} = response;
 		const responseURL = response.config.url;
 		const paginator = new Paginator();
 		paginator.getURL(responseURL);
 		paginator.getRespForPagination(responseURL);
 		const data = getNormalizeResponse(results, responseURL);
 		list.insertAdjacentHTML("beforeend", getMarkup(data));
+	})
+	.catch(error => {
+		console.log(error);
+		renderMarkupError(".home__inner");
 	});
 
 fetchByInputSerchAndDate()
@@ -36,7 +41,9 @@ fetchByInputSerchAndDate()
 		paginator.getRespForPagination(responseURL);
 		const data = getNormalizeResponse(docs, URL);
 		// list.insertAdjacentHTML("beforeend", getMarkup(data))
-		console.log(data);
+	})
+	.catch(error => {
+		console.log(error);
 	});
 
 startWeather();
