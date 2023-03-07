@@ -8,42 +8,64 @@ import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
 import { renderMarkupError } from './js/renderMarkupError';
 
-const list = document.querySelector(".home__list");
+// const list = document.querySelector('.home__list');
 
-// const URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&"
-fetchMostPopular()
-	.then(response => {
-		const {
-			data: { results },
-		} = response;
-		const responseURL = response.config.url;
-		const paginator = new Paginator();
-		paginator.getURL(responseURL);
-		paginator.getRespForPagination(responseURL);
-		const data = getNormalizeResponse(results, responseURL);
-		list.insertAdjacentHTML("beforeend", getMarkup(data));
-	})
-	.catch(error => {
+// const URL =
+//   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
+
+function renderByDefault() {
+  fetchMostPopular().then(response => {
+    const {
+      data: { results },
+    } = response;
+    const responseURL = response.config.url;
+    const data = getNormalizeResponse(results, responseURL);
+    const paginator = new Paginator();
+    paginator.getRespForPagination(response, responseURL, data);
+  })
+  	.catch(error => {
 		console.log(error);
 		renderMarkupError(".home__inner");
 	});
+}
 
-fetchByInputSerchAndDate()
-	.then(answer => {
-		const {
-		data: {
-			response: { docs },
-		},
-		} = answer;
-		const responseURL = answer.config.url;
-		const paginator = new Paginator();
-		paginator.getURL(responseURL);
-		paginator.getRespForPagination(responseURL);
-		const data = getNormalizeResponse(docs, URL);
-		// list.insertAdjacentHTML("beforeend", getMarkup(data))
-	})
-	.catch(error => {
+renderByDefault();
+
+// 		} = response;
+// 	const responseURL = response.config.url;
+// 	const paginator = new Paginator();
+// 	paginator.getURL(responseURL);
+// 	paginator.getRespForPagination(responseURL);
+// 	const data = getNormalizeResponse(results, responseURL);
+// 	list.insertAdjacentHTML("beforeend", getMarkup(data));
+// });
+
+function renderByInputAndDate() {
+  fetchByInputSerchAndDate().then(answer => {
+    const {
+      data: {
+        response: { docs },
+      },
+    } = answer;
+    const responseURL = answer.config.url;
+    const paginator = new Paginator();
+    const data = getNormalizeResponse(docs, responseURL);
+    paginator.getRespForPagination(answer, responseURL, data);
+  })
+  .catch(error => {
 		console.log(error);
-	});
+		renderMarkupError(".home__inner");
+	});;
+}
+
+// 	} = answer;
+// 	const responseURL = answer.config.url;
+// 	const paginator = new Paginator();
+// 	paginator.getURL(responseURL);
+// 	paginator.getRespForPagination(responseURL);
+// 	const data = getNormalizeResponse(docs, URL);
+// 	// list.insertAdjacentHTML("beforeend", getMarkup(data))
+// 	console.log(data);
+// });
 
 startWeather();
