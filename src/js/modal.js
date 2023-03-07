@@ -8,4 +8,4 @@
       modalBtn.classList.toggle('active'); 
       mobMenu.classList.toggle('is-closed'); 
     }
-  });
+  })();
