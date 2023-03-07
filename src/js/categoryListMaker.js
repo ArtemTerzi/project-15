@@ -13,6 +13,7 @@ let searchYear = new Date().getFullYear();
 let searchMonth = new Date().getMonth();
 let searchDay = new Date().getDate();
 let searchDate = new Date(searchYear, searchMonth);
+
 let dateString = `${searchYear}${(searchMonth + 1)
   .toString()
   .padStart(2, '0')}${searchDay.toString().padStart(2, '0')}`;
@@ -329,12 +330,6 @@ let categories = [];
 let selectedCategory = '';
 window.selectedCategory = selectedCategory;
 
-fetchNewsCategories().then(allCategories => {
-  categories = allCategories;
-  console.log(categories);
-  getCurrWidth();
-});
-
 export default function deactivateCategory() {
   const currentActive = document.querySelector('.category-item-active');
   if (currentActive) {
@@ -342,7 +337,12 @@ export default function deactivateCategory() {
     selectedCategory = '';
     otherCategoryItem.textContent = '';
   }
-}
+};
+
+function setCategory(newItem) {
+  selectedCategory = newItem;
+  fetchByChoosenCategories(selectedCategory);
+};
 
 function setCategory(newItem) {
   selectedCategory = newItem;
@@ -394,9 +394,13 @@ function createVisibleCategoryMarkup(data) {
   }
 }
 
+function onResizeWindow(event) {
+  getCurrWidth();
+};
+
 function getCurrWidth() {
   const widthInPx = filterSection.getBoundingClientRect().width;
-  const tempArray = categories;
+  const tempArray = [...categories];
   if (widthInPx < tabletWidth) {
     createVisibleCategoryMarkup([]);
     createHiddenCategoryMarkup(categories);
@@ -411,12 +415,12 @@ function getCurrWidth() {
     createVisibleCategoryMarkup(visiblePart);
     createHiddenCategoryMarkup(HiddenPart);
   }
-}
+};
 
 function onOtherClick(event) {
   otherBtn.classList.toggle('category-others-active');
   document.addEventListener('click', onCloseCategory);
-}
+};
 
 function onCloseCategory(event) {
   if (!otherBtn.contains(event.target) & !hiddenList.contains(event.target)) {
@@ -425,6 +429,11 @@ function onCloseCategory(event) {
   }
 }
 
+fetchNewsCategories().then(allCategories => {
+  categories = allCategories;
+  getCurrWidth();
+});
+
 otherBtn.addEventListener('click', onOtherClick);
 category.addEventListener('click', onCategoryChose);
-window.addEventListener('resize', throttle(getCurrWidth, 500));
+window.addEventListener('resize', throttle(onResizeWindow, 500));
