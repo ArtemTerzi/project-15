@@ -46,7 +46,6 @@ function renderByInputAndDate() {
       const responseURL = answer.config.url;
       const paginator = new Paginator();
       const data = getNormalizeResponse(docs, responseURL);
-      console.log(data)
       paginator.getRespForPagination(answer, responseURL, data);
     });
 }

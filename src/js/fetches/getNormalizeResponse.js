@@ -30,7 +30,7 @@ export function getNormalizeResponse(arr, url) {
         return {
             img: `${defaultImg}`,
             title: `${news.headline.main}`,
-            section: `${news.section}`,
+            section: `${news["type_of_material"]}`,
             text: `${createThreePoints(news.snippet)}`,
             date: `${convertoNormalDate(news.pub_date)}`,
             link: `${news.web_url}`,
@@ -39,7 +39,7 @@ export function getNormalizeResponse(arr, url) {
        return {
             img: `${attachURL}${news.multimedia[0].url}`,
             title: `${news.headline.main}`,
-            section: `${news.section}`,
+            section: `${news["type_of_material"]}`,
             text: `${createThreePoints(news.snippet)}`,
             date: `${convertoNormalDate(news.pub_date)}`,
             link: `${news.web_url}`,
