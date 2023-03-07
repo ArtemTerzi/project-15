@@ -343,11 +343,6 @@ function setCategory(newItem) {
   fetchByChoosenCategories(selectedCategory);
 }
 
-function setCategory(newItem) {
-  selectedCategory = newItem;
-  fetchByChoosenCategories(selectedCategory);
-}
-
 function onCategoryChose(event) {
   const isVisibleCat = event.target.classList.contains('category-btn');
   const isModalBtn = event.target.classList.contains('category-others');
