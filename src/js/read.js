@@ -240,4 +240,5 @@ function makeMarkapPageRead(arrayNewsRead) {
     itemListReadNews.classList.toggle('visually-hidden');
    };
 
-   export { onBtnReadMore };
+export { onBtnReadMore, makeArrNewsForPageRead};
+
