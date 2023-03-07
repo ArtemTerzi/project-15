@@ -42,10 +42,13 @@ export class Paginator {
     this.itemsPerPage = 10;
     this.visiblePages = 3;
     this.container = list;
+    this.data = [];
   }
   getRespForPagination(response, responseURL, data) {
     this.URL = responseURL;
     console.log(responseURL);
+    this.data = data;
+    console.log(data);
 
     if (this.URL.includes('articlesearch')) this.isSearchQuery = true;
     if (window.frames.innerWidth <= 320) this.visiblePages = 1;
@@ -55,13 +58,16 @@ export class Paginator {
       const docs = response.data.response.docs;
       const normalized = getNormalizeResponse(docs, responseURL);
       this.container.innerHTML = getMarkup(normalized);
+
       this.clearPageNumberToURL();
       this.addPageNumberToURL();
       // } else if (this.URL.includes('mostpopular/v2/viewed/')) {
       //   this.hide();
     } else {
       this.totalItems = response.data.num_results;
-      this.container.innerHTML = getMarkup(data);
+      this.container.innerHTML = getMarkup(
+        data.slice(this.page, this.page + this.itemsPerPage)
+      );
     }
 
     if (this.totalItems <= 10) this.hide();
@@ -136,6 +142,9 @@ export class Paginator {
         const { page } = event;
         this.page = pagination.getCurrentPage();
         this.updatePageNumberToURL(page);
+        this.container.innerHTML = getMarkup(
+          this.data.splice(this.page, this.page + this.itemsPerPage)
+        );
         if (this.isSearchQuery) {
           this.clearPageNumberToURL(page);
           this.addPageNumberToURL(page);
@@ -145,11 +154,13 @@ export class Paginator {
                 response: { docs },
               },
             } = answer;
-            const responseURL = answer.config.url;
-            const data = getNormalizeResponse(docs, responseURL);
-            this.container.innerHTML = '';
-            this.container.innerHTML = getMarkup(data);
+            // const responseURL = answer.config.url;
+            // const data = getNormalizeResponse(docs, responseURL);
+            // this.container.innerHTML = '';
+            // this.container.innerHTML = getMarkup(data);
           });
+        } else {
+          // const data = getNormalizeResponse(results, responseURL);
         }
       } catch (err) {
         console.log(err);
