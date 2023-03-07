@@ -1,0 +1,19 @@
+.footer__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer__logo {
+    @include mobile {
+        width: 50px;
+    }
+    
+    @include tablet {
+        width: 70px;
+    }
+    
+    @include desktop {
+    }
+}

@@ -1,5 +1,8 @@
 import { getMarkupError } from './error';
 import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
+import { getMarkup } from "./fetches/getMarkup";
+import { refs } from './refs';
+
 // isReadForStyle("https://www.nytimes.com/2023/03/06/travel/taliesin-frank-lloyd-wright-wisconsin-baking-class.html");
 // isReadForStyle("https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollByPages");
 // isFavoriteForStyle("https://www.nytimes.com/2023/03/06/travel/taliesin-frank-lloyd-wright-wisconsin-baking-class.html");
@@ -36,7 +39,7 @@ function makeNews(arrNews) {
     const markapNews = arrNews
       .map(
         ({ headline, web_url, pub_date, snippet, multimedia, keywords }) =>
-          `<li class="news-item">
+          `<li class="news-item ${isReadForStyle(web_url)}">
         <img class="news-item__img" src="https://www.nytimes.com/${
           multimedia[2].url
         }" alt="${keywords[0].value}">
@@ -62,7 +65,7 @@ function makeNews(arrNews) {
     const markapNews = arrNews
       .map(
         ({ headline, web_url, pub_date, snippet, multimedia, keywords }) =>
-          `<li class="news-item">
+          `<li class="news-item ${isReadForStyle(web_url)}">
         <img class="news-item__img" src="https://cdn.pixabay.com/photo/2015/02/15/09/33/news-636978_960_720.jpg" alt="${
           keywords[0].value
         }">
@@ -89,14 +92,19 @@ function makeNews(arrNews) {
 
 // =======================  FOR TEST ==============================
 
-const KEY_LOCAL_STORAGE = 'read-news-local-storage';
+// const KEY_LOCAL_STORAGE = 'read-news-local-storage';
 const listNews = document.querySelector('.list-news');
+const btnReadPage = document.querySelector('.read-page');
+const listReadNews = document.querySelector('.readPage-list');
+
+
 
 function createNewData() {
   return new Date(Date.now()).toLocaleString().split(',')[0];
 }
 
-listNews.addEventListener('click', onBtnReadMore);
+listReadNews.addEventListener('click', onBtnReadMore);
+
 
 function onBtnReadMore(e) {
   // =======================  FOR TEST ==============================
@@ -105,52 +113,34 @@ function onBtnReadMore(e) {
 
   if (e.target.nodeName !== 'A') {
     return;
-  }
-
-  // makeObjectNews(e);
-  let newsCard = e.target.parentNode.parentNode;
-  let img = newsCard.querySelector('.news-item__img').src;
-  let alt = newsCard.querySelector('.news-item__img').alt;
-  let title = newsCard.querySelector('.news-item__title').textContent;
-  let text = newsCard.querySelector('.news-item__text').textContent;
-  let date = newsCard.querySelector('.news-item__date').textContent;
-  let link = newsCard.querySelector('.news-item__link').href;
-  let dateOfRead = createNewData();
-
-  const newsObj = {
-    img,
-    alt,
-    title,
-    text,
-    date,
-    link,
-
-    isFavorite: false,
-    isRead: true,
-    dateOfRead,
   };
 
+  const newsCard = e.target.parentNode.parentNode;
+  const newsObj = makeObjectNews(newsCard);
+  
   try {
     const newsAllLocalStorage = JSON.parse(
-      localStorage.getItem(KEY_LOCAL_STORAGE)
+      localStorage.getItem(refs.KEY_LOCAL_STORAGE)
     );
 
     if (newsAllLocalStorage === null) {
-      localStorage.setItem(KEY_LOCAL_STORAGE, JSON.stringify([newsObj]));
+      localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify([newsObj]));
       return;
     }
 
     if (newsAllLocalStorage !== null) {
       for (const news of newsAllLocalStorage) {
+
         if (news.link === newsObj.link) {
-          news.dateOfRead = dateOfRead;
+
+          news.dateOfRead = createNewData();
           return;
         }
       }
 
       newsAllLocalStorage.push(newsObj);
       localStorage.setItem(
-        KEY_LOCAL_STORAGE,
+        refs.KEY_LOCAL_STORAGE,
         JSON.stringify(newsAllLocalStorage)
       );
     }
@@ -159,17 +149,43 @@ function onBtnReadMore(e) {
   }
 }
 
-const btnReadPage = document.querySelector('.read-page');
-const listReadNews = document.querySelector('.readPage-list');
+function makeObjectNews(newsCard) {
+    // const newsCard = e.target.parentNode.parentNode;
+  const section = newsCard.querySelector('.home__list-section').textContent;
+  const img = newsCard.querySelector('.home__list-img').src;
+  const alt = newsCard.querySelector('.home__list-img').alt;
+  const title = newsCard.querySelector('.home__list-title').textContent;
+  const text = newsCard.querySelector('.home__list-text').textContent;
+  const date = newsCard.querySelector('.home__list-date').textContent;
+  const link = newsCard.querySelector('.home__list-link').href;
+  const dateOfRead = createNewData();
+
+  const newsObj = {
+    section,
+    img,
+    alt,
+    title,
+    text,
+    date,
+    link,
+
+    isRead: true,
+    dateOfRead,
+  };
+
+  console.log(newsObj);
+  return newsObj;
+
+};
+
 
 btnReadPage.addEventListener('click', makeArrNewsForPageRead);
 
 function makeArrNewsForPageRead() {
   try {
     const newsAllGetLocalStorage = JSON.parse(
-      localStorage.getItem(KEY_LOCAL_STORAGE)
+      localStorage.getItem(refs.KEY_LOCAL_STORAGE)
     );
-    // console.log(newsAllGetLocalStorage);
 
     const arrNewsIsRead = newsAllGetLocalStorage.reduce((arrNews, news) => {
       if (news.isRead) {
@@ -187,54 +203,41 @@ function makeArrNewsForPageRead() {
 }
 
 function makeMarkapPageRead(arrayNewsRead) {
+
   const allDates = arrayNewsRead
     .flatMap(newsRead => newsRead.dateOfRead)
     .filter((date, idx, arr) => arr.indexOf(date) === idx);
 
+    function makeArrNewsDate(date, arrNews) {
+        const arrFilterDataNews = arrNews.filter((news) => news.dateOfRead === date);
+        return getMarkup(arrFilterDataNews);
+    };
+
+
+    
+
   const markapDatesRead = allDates
     .map(
-      data =>
-        `<li class="readPage-list__item">${data}<ul class="readPage-list__list"></ul></li>`
+      date =>
+        `<li class="readPage-list__item">${date}<ul class="readPage-list__list">${makeArrNewsDate(date, arrayNewsRead)}</ul></li>`
     )
     .join('');
 
   listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
-  listReadNews.addEventListener('click', openListNews);
 
-  function openListNews(e) {
+  };
+
+
+  listReadNews.addEventListener('click', openListsReadNews);
+
+  function openListsReadNews(e) {
+
     if (e.target.nodeName !== 'LI') {
-      return;
-    }
+        return;
+      };
+    
+    const itemListReadNews = e.target.firstElementChild;
+    itemListReadNews.classList.toggle('visually-hidden');
+   };
 
-    const cardDateRead = e.target;
-
-    const markapNewsAndDatesRead = arrayNewsRead.map(news => {
-      if (cardDateRead.textContent === news.dateOfRead) {
-        return `<li class="news-item">
-        <img class="news-item__img" src="${news.img}" alt="${news.alt}">
-        <div class="news-item__buttons">
-         <button type="button" class="news-item__btn">Add to favorite</button>
-         <button type="button" class="news-item__category">Job searching </button>
-        </div>
-        <div class="news-item__wrapper-text">
-          <h2 class="news-item__title">${news.title}</h2>
-          <p class="news-item__text">${news.text}</p>
-        </div>
-        <div class="news-item__wrapper-date">
-          <p class="news-item__date">${news.date}</p>
-          <a href="${news.link}" class="news-item__link">Read more</a>
-        </div>
-        </li>`;
-      }
-    });
-
-    cardDateRead.firstElementChild.insertAdjacentHTML(
-      'beforeend',
-      markapNewsAndDatesRead
-    );
-  }
-}
-
-// function openListsReadNews(e) {
-//  cardDateRead.firstElementChild.classList.toggle('visually-hidden');
-// };
+   export { onBtnReadMore };
