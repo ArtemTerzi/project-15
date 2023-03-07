@@ -1,5 +1,6 @@
 export function getNormalizeResponse(arr, url) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
+  const attachURL = "https://www.nytimes.com/";
 
   if (url.includes("mostpopular")) {
     return arr.map(news => {
@@ -25,11 +26,11 @@ export function getNormalizeResponse(arr, url) {
       });
   } else if (url.includes("articlesearch")) {
       return arr.map(news => {
-      if (!news.media) {
+      if (!news.multimedia) {
         return {
             img: `${defaultImg}`,
             title: `${news.headline.main}`,
-            section: `${news.section}`,
+            section: `${news["type_of_material"]}`,
             text: `${createThreePoints(news.snippet)}`,
             date: `${convertoNormalDate(news.pub_date)}`,
             link: `${news.web_url}`,
@@ -37,13 +38,34 @@ export function getNormalizeResponse(arr, url) {
        }
        return {
             img: `${attachURL}${news.multimedia[0].url}`,
-         title: `${news.headline.main}`,
-            section: `${news.section}`,
+            title: `${news.headline.main}`,
+            section: `${news["type_of_material"]}`,
             text: `${createThreePoints(news.snippet)}`,
             date: `${convertoNormalDate(news.pub_date)}`,
             link: `${news.web_url}`,
           };
       });
+  } else {
+    return arr.map(news => {
+      if (!news.multimedia) {
+      return {
+          img: `${defaultImg}`,
+          title: `${news.title}`,
+          section: `${news.section}`,
+          text: `${createThreePoints(news.abstract)}`,
+          date: `${convertoNormalDate(news.published_date)}`,
+          link: `${news.url}`,
+        };
+    }
+    return {
+        img: `${news.multimedia[2].url}`,
+        title: `${news.title}`,
+        section: `${news.section}`,
+        text: `${createThreePoints(news.abstract)}`,
+        date: `${convertoNormalDate(news.published_date)}`,
+        link: `${news.url}`,
+      };
+    })
   }
 
   return createObj;

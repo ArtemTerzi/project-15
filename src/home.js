@@ -6,9 +6,10 @@ import { fetchMostPopular } from './js/fetchMostPopular';
 import { getNormalizeResponse } from './js/fetches/getNormalizeResponse';
 import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
+import { fetchByChoosenCategories } from './js/fetchByCategories';
 import { renderMarkupError } from './js/renderMarkupError';
 
-// const list = document.querySelector('.home__list');
+const searchFormElem = document.querySelector(".header__form");
 
 // const URL =
 //   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
@@ -29,7 +30,7 @@ function renderByDefault() {
 	});
 }
 
-renderByDefault();
+// renderByDefault();
 
 // 		} = response;
 // 	const responseURL = response.config.url;
@@ -41,7 +42,9 @@ renderByDefault();
 // });
 
 function renderByInputAndDate() {
-  fetchByInputSerchAndDate().then(answer => {
+
+  fetchByInputSerchAndDate()
+  .then(answer => {
     const {
       data: {
         response: { docs },
@@ -58,6 +61,8 @@ function renderByInputAndDate() {
 	});;
 }
 
+renderByInputAndDate();
+
 // 	} = answer;
 // 	const responseURL = answer.config.url;
 // 	const paginator = new Paginator();
@@ -68,4 +73,21 @@ function renderByInputAndDate() {
 // 	console.log(data);
 // });
 
-startWeather();
+function onSubmitSearchForm(event) {
+  event.preventDefault();
+  const inputSaerch = event.currentTarget.elements.search.value;
+
+  fetchByChoosenCategories(inputSaerch)
+    .then(response => {
+      const {
+        data: { results },
+      } = response;
+      const responseURL = response.config.url;
+      const data = getNormalizeResponse(results, responseURL);
+      console.log(data);
+    });
+}
+
+searchFormElem.addEventListener("submit", onSubmitSearchForm);
+
+// startWeather();
