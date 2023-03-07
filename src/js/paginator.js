@@ -57,8 +57,8 @@ export class Paginator {
       this.container.innerHTML = getMarkup(normalized);
       this.clearPageNumberToURL();
       this.addPageNumberToURL();
-    } else if (this.URL.includes('mostpopular/v2/viewed/')) {
-      this.hide();
+      // } else if (this.URL.includes('mostpopular/v2/viewed/')) {
+      //   this.hide();
     } else {
       this.totalItems = response.data.num_results;
       this.container.innerHTML = getMarkup(data);
