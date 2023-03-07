@@ -35,6 +35,7 @@ function getMonthName(monthNumber) {
 }
 
 function updateMarkupDates() {
+
   monthBlock.textContent = getMonthName(searchMonth);
   yearBlock.textContent = searchYear;
   visibleDate.textContent = `${searchDay.toString().padStart(2, '0')}/${(
@@ -43,6 +44,7 @@ function updateMarkupDates() {
     .toString()
     .padStart(2, '0')}/${searchYear}`;
 }
+
 
 function filterNextMonthDays(daysArray) {
   const lastWeek = daysArray.slice(-7);
@@ -108,6 +110,7 @@ function findSpecDay(day) {
 }
 
 function updateDate(day, month, year) {
+
   searchDay = day;
   searchMonth = month;
   searchYear = year;
@@ -307,6 +310,7 @@ function onCalendarChange(event) {
 
 calendarFrame.addEventListener('click', onCalendar);
 calendarModal.addEventListener('click', onCalendarChange);
+
 
 getDates();
 export default dateString;
