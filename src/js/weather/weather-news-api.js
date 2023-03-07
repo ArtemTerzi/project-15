@@ -4,8 +4,8 @@ import { addSpinner, removeSpinner } from "./spinner";
 const weatherMarkupApi = new WeatherMarkupApi();
 
 class WeatherNewsApi {
-	constructor() {
-		this.weatherElem = document.querySelector(".weather");
+	constructor(container) {
+		this.weatherElem = document.querySelector(`${container}`);
 		this.apiKey = "c76da9d16a38d15146607ff522b06c37";
 	}
 
