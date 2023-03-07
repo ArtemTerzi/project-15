@@ -37,12 +37,14 @@ class WeatherNewsApi {
 			const resopnse = await fetch(BASE_URL);
 			const data = await resopnse.json();
 			await this.weatherElem.insertAdjacentHTML("beforeend", weatherMarkupApi.getWeatherMurkup(data));
-
+			
 			if (this.weatherElem.children.length > 0) {
 				this.removeClassLoad(this.weatherElem);
 				this.removeClassLoad(preloadWrapper);
 				removeSpinner(preloadWrapper);
 			}
+
+			return weatherMarkupApi.getWeatherMurkup(data);
 		} catch (error) {
 			console.log(error);
 		}
