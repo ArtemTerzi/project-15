@@ -1,11 +1,11 @@
 export function getMarkup(arr) {
   return arr.map(({ img, title, text, date, link, section }) => {
     return `
-    <li class="home__list-item">
+    <li class="home__list-item ${isReadForStyle(link)}">
       <div class="home__list-top">
           <p class="home__list-section">${section}</p>
           <img width="353" height="395" class="home__list-img" src=${img} alt=${title}>
-          <button type="button" id="like" class="add-btn">Add to favorite</button>
+          <button type="button" id="like" class="add-btn ${isFavoriteForStyle(link)}">Add to favorite</button>
           <button type="button" id="dislike" class="remove-button invisible-button">Remove from favorite</button>
       </div>
       <div class="home__list-description">
