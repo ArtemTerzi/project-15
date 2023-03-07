@@ -8,11 +8,14 @@ import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
 import { fetchByChoosenCategories } from './js/fetchByCategories';
 import { renderMarkupError } from './js/renderMarkupError';
+import WeatherMarkupApi from './js/weather/waether-markup';
 // import './js/firebaseData';
 
 const categoriesList = document.querySelector(".category-list");
 const homeList = document.querySelector(".home__list");
-const searchFormElem = document.querySelector('.header__form');
+const categoryOthers = document.querySelector(".category-others");
+
+const weatherMarkupApi = new WeatherMarkupApi();
 
 // const URL =
 //   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
@@ -94,12 +97,16 @@ function onSearchCatehories(event) {
       } = response;
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
-      console.log(data);
+      homeList.innerHTML = getMarkup(data);
+      // weatherMarkupApi.getWeatherMurkup();
+
     }).catch(error => {
       console.log(error);
+      renderMarkupError(homeList);
     });
 }
 
-startWeather();
+// startWeather();
 
 categoriesList.addEventListener("click", onSearchCatehories);
+categoryOthers.addEventListener("click", onSearchCatehories);
