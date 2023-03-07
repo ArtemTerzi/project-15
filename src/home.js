@@ -6,6 +6,7 @@ import { fetchMostPopular } from './js/fetchMostPopular';
 import { getNormalizeResponse } from './js/fetches/getNormalizeResponse';
 import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
+import { renderMarkupError } from './js/renderMarkupError';
 
 // const list = document.querySelector('.home__list');
 
@@ -21,7 +22,11 @@ function renderByDefault() {
     const data = getNormalizeResponse(results, responseURL);
     const paginator = new Paginator();
     paginator.getRespForPagination(response, responseURL, data);
-  });
+  })
+  	.catch(error => {
+		console.log(error);
+		renderMarkupError(".home__inner");
+	});
 }
 
 renderByDefault();
@@ -46,7 +51,11 @@ function renderByInputAndDate() {
     const paginator = new Paginator();
     const data = getNormalizeResponse(docs, responseURL);
     paginator.getRespForPagination(answer, responseURL, data);
-  });
+  })
+  .catch(error => {
+		console.log(error);
+		renderMarkupError(".home__inner");
+	});;
 }
 
 // 	} = answer;
