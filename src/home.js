@@ -24,7 +24,7 @@ function renderByDefault() {
   });
 }
 
-renderByDefault();
+// renderByDefault();
 
 // 		} = response;
 // 	const responseURL = response.config.url;
@@ -36,18 +36,22 @@ renderByDefault();
 // });
 
 function renderByInputAndDate() {
-  fetchByInputSerchAndDate().then(answer => {
-    const {
-      data: {
-        response: { docs },
-      },
-    } = answer;
-    const responseURL = answer.config.url;
-    const paginator = new Paginator();
-    const data = getNormalizeResponse(docs, responseURL);
-    paginator.getRespForPagination(answer, responseURL, data);
-  });
+  fetchByInputSerchAndDate()
+    .then(answer => {
+      const {
+        data: {
+          response: { docs },
+        },
+      } = answer;
+      const responseURL = answer.config.url;
+      const paginator = new Paginator();
+      const data = getNormalizeResponse(docs, responseURL);
+      console.log(data)
+      paginator.getRespForPagination(answer, responseURL, data);
+    });
 }
+
+renderByInputAndDate();
 
 // 	} = answer;
 // 	const responseURL = answer.config.url;
@@ -59,4 +63,4 @@ function renderByInputAndDate() {
 // 	console.log(data);
 // });
 
-startWeather();
+// startWeather();

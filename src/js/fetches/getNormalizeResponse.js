@@ -1,5 +1,6 @@
 export function getNormalizeResponse(arr, url) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
+  const attachURL = "https://www.nytimes.com/";
 
   if (url.includes("mostpopular")) {
     return arr.map(news => {
@@ -25,7 +26,7 @@ export function getNormalizeResponse(arr, url) {
       });
   } else if (url.includes("articlesearch")) {
       return arr.map(news => {
-      if (!news.media) {
+      if (!news.multimedia) {
         return {
             img: `${defaultImg}`,
             title: `${news.headline.main}`,
@@ -37,7 +38,7 @@ export function getNormalizeResponse(arr, url) {
        }
        return {
             img: `${attachURL}${news.multimedia[0].url}`,
-         title: `${news.headline.main}`,
+            title: `${news.headline.main}`,
             section: `${news.section}`,
             text: `${createThreePoints(news.snippet)}`,
             date: `${convertoNormalDate(news.pub_date)}`,
