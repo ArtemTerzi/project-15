@@ -9,28 +9,30 @@ import { getMarkup } from './js/fetches/getMarkup';
 import { fetchByChoosenCategories } from './js/fetchByCategories';
 import { renderMarkupError } from './js/renderMarkupError';
 
-const searchFormElem = document.querySelector(".header__form");
+const searchFormElem = document.querySelector('.header__form');
 
 // const URL =
 //   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
 
 function renderByDefault() {
-  fetchMostPopular().then(response => {
-    const {
-      data: { results },
-    } = response;
-    const responseURL = response.config.url;
-    const data = getNormalizeResponse(results, responseURL);
-    const paginator = new Paginator();
-    paginator.getRespForPagination(response, responseURL, data);
-  })
-  	.catch(error => {
-		console.log(error);
-		renderMarkupError(".home__inner");
-	});
+  fetchMostPopular()
+    .then(response => {
+      if (response.status != 200) throw new Error(response.status);
+      const {
+        data: { results },
+      } = response;
+      const responseURL = response.config.url;
+      const data = getNormalizeResponse(results, responseURL);
+      const paginator = new Paginator();
+      paginator.getRespForPagination(response, responseURL, data);
+    })
+    .catch(error => {
+      console.error(error);
+      renderMarkupError('.home__inner');
+    });
 }
 
-// renderByDefault();
+renderByDefault();
 
 // 		} = response;
 // 	const responseURL = response.config.url;
@@ -42,26 +44,27 @@ function renderByDefault() {
 // });
 
 function renderByInputAndDate() {
-
   fetchByInputSerchAndDate()
-  .then(answer => {
-    const {
-      data: {
-        response: { docs },
-      },
-    } = answer;
-    const responseURL = answer.config.url;
-    const paginator = new Paginator();
-    const data = getNormalizeResponse(docs, responseURL);
-    paginator.getRespForPagination(answer, responseURL, data);
-  })
-  .catch(error => {
-		console.log(error);
-		renderMarkupError(".home__inner");
-	});;
+    .then(answer => {
+      if (answer.status != 200) throw new Error(response.status);
+
+      const {
+        data: {
+          response: { docs },
+        },
+      } = answer;
+      const responseURL = answer.config.url;
+      const paginator = new Paginator();
+      const data = getNormalizeResponse(docs, responseURL);
+      paginator.getRespForPagination(answer, responseURL, data);
+    })
+    .catch(error => {
+      console.error(error);
+      renderMarkupError('.home__inner');
+    });
 }
 
-renderByInputAndDate();
+// renderByInputAndDate();
 
 // 	} = answer;
 // 	const responseURL = answer.config.url;
@@ -73,21 +76,31 @@ renderByInputAndDate();
 // 	console.log(data);
 // });
 
-function onSubmitSearchForm(event) {
-  event.preventDefault();
-  const inputSaerch = event.currentTarget.elements.search.value;
+//TODO NEED TO CHANGE TO CATEGORIES FETCH (BUTTON)
 
-  fetchByChoosenCategories(inputSaerch)
-    .then(response => {
-      const {
-        data: { results },
-      } = response;
-      const responseURL = response.config.url;
-      const data = getNormalizeResponse(results, responseURL);
-      console.log(data);
-    });
-}
+// function onSubmitSearchForm(event) {
+//   event.preventDefault();
+//   const inputSaerch = event.currentTarget.elements.search.value;
 
-searchFormElem.addEventListener("submit", onSubmitSearchForm);
+//   fetchByChoosenCategories(inputSaerch)
+//     .then(response => {
+//       if (response.status != 200) throw new Error(response.status);
+
+//       const {
+//         data: { results },
+//       } = response;
+//       const responseURL = response.config.url;
+//       const data = getNormalizeResponse(results, responseURL);
+//       console.log(data);
+//     })
+//     .catch(error => {
+//       console.error(error);
+//       renderMarkupError('.home__inner');
+//     });
+// }
+
+// searchFormElem.addEventListener('submit', onSubmitSearchForm);
+
+//! END HERE
 
 // startWeather();
