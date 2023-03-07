@@ -1,4 +1,3 @@
-
 export function getMarkupError() {
   return `<div class="error">
   <h2 class="error-text">We haven’t found news from this category</h2>
