@@ -28,7 +28,7 @@ function renderByDefault() {
   });
 }
 
-renderByDefault();
+// renderByDefault();
 
 // 		} = response;
 // 	const responseURL = response.config.url;
@@ -87,6 +87,6 @@ function onSearchCatehories(event) {
     });
 }
 
-// startWeather();
+startWeather();
 
 categoriesList.addEventListener("click", onSearchCatehories);
