@@ -1,6 +1,6 @@
 import { getMarkupError } from './error';
 import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
-import { getMarkup } from "./fetches/getMarkup";
+import { getMarkup } from './fetches/getMarkup';
 import { refs } from './refs';
 
 // =======================  FOR TEST ==============================
@@ -96,28 +96,24 @@ import { refs } from './refs';
 const container = document.querySelector('main');
 const listReadNews = document.querySelector('.readPage-list');
 
-
-
-
 function createNewData() {
   return new Date(Date.now()).toLocaleString().split(',')[0];
 }
 
 listReadNews.addEventListener('click', onBtnReadMore);
 
-
 function onBtnReadMore(e) {
   // =======================  FOR TEST ==============================
-  e.preventDefault();
+  // e.preventDefault();
   // =======================  FOR TEST ==============================
 
   if (e.target.nodeName !== 'A') {
     return;
-  };
+  }
 
   const newsCard = e.target.parentNode.parentNode;
   const newsObj = makeObjectNews(newsCard);
-  
+
   try {
     const newsAllLocalStorage = JSON.parse(
       localStorage.getItem(refs.KEY_LOCAL_STORAGE)
@@ -130,13 +126,11 @@ function onBtnReadMore(e) {
 
     if (newsAllLocalStorage !== null) {
       for (const news of newsAllLocalStorage) {
-
         if (news.link === newsObj.link) {
-
           news.dateOfRead = createNewData();
           return;
-        };
-      };
+        }
+      }
 
       newsAllLocalStorage.push(newsObj);
       localStorage.setItem(
@@ -145,14 +139,12 @@ function onBtnReadMore(e) {
       );
     }
   } catch (error) {
-
     console.log(container);
     container.innerHTML = getMarkupError();
   }
 }
 
 function makeObjectNews(newsCard) {
-
   const section = newsCard.querySelector('.home__list-section').textContent;
   const img = newsCard.querySelector('.home__list-img').src;
   const alt = newsCard.querySelector('.home__list-img').alt;
@@ -177,9 +169,7 @@ function makeObjectNews(newsCard) {
 
   console.log(newsObj);
   return newsObj;
-
-};
-
+}
 
 makeArrNewsForPageRead();
 
@@ -199,49 +189,48 @@ function makeArrNewsForPageRead() {
 
     makeMarkapPageRead(arrNewsIsRead);
   } catch (error) {
-
     console.log(container);
     container.innerHTML = getMarkupError();
-  };
-};
-
+  }
+}
 
 function makeMarkapPageRead(arrayNewsRead) {
-
   const allDates = arrayNewsRead
     .flatMap(newsRead => newsRead.dateOfRead)
     .filter((date, idx, arr) => arr.indexOf(date) === idx);
 
-    function makeArrNewsDate(date, arrNews) {
-        const arrFilterDataNews = arrNews.filter((news) => news.dateOfRead === date);
-        return getMarkup(arrFilterDataNews);
-    };
-
+  function makeArrNewsDate(date, arrNews) {
+    const arrFilterDataNews = arrNews.filter(news => news.dateOfRead === date);
+    return getMarkup(arrFilterDataNews);
+  }
 
   const markapDatesRead = allDates
     .map(
       date =>
-        `<li class="readPage-list__item"><h2 class="readPage-list__title">${date.replaceAll('.','/')}</h2><svg class="readPage-list__svg" aria-label="open news" width="20px" height="20px">
+        `<li class="readPage-list__item"><h2 class="readPage-list__title">${date.replaceAll(
+          '.',
+          '/'
+        )}</h2><svg class="readPage-list__svg" aria-label="open news" width="20px" height="20px">
         <use href="/icons.adfc4680.svg#dilka-bottom"></use>
-    </svg><ul class="readPage-list__list  home__list">${makeArrNewsDate(date, arrayNewsRead)}</ul></li>`)
+    </svg><ul class="readPage-list__list  home__list">${makeArrNewsDate(
+      date,
+      arrayNewsRead
+    )}</ul></li>`
+    )
     .join('');
 
   listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
+}
 
-  };
+listReadNews.addEventListener('click', openListsReadNews);
 
+function openListsReadNews(e) {
+  if (e.target.nodeName !== 'H2') {
+    return;
+  }
 
-  listReadNews.addEventListener('click', openListsReadNews);
+  const titleDate = e.target;
+  titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
+}
 
-  function openListsReadNews(e) {
-
-    if (e.target.nodeName !== 'H2') {
-        return;
-      };
-    
-    const titleDate = e.target;
-    titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
-    
-   };
-
-   export { onBtnReadMore };
+export { onBtnReadMore };
