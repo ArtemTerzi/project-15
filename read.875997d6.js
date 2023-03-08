@@ -1,0 +1,2 @@
+var search=document.querySelector(".header__form"),header=document.querySelector(".header");search.addEventListener("click",(function(e){this.classList.add("search--active")})),header.addEventListener("click",(function(){search.classList.remove("search--active")}));var menu=document.getElementById("navigation"),currentPage=location.pathname;menu.querySelectorAll("a").forEach((function(e){e.getAttribute("href")===currentPage&&e.classList.add("navigation__link--current")}));
+//# sourceMappingURL=read.875997d6.js.map
