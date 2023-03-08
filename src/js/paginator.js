@@ -37,45 +37,99 @@ export class Paginator {
   constructor() {
     this.URL = '';
     this.page = 1;
-    this.totalItems = 10;
+    this.totalItems = null;
     this.isSearchQuery = false;
+    this.isCategorySearch = false;
+    this.isMostPopularSearch = false;
+    this.offset = null;
     this.itemsPerPage = 10;
-    this.visiblePages = 3;
+    this.visiblePages = 1;
     this.container = list;
     this.data = [];
   }
-  getRespForPagination(response, responseURL, data) {
+  getRespForPagination(response, responseURL, data, results) {
     this.URL = responseURL;
-    console.log(responseURL);
     this.data = data;
-    console.log(data);
+
+    if (window.frames.innerWidth >= 320) this.visiblePages = 3;
 
     if (this.URL.includes('articlesearch')) this.isSearchQuery = true;
-    if (window.frames.innerWidth <= 320) this.visiblePages = 1;
+    if (this.URL.includes('v3/content/')) this.isCategorySearch = true;
+    if (this.URL.includes('mostpopular/v2')) this.isMostPopularSearch = true;
 
     if (this.isSearchQuery) {
       this.totalItems = response.data.response.meta.hits;
-      const docs = response.data.response.docs;
-      const normalized = getNormalizeResponse(docs, responseURL);
-      this.container.innerHTML = getMarkup(normalized);
-
-      this.clearPageNumberToURL();
-      this.addPageNumberToURL();
-      // } else if (this.URL.includes('mostpopular/v2/viewed/')) {
-      //   this.hide();
-    } else {
+      if (this.totalItems <= this.itemsPerPage) this.hide();
+      this.updatePageNumberToURL();
+      this.makeFetchForSearchByQuery();
+    } else if (this.isCategorySearch) {
       this.totalItems = response.data.num_results;
-      this.container.innerHTML = getMarkup(
-        data.slice(this.page, this.page + this.itemsPerPage)
-      );
-    }
+      if (this.totalItems <= this.itemsPerPage) this.hide();
 
+      this.makeFetchForSearhByCategory();
+      this.updateURLWithOffset();
+    } else if (this.isMostPopularSearch) {
+      this.totalItems = response.data.num_results;
+      if (this.totalItems <= this.itemsPerPage) this.hide();
+
+      this.makeFetchForSearhByPopular();
+    }
     if (this.totalItems <= 10) this.hide();
+
     this.initPagination(this.page);
   }
 
-  forMobile() {
-    if (window.frames.innerWidth <= 320) this.visiblePages = 1;
+  updateURLWithOffset() {
+    this.offset = this.itemsPerPage * (this.page - 1) + this.itemsPerPage;
+
+    this.URL = this.URL.includes('&limit=')
+      ? this.URL.substring(0, this.URL.search('&limit='))
+      : (this.URL = this.URL);
+    this.URL = this.URL + `&limit=${this.itemsPerPage}&offset=${this.offset}`;
+  }
+
+  checkNumItems() {
+    if (this.totalItems <= 10) this.hide();
+  }
+  // forMobile() {
+  //   if (window.frames.innerWidth <= 320) this.visiblePages = 1;
+  // }
+
+  async makeFetchForSearchByQuery() {
+    await axios.get(this.URL).then(answer => {
+      const {
+        data: {
+          response: { docs },
+        },
+      } = answer;
+      const responseURL = answer.config.url;
+      this.data = getNormalizeResponse(docs, responseURL);
+      this.container.innerHTML = getMarkup(this.data);
+    });
+  }
+
+  async makeFetchForSearhByCategory() {
+    await axios.get(this.URL).then(response => {
+      const {
+        data: { results },
+      } = response;
+      this.URL = response.config.url;
+      this.data = getNormalizeResponse(results, this.URL);
+      this.container.innerHTML = getMarkup(this.data);
+    });
+  }
+
+  async makeFetchForSearhByPopular() {
+    await axios.get(this.URL).then(response => {
+      const {
+        data: { results },
+      } = response;
+      this.URL = response.config.url;
+      this.data = getNormalizeResponse(results, this.URL);
+      this.container.innerHTML = getMarkup(
+        this.data.splice(this.itemsPerPage * (this.page - 1), this.itemsPerPage)
+      );
+    });
   }
 
   show() {
@@ -100,10 +154,10 @@ export class Paginator {
   }
 
   updatePageNumberToURL() {
-    this.URL = this.URL.includes('page=')
+    this.URL = this.URL.includes('&page=')
       ? this.URL.substring(0, this.URL.search('&page='))
       : (this.URL = this.URL);
-    this.URL = this.URL + `&page=${this.page}`;
+    this.URL = this.URL + `&page=${this.page - 1}`;
   }
 
   changeCurrentPage(page) {
@@ -113,7 +167,7 @@ export class Paginator {
   initPagination(page) {
     const paginationOptions = {
       totalItems: this.totalItems,
-      page: this.page,
+      page: page,
       itemsPerPage: this.itemsPerPage,
       visiblePages: this.visiblePages,
       centerAlign: true,
@@ -141,26 +195,20 @@ export class Paginator {
       try {
         const { page } = event;
         this.page = pagination.getCurrentPage();
-        this.updatePageNumberToURL(page);
-        this.container.innerHTML = getMarkup(
-          this.data.splice(this.page, this.page + this.itemsPerPage)
-        );
-        if (this.isSearchQuery) {
-          this.clearPageNumberToURL(page);
-          this.addPageNumberToURL(page);
-          await axios.get(this.URL).then(answer => {
-            const {
-              data: {
-                response: { docs },
-              },
-            } = answer;
-            // const responseURL = answer.config.url;
-            // const data = getNormalizeResponse(docs, responseURL);
-            // this.container.innerHTML = '';
-            // this.container.innerHTML = getMarkup(data);
-          });
+        if (window.frames.innerWidth >= 320) {
+          this.visiblePages = 3;
         } else {
-          // const data = getNormalizeResponse(results, responseURL);
+          this.visiblePages = 1;
+        }
+
+        if (this.isSearchQuery) {
+          this.updatePageNumberToURL();
+          this.makeFetchForSearchByQuery();
+        } else if (this.isCategorySearch) {
+          this.updateURLWithOffset(this.URL);
+          this.makeFetchForSearhByCategory();
+        } else if (this.isMostPopularSearch) {
+          this.makeFetchForSearhByPopular();
         }
       } catch (err) {
         console.log(err);
@@ -169,6 +217,3 @@ export class Paginator {
     });
   }
 }
-
-// const paginator = new Paginator();
-// paginator.getRespForPagination();
