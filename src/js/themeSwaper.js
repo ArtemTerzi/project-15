@@ -34,3 +34,5 @@ function themeSwitcherToggle(checked) {
     checkboxArray.forEach(el => el.classList.remove('checkbox-on'))
   }
 }
+
+

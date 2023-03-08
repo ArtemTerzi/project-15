@@ -1,194 +1,172 @@
-@media (min-width: 768px){
-    .menu-container,
-    .modalBtn{
-        display: none;
-    }
+@media screen and (min-width: 768px) {
+  .menu-container,
+  .modalBtn {
+    display: none;
+  }
 }
 
-@media  (max-width: 767px) {
-    // .navigation__list{
-    //     display: none;
-    // }
+@media screen and (max-width: 767px) {
+  @include mobile {
+    .menu-container {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      align-items: baseline;
 
-    // .theme-swapper{
-    //     display: none;
-    // }
-
-    // .tui-pagination{
-    //     display: none;
-    // }
-    
-
-    .menu-container{
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        bottom: 0;
-        padding: 0 16px;
-        background-color: #F4F4F4;
-    }
-    .menu-container .is-closed {
-        display: none;
-    }
-   
-    .dark-theme .menu-container{
-        background-color:#2E2E2E;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 16px;
+      background-color: #f4f4f4;
     }
 
-    .logo-modal{
-        font-family: 'Manrope';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 24;
-        color: inherit;
-    
-        padding-top: 24px;
-        padding-bottom: 24px;
-
-        margin-bottom: 44px;
-    
-
-        line-height: 33px;
+    .menu-container.is-closed {
+      opacity: 0;
+      visibility: hidden;
     }
 
-
-    .backdrop .is-closed{
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 16px;
-        left: 16px;
-        background-color: #F4F4F4;
-        
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        visibility: hidden;
+    .dark-theme .menu-container {
+      background-color: #2e2e2e;
     }
-    
-    .mobile-menu__button{
-        z-index: 5;
-        display: block;
-        position: relative;
-        width: 18px;
-        height: 15px;
-        cursor: pointer;
+
+    .logo-modal {
+      font-family: 'Manrope';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24;
+      color: inherit;
+
+      padding-top: 11px;
+      padding-bottom: 24px;
+
+      margin-bottom: 44px;
+      line-height: 0, 75;
+    }
+
+    .mobile-menu__button {
+      z-index: 5;
+      display: block;
+      position: relative;
+      width: 18px;
+      height: 15px;
+      cursor: pointer;
+      padding-right: 16px;
+      padding-left: auto;
     }
 
     .mobile-menu__button span,
     .mobile-menu__button:before,
-    .mobile-menu__button::after{
-        right: 0;
-        position: absolute;
-        height: 10%;
-        width: 100%;
-        transition: all 0.3s ease 0s;
-        background-color: black;
+    .mobile-menu__button::after {
+      right: 0;
+      position: absolute;
+      height: 10%;
+      width: 100%;
+      transition: all 0.3s ease 0s;
+      background-color: #111321;
     }
 
     .mobile-menu__button:before,
-    .mobile-menu__button::after{
-        content: "";
+    .mobile-menu__button::after {
+      content: '';
     }
 
-    .mobile-menu__button:before{
-        top: 0;
+    .mobile-menu__button:before {
+      top: 0;
     }
 
-    .mobile-menu__button::after{
-        bottom: 0;
+    .mobile-menu__button::after {
+      bottom: 0;
     }
 
-    .mobile-menu__button span{
-        top: 50%;
-        transform: scale(1) translate(0px, -50%);
+    .mobile-menu__button span {
+      top: 50%;
+      transform: scale(1) translate(0px, -50%);
     }
 
-    .mobile-menu__button.active::before{
-        transform: rotate(50deg);
-        top: 7px;
+    .mobile-menu__button.active {
+      position: fixed;
     }
 
-    .mobile-menu__button.active::after{
-        transform: rotate(-50deg);
-        bottom: 7px;
+    .mobile-menu__button.active::before {
+      transform: rotate(50deg);
+      top: 7px;
     }
 
-    .mobile-menu__button.active span{
-        transform: scale(0);
+    .mobile-menu__button.active::after {
+      transform: rotate(-50deg);
+      bottom: 7px;
+    }
+
+    .mobile-menu__button.active span {
+      transform: scale(0);
     }
 
     .dark-theme .mobile-menu__button span {
-        background-color: white;
+      background-color: #f4f4f4;
     }
-    
+
     .dark-theme .mobile-menu__button:before {
-        background-color: white;
+      background-color: #f4f4f4;
     }
-    
+
     .dark-theme .mobile-menu__button:after {
-        background-color: white;
+      background-color: #f4f4f4;
     }
 
-    .mobile-menu{
-        display: inline-block;
-        position: relative;
-        width: 100%;
-        z-index: 1;
-
+    .mobile-menu {
+      display: inline-block;
+      position: relative;
+      width: 100%;
+      z-index: 5;
     }
 
-    .mobile-menu__item{
-        display: flex;
-        align-items: center;
-        margin-top: 12px;
-        margin-bottom: 12px;
+    .mobile-menu__item {
+      display: flex;
+      align-items: center;
+      margin-top: 12px;
+      margin-bottom: 12px;
     }
 
     .mobile-menu__item:hover,
     .mobile-menu__item:focus,
-    .mobile-menu__item:active{
-        cursor: pointer;
-        color: #F4F4F4;
-        background-color: #4440F6;
+    .mobile-menu__item:active {
+      cursor: pointer;
+      color: #f4f4f4;
+      background-color: #4440f6;
     }
 
-    .mobile-menu__icon{
-        fill: #4440F6;
-        margin-right: 14px;
-        // padding-top: 6px;
-        // padding-bottom: 6px;
+    .mobile-menu__icon {
+      fill: #4440f6;
+      margin-right: 14px;
     }
 
-    .dark-theme .mobile-menu__icon{
-        fill: #4440F6;
+    .dark-theme .mobile-menu__icon {
+      fill: #4440f6;
     }
 
-    .mobile-menu__icon-arrow{
-        display: flex;
-        margin-right: 16px;
-        margin-left: auto;
-        fill: rgba(0, 0, 0, 0);
+    .mobile-menu__icon-arrow {
+      display: flex;
+      margin-right: 16px;
+      margin-left: auto;
+      fill: rgba(0, 0, 0, 0);
     }
 
-    .dark-theme .mobile-menu__icon-arrow{
-        fill: rgba(0, 0, 0, 0);
+    .dark-theme .mobile-menu__icon-arrow {
+      fill: rgba(0, 0, 0, 0);
     }
 
-    .mobile-menu__link{
-        font-size: 16;
-        color: inherit;
+    .mobile-menu__link {
+      font-size: 16;
+      color: inherit;
+      padding-top: 3px;
+      padding-bottom: 3px;
+      padding-right: 300px;
     }
 
-    .menu-container .theme-swapper{
-        margin-bottom: 16px;
-        margin-top: auto;
+    .menu-container .theme-swapper {
+      margin-bottom: 16px;
+      margin-top: auto;
     }
-
+  }
 }
-

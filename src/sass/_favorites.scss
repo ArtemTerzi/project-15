@@ -204,3 +204,26 @@
   background-color: rgba(68, 64, 247, 0.7);
   border-radius: 0px 4px 4px 0px;
 }
+
+.isFavorite {
+  position: absolute;
+  padding-left: 12px;
+  height: 28px;
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: center;
+  background: #fff;
+  border-radius: 20px;
+  color: #111321;
+  right: 8px;
+  bottom: 12px;
+  @media screen and (min-width: 768px) {
+    right: 12px;
+  }
+  @media screen and (min-width: 1200px) {
+    right: 12px;
+  }
+}

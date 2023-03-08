@@ -7,43 +7,115 @@ import { getNormalizeResponse } from './js/fetches/getNormalizeResponse';
 import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
 import { refs } from './js/refs';
+import { fetchByChoosenCategories } from './js/fetchByCategories';
+import { renderMarkupError } from './js/renderMarkupError';
+import WeatherMarkupApi from './js/weather/waether-markup';
+// import './js/firebaseData';
 
-const list = document.querySelector(".home__list");
+const homeInner = document.querySelector(".home__inner");
+const categoriesList = document.querySelector(".category-list");
+const homeList = document.querySelector(".home__list");
+const categoryOthers = document.querySelector(".category-others");
 
-const URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&"
-fetchMostPopular()
-	.then(response => {
-		const {
-			data: { results },
-			} = response;
-		const responseURL = response.config.url;
-		const paginator = new Paginator();
-		paginator.getURL(responseURL);
-		paginator.getRespForPagination(responseURL);
-		const data = getNormalizeResponse(results, responseURL);
-		list.insertAdjacentHTML("beforeend", getMarkup(data));
-	});
+// homeInner.style.height = `${homeInner.style.height} - ${700}px`;
+homeInner.getBoundingClientRect().height = homeInner.getBoundingClientRect().height - 700;
+console.log(homeInner.getBoundingClientRect().height);
 
-fetchByInputSerchAndDate()
-	.then(answer => {
-		const {
-		data: {
-			response: { docs },
-		},
-		} = answer;
-		const responseURL = answer.config.url;
-		const paginator = new Paginator();
-		paginator.getURL(responseURL);
-		paginator.getRespForPagination(responseURL);
-		const data = getNormalizeResponse(docs, URL);
-		// list.insertAdjacentHTML("beforeend", getMarkup(data))
-		console.log(data);
-	});
+// homeInner.style.height = `${homeInner.scrollHeight} - ${700}px`;
+
+// const URL =
+//   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
+
+
+function renderByDefault() {
+  fetchMostPopular()
+    .then(response => {
+      if (response.status != 200) throw new Error(response.status);
+      const {
+        data: { results },
+      } = response;
+      const responseURL = response.config.url;
+      const data = getNormalizeResponse(results, responseURL);
+      const paginator = new Paginator();
+      paginator.getRespForPagination(response, responseURL, data);
+    })
+    .catch(error => {
+      console.error(error);
+      renderMarkupError('.home__inner');
+    });
+}
+
+renderByDefault();
+
+// 		} = response;
+// 	const responseURL = response.config.url;
+// 	const paginator = new Paginator();
+// 	paginator.getURL(responseURL);
+// 	paginator.getRespForPagination(responseURL);
+// 	const data = getNormalizeResponse(results, responseURL);
+// 	list.insertAdjacentHTML("beforeend", getMarkup(data));
+// });
+
+function renderByInputAndDate() {
+  fetchByInputSerchAndDate()
+    .then(answer => {
+      if (answer.status != 200) throw new Error(response.status);
+
+      const {
+        data: {
+          response: { docs },
+        },
+      } = answer;
+      const responseURL = answer.config.url;
+      const paginator = new Paginator();
+      const data = getNormalizeResponse(docs, responseURL);
+      paginator.getRespForPagination(answer, responseURL, data);
+    })
+    .catch(error => {
+      console.error(error);
+      renderMarkupError('.home__inner');
+    });
+}
+
+// renderByInputAndDate();
+
+// 	} = answer;
+// 	const responseURL = answer.config.url;
+// 	const paginator = new Paginator();
+// 	paginator.getURL(responseURL);
+// 	paginator.getRespForPagination(responseURL);
+// 	const data = getNormalizeResponse(docs, URL);
+// 	// list.insertAdjacentHTML("beforeend", getMarkup(data))
+// 	console.log(data);
+// });
+
+function onSearchCatehories(event) {
+  if (event.target.nodeName !== "LI") {
+    return;
+  }
+
+  const category = event.target.textContent;
+
+  fetchByChoosenCategories(category)
+    .then(response => {
+      const {
+        data: { results },
+      } = response;
+      const responseURL = response.config.url;
+      const data = getNormalizeResponse(results, responseURL);
+      homeList.innerHTML = getMarkup(data);
+      // weatherMarkupApi.getWeatherMurkup();
+
+    }).catch(error => {
+      console.log(error);
+      renderMarkupError(homeList);
+    });
+}
 
 startWeather();
 
-
-list.addEventListener('click', onBtnReadMore);
+//! start new function for localStorage for read 
+homeList.addEventListener('click', onBtnReadMore);
 
 function onBtnReadMore(e) {
 
@@ -56,7 +128,7 @@ function onBtnReadMore(e) {
 	const img = newsCard.querySelector('.home__list-img').src;
 	const alt = newsCard.querySelector('.home__list-img').alt;
 	const title = newsCard.querySelector('.home__list-title').textContent;
-	const text = newsCard.querySelector('.home__list-text').textContent;
+	const text = newsCard.querySelector('.home__lit-text').textContent;
 	const date = newsCard.querySelector('.home__list-date').textContent;
 	const link = newsCard.querySelector('.home__list-link').href;
 	const dateOfRead = createNewData();
@@ -90,6 +162,7 @@ function onBtnReadMore(e) {
 			const news = newsAllLocalStorage[i];
 			if (news.link === newsObj.link) {
 				news.dateOfRead = createNewData();
+        news.isRead = true;
 			};
 		};
   
@@ -100,11 +173,13 @@ function onBtnReadMore(e) {
 		);
 	  }
 	} catch (error) {
-  
-	  console.log(error);
+  	  console.error(error);
 	}
+  
 	function createNewData() {
 		return new Date(Date.now()).toLocaleString().split(',')[0];
 	  }
   };
-  
+
+categoriesList.addEventListener("click", onSearchCatehories);
+categoryOthers.addEventListener("click", onSearchCatehories);

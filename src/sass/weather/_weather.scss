@@ -12,14 +12,26 @@ button {
 .weather {
   background-color: #4440f6;
   color: #ffffff;
+  max-width: 395px;
   width: 100%;
   height: 675px;
   padding: 40px 15px 60px;
   border-radius: 4px;
-  z-index: 1;
+  position: relative;
+  z-index: 2;
+  margin: 0 auto 30px;
 
   &.load {
     background-color: rgb(98, 145, 233);
+  }
+
+  @include tablet {
+    max-width: 353px;
+    margin: 0px 0px 30px auto;
+  }
+
+  @include desktop {
+    max-width: 395px;
   }
 }
 
@@ -78,10 +90,12 @@ button {
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  max-height: 675px;
 }
 
 .weather-container__top {
   display: flex;
+  margin-bottom: 50px;
 }
 
 .weather-container__deg {
@@ -130,6 +144,7 @@ button {
   background-size: cover;
   background-position: center;
   height: 165px;
+  margin-bottom: 50px;
 
   &.cloudy {
     background-image: url('../images-weather/cloudy.png');
@@ -151,6 +166,7 @@ button {
 
 .weather-container__footer {
   text-align: center;
+  margin-top: auto;
 }
 
 .weather-container__footer-day,

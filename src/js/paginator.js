@@ -4,8 +4,10 @@ import {
   fetchByChoosenCategories,
   markupForSearchByCategories,
 } from './fetchByCategories';
-import './fetchByInputAndDate';
-import './fetchMostPopular';
+import { fetchByInputSerchAndDate } from './fetchByInputAndDate';
+import { fetchMostPopular } from './fetchMostPopular';
+import { getMarkup } from './fetches/getMarkup';
+import { getNormalizeResponse } from './fetches/getNormalizeResponse';
 import './fetchNewsCategories';
 import { options } from './refs.js';
 
@@ -30,59 +32,112 @@ const totalItems = response.data.num_results;
  */
 
 const containerPagination = document.querySelector('.tui-pagination'); // to refs
-const ENDPOINT_URL = `https://api.nytimes.com/svc/news/v3/content/all/food.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`;
-// const ENDPOINT_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&`;
-// const ENDPOINT_URL = `https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g`;
-// const ENDPOINT_URL =
-//   'https://api.nytimes.com/svc/news/v3/content/section-list.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g';
+const list = document.querySelector('.home__list');
 export class Paginator {
   constructor() {
+    this.URL = '';
     this.page = 1;
-    // this.searchQuery = '';
-    this.URL = ENDPOINT_URL;
-    // this.URL_withPage = ENDPOINT_URL + `p=${this.page}`;
+    this.totalItems = null;
     this.isSearchQuery = false;
-    this.totalItems = 10;
+    this.isCategorySearch = false;
+    this.isMostPopularSearch = false;
+    this.offset = null;
+    this.itemsPerPage = 10;
+    this.visiblePages = 1;
+    this.container = list;
+    this.data = [];
   }
-  async getRespForPagination() {
-    const URL = this.URL;
-    // const URL = `https://api.nytimes.com/svc/news/v3/content/all/food.json?api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&p=${this.page}`;
-    const response = await axios.get(URL);
+  getRespForPagination(response, responseURL, data, results) {
+    this.URL = responseURL;
+    this.data = data;
+
+    if (window.frames.innerWidth >= 320) this.visiblePages = 3;
 
     if (this.URL.includes('articlesearch')) this.isSearchQuery = true;
+    if (this.URL.includes('v3/content/')) this.isCategorySearch = true;
+    if (this.URL.includes('mostpopular/v2')) this.isMostPopularSearch = true;
 
     if (this.isSearchQuery) {
       this.totalItems = response.data.response.meta.hits;
-      this.clearPageNumberToURL();
-      this.addPageNumberToURL();
-    } else {
+      if (this.totalItems <= this.itemsPerPage) this.hide();
+      this.updatePageNumberToURL();
+      this.makeFetchForSearchByQuery();
+    } else if (this.isCategorySearch) {
       this.totalItems = response.data.num_results;
+      if (this.totalItems <= this.itemsPerPage) this.hide();
+
+      this.makeFetchForSearhByCategory();
+      this.updateURLWithOffset();
+    } else if (this.isMostPopularSearch) {
+      this.totalItems = response.data.num_results;
+      if (this.totalItems <= this.itemsPerPage) this.hide();
+
+      this.makeFetchForSearhByPopular();
     }
+    if (this.totalItems <= 10) this.hide();
 
-    const totalItems = this.totalItems;
+    this.initPagination(this.page);
+  }
 
-    console.log(this.totalItems, 'change TI');
-    // const data = response.data.response;
-    // console.log(response, 'resp get');
-    // const totalItems = response.data.response.meta.hits; // fetchByInputAndDate
-    // const responseURL = response.config.url; // fetchByInputAndDate
-    const responseURL = response.config.url;
-    // const totalItems = response.data.num_results;
+  updateURLWithOffset() {
+    this.offset = this.itemsPerPage * (this.page - 1) + this.itemsPerPage;
 
-    const page = this.page;
-    // const dataObj = {
-    //   articles1,
-    //   totalHits,
-    //   totalPages,
-    //   page,
-    // };
+    this.URL = this.URL.includes('&limit=')
+      ? this.URL.substring(0, this.URL.search('&limit='))
+      : (this.URL = this.URL);
+    this.URL = this.URL + `&limit=${this.itemsPerPage}&offset=${this.offset}`;
+  }
 
-    console.log(this.isSearchQuery);
-    console.log(responseURL);
-    console.log(totalItems, 'totalItems');
+  checkNumItems() {
+    if (this.totalItems <= 10) this.hide();
+  }
+  // forMobile() {
+  //   if (window.frames.innerWidth <= 320) this.visiblePages = 1;
+  // }
 
-    this.initPagination({ totalItems, page });
-    return totalItems;
+  async makeFetchForSearchByQuery() {
+    await axios.get(this.URL).then(answer => {
+      const {
+        data: {
+          response: { docs },
+        },
+      } = answer;
+      const responseURL = answer.config.url;
+      this.data = getNormalizeResponse(docs, responseURL);
+      this.container.innerHTML = getMarkup(this.data);
+    });
+  }
+
+  async makeFetchForSearhByCategory() {
+    await axios.get(this.URL).then(response => {
+      const {
+        data: { results },
+      } = response;
+      this.URL = response.config.url;
+      this.data = getNormalizeResponse(results, this.URL);
+      this.container.innerHTML = getMarkup(this.data);
+    });
+  }
+
+  async makeFetchForSearhByPopular() {
+    await axios.get(this.URL).then(response => {
+      const {
+        data: { results },
+      } = response;
+      this.URL = response.config.url;
+      this.data = getNormalizeResponse(results, this.URL);
+      this.container.innerHTML = getMarkup(
+        this.data.splice(this.itemsPerPage * (this.page - 1), this.itemsPerPage)
+      );
+    });
+  }
+
+  show() {
+    containerPagination.removeClassList('visually-hidden');
+  }
+
+  hide() {
+    containerPagination.addClassList('visually-hidden');
   }
 
   getURL(URL) {
@@ -90,34 +145,31 @@ export class Paginator {
   }
 
   addPageNumberToURL() {
-    this.URL = this.URL + `p=${this.page}`;
-    console.log(this.URL, 'add pageNum');
+    this.URL = this.URL + `&page=${this.page}`;
   }
   clearPageNumberToURL() {
-    this.URL = this.URL.includes('p=')
-      ? this.URL.substring(0, this.URL.search('p='))
+    this.URL = this.URL.includes('&page=')
+      ? this.URL.substring(0, this.URL.search('&page='))
       : (this.URL = this.URL);
-    console.log(this.URL, 'del pageNum');
   }
 
-  updatePageNumberToURL(page) {
-    this.URL = this.URL.includes('p=')
-      ? this.URL.substring(0, this.URL.search('p='))
+  updatePageNumberToURL() {
+    this.URL = this.URL.includes('&page=')
+      ? this.URL.substring(0, this.URL.search('&page='))
       : (this.URL = this.URL);
-    this.URL = this.URL + `p=${this.page}`;
+    this.URL = this.URL + `&page=${this.page - 1}`;
   }
 
   changeCurrentPage(page) {
     this.page = page;
   }
 
-  initPagination(event) {
-    const { totalItems, page } = event;
+  initPagination(page) {
     const paginationOptions = {
-      totalItems,
-      page,
-      itemsPerPage: 10,
-      visiblePages: 3,
+      totalItems: this.totalItems,
+      page: page,
+      itemsPerPage: this.itemsPerPage,
+      visiblePages: this.visiblePages,
       centerAlign: true,
       firstItemClassName: 'tui-first-child',
       lastItemClassName: 'tui-last-child',
@@ -141,34 +193,27 @@ export class Paginator {
     paginationOptions.page = pagination;
     pagination.on('afterMove', async event => {
       try {
-        const { page, totalItems } = event;
-        if (this.isSearchQuery) {
-          this.changeCurrentPage(page);
-          this.updatePageNumberToURL(page);
-          this.getRespForPagination();
+        const { page } = event;
+        this.page = pagination.getCurrentPage();
+        if (window.frames.innerWidth >= 320) {
+          this.visiblePages = 3;
+        } else {
+          this.visiblePages = 1;
         }
-        // const data = await paginator.getRespForPagination();
 
-        // const { page, totalItems } = event;
-        // fetchByChoosenCategories('food'); // повинен викликатися фетч і розмітка, фетч для searchQuery викликається окремо для сторінок
-        // this.getRespForPagination();
-
-        // const totalItems = data;
-        // console.log(totalItems, 'data');
-        // const totalItems = data.totalHits;
-        // Paginator.totalItems = totalItems;
-
-        // this.addPageNumberToURL();
-        // console.log(pageCur, 'get curPg');
-        console.log(page, 'curPg');
-        console.log(this.page, 'new curPg');
+        if (this.isSearchQuery) {
+          this.updatePageNumberToURL();
+          this.makeFetchForSearchByQuery();
+        } else if (this.isCategorySearch) {
+          this.updateURLWithOffset(this.URL);
+          this.makeFetchForSearhByCategory();
+        } else if (this.isMostPopularSearch) {
+          this.makeFetchForSearhByPopular();
+        }
       } catch (err) {
         console.log(err);
       }
-      return page;
+      return pagination;
     });
   }
 }
-
-const paginator = new Paginator();
-paginator.getRespForPagination();

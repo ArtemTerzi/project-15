@@ -4,8 +4,8 @@ import { addSpinner, removeSpinner } from "./spinner";
 const weatherMarkupApi = new WeatherMarkupApi();
 
 class WeatherNewsApi {
-	constructor() {
-		this.weatherElem = document.querySelector(".weather");
+	constructor(container) {
+		this.weatherElem = document.querySelector(`${container}`);
 		this.apiKey = "c76da9d16a38d15146607ff522b06c37";
 	}
 
@@ -37,12 +37,14 @@ class WeatherNewsApi {
 			const resopnse = await fetch(BASE_URL);
 			const data = await resopnse.json();
 			await this.weatherElem.insertAdjacentHTML("beforeend", weatherMarkupApi.getWeatherMurkup(data));
-
+			
 			if (this.weatherElem.children.length > 0) {
 				this.removeClassLoad(this.weatherElem);
 				this.removeClassLoad(preloadWrapper);
 				removeSpinner(preloadWrapper);
 			}
+
+			return weatherMarkupApi.getWeatherMurkup(data);
 		} catch (error) {
 			console.log(error);
 		}

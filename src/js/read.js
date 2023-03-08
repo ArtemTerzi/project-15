@@ -1,6 +1,6 @@
 import { getMarkupError } from './error';
 import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
-import { getMarkup } from "./fetches/getMarkup";
+import { getMarkup } from './fetches/getMarkup';
 import { refs } from './refs';
 
 // =======================  FOR TEST ==============================
@@ -96,21 +96,21 @@ import { refs } from './refs';
 const container = document.querySelector('main');
 const listReadNews = document.querySelector('.readPage-list');
 
+
+function createNewData() {
+  return new Date(Date.now()).toLocaleString().split(',')[0];
+}
+
 listReadNews.addEventListener('click', onBtnReadMore);
 
-
 function onBtnReadMore(e) {
-  // =======================  FOR TEST ==============================
-//   e.preventDefault();
-  // =======================  FOR TEST ==============================
-
   if (e.target.nodeName !== 'A') {
     return;
-  };
+  }
 
   const newsCard = e.target.parentNode.parentNode;
   const newsObj = makeObjectNews(newsCard);
-  
+
   try {
     const newsAllLocalStorage = JSON.parse(
       localStorage.getItem(refs.KEY_LOCAL_STORAGE)
@@ -127,6 +127,7 @@ function onBtnReadMore(e) {
         const news = newsAllLocalStorage[i];
         if (news.link === newsObj.link) {
             news.dateOfRead = createNewData();
+            news.isRead = true;
         };
     }
 
@@ -137,14 +138,12 @@ function onBtnReadMore(e) {
       );
     }
   } catch (error) {
-
-    console.log(error);
+    console.error(error);
     container.innerHTML = getMarkupError();
   }
 }
 
 function makeObjectNews(newsCard) {
-
   const section = newsCard.querySelector('.home__list-section').textContent;
   const img = newsCard.querySelector('.home__list-img').src;
   const alt = newsCard.querySelector('.home__list-img').alt;
@@ -168,12 +167,7 @@ function makeObjectNews(newsCard) {
   };
 
   return newsObj;
-
-};
-
-function createNewData() {
-    return new Date(Date.now()).toLocaleString().split(',')[0];
-  }
+}
 
 
 makeArrNewsForPageRead();
@@ -196,21 +190,18 @@ function makeArrNewsForPageRead() {
   } catch (error) {
     console.log(error);
     container.innerHTML = getMarkupError();
-  };
-};
-
+  }
+}
 
 function makeMarkapPageRead(arrayNewsRead) {
-
   const allDates = arrayNewsRead
     .flatMap(newsRead => newsRead.dateOfRead)
     .filter((date, idx, arr) => arr.indexOf(date) === idx);
 
-    function makeArrNewsDate(date, arrNews) {
-        const arrFilterDataNews = arrNews.filter((news) => news.dateOfRead === date);
-        return getMarkup(arrFilterDataNews);
-    };
-
+  function makeArrNewsDate(date, arrNews) {
+    const arrFilterDataNews = arrNews.filter(news => news.dateOfRead === date);
+    return getMarkup(arrFilterDataNews);
+  }
 
   const markapDatesRead = allDates.map(
       date =>
@@ -223,13 +214,23 @@ function makeMarkapPageRead(arrayNewsRead) {
     </li>`).join('');
 
   listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
+}
 
-  };
+listReadNews.addEventListener('click', openListsReadNews);
 
+function openListsReadNews(e) {
+  if (e.target.nodeName !== 'H2') {
+    return;
+  }
 
-  listReadNews.addEventListener('click', openListsReadNews);
+  const titleDate = e.target;
+  titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
+}
 
-  function openListsReadNews(e) {
+function openListsReadNews(e) {
+  if (e.target.nodeName !== 'H2') {
+    return;
+  }
 
     if (e.target.nodeName !== 'H2') {
         return;
@@ -241,4 +242,4 @@ function makeMarkapPageRead(arrayNewsRead) {
     
    };
 
-   export { onBtnReadMore };
+export { onBtnReadMore, makeArrNewsForPageRead };
