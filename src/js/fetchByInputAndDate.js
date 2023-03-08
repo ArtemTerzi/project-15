@@ -17,10 +17,11 @@ let query = '';
 
 // _________________________add function for remove eventListener
 
-if (window.location.pathname === '/index.html') {
-  searchForm.addEventListener('submit', handleSubmit);
-}
+// if (window.location.pathname === '/index.html') {
+//   searchForm.addEventListener('submit', handleSubmit);
+// }
 
+searchForm.addEventListener('submit', handleSubmit);
 
 function handleSubmit(e) {
   e.preventDefault();
