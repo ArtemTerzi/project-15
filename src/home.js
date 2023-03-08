@@ -11,11 +11,16 @@ import { renderMarkupError } from './js/renderMarkupError';
 import WeatherMarkupApi from './js/weather/waether-markup';
 // import './js/firebaseData';
 
+const homeInner = document.querySelector(".home__inner");
 const categoriesList = document.querySelector(".category-list");
 const homeList = document.querySelector(".home__list");
 const categoryOthers = document.querySelector(".category-others");
 
-const weatherMarkupApi = new WeatherMarkupApi();
+// homeInner.style.height = `${homeInner.style.height} - ${700}px`;
+homeInner.getBoundingClientRect().height = homeInner.getBoundingClientRect().height - 700;
+console.log(homeInner.getBoundingClientRect().height);
+
+// homeInner.style.height = `${homeInner.scrollHeight} - ${700}px`;
 
 // const URL =
 //   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
@@ -106,7 +111,7 @@ function onSearchCatehories(event) {
     });
 }
 
-// startWeather();
+startWeather();
 
 categoriesList.addEventListener("click", onSearchCatehories);
 categoryOthers.addEventListener("click", onSearchCatehories);
