@@ -1,3 +1,5 @@
+import { isFavoriteForStyle, isReadForStyle } from '../favoriteReadStyles';
+
 export function getMarkup(arr) {
   const defaultImg = `https://cdn.create.vista.com/api/media/small/251043028/stock-photo-selective-focus-black-news-lettering`;
   return arr.map(({ img, title, text, date, link, section }) => {
@@ -6,6 +8,7 @@ export function getMarkup(arr) {
     <li class="home__list-item ${isReadForStyle(link)}">
       <div class="home__list-top">
           <p class="home__list-section">${section}</p>
+          <p class="home__list-is-read">Already read &#10004;</p>
           <img width="353" height="395" class="home__list-img" src=${img} alt=${title}>
           <button type="button" id="like" class="add-btn ${isFavoriteForStyle(link)}">Add to favorite</button>
           <button type="button" id="dislike" class="remove-button invisible-button">Remove from favorite</button>

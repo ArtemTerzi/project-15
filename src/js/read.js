@@ -96,19 +96,12 @@ import { refs } from './refs';
 const container = document.querySelector('main');
 const listReadNews = document.querySelector('.readPage-list');
 
-
-
-
-function createNewData() {
-  return new Date(Date.now()).toLocaleString().split(',')[0];
-}
-
 listReadNews.addEventListener('click', onBtnReadMore);
 
 
 function onBtnReadMore(e) {
   // =======================  FOR TEST ==============================
-  e.preventDefault();
+//   e.preventDefault();
   // =======================  FOR TEST ==============================
 
   if (e.target.nodeName !== 'A') {
@@ -146,7 +139,7 @@ function onBtnReadMore(e) {
     }
   } catch (error) {
 
-    console.log(container);
+    console.log(error);
     container.innerHTML = getMarkupError();
   }
 }
@@ -175,10 +168,13 @@ function makeObjectNews(newsCard) {
     dateOfRead,
   };
 
-  console.log(newsObj);
   return newsObj;
 
 };
+
+function createNewData() {
+    return new Date(Date.now()).toLocaleString().split(',')[0];
+  }
 
 
 makeArrNewsForPageRead();
@@ -199,8 +195,7 @@ function makeArrNewsForPageRead() {
 
     makeMarkapPageRead(arrNewsIsRead);
   } catch (error) {
-
-    console.log(container);
+    console.log(error);
     container.innerHTML = getMarkupError();
   };
 };
@@ -218,13 +213,15 @@ function makeMarkapPageRead(arrayNewsRead) {
     };
 
 
-  const markapDatesRead = allDates
-    .map(
+  const markapDatesRead = allDates.map(
       date =>
-        `<li class="readPage-list__item"><h2 class="readPage-list__title">${date.replaceAll('.','/')}</h2><svg class="readPage-list__svg" aria-label="open news" width="20px" height="20px">
+        `<li class="readPage-list__item">
+        <h2 class="readPage-list__title">${date.replaceAll('.','/')}</h2>
+        <svg class="readPage-list__svg" aria-label="open news" width="15px" height="20px">
         <use href="/icons.adfc4680.svg#dilka-bottom"></use>
-    </svg><ul class="readPage-list__list  home__list">${makeArrNewsDate(date, arrayNewsRead)}</ul></li>`)
-    .join('');
+    </svg>
+    <ul class="readPage-list__list  home__list">${makeArrNewsDate(date, arrayNewsRead)}</ul>
+    </li>`).join('');
 
   listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
 
@@ -240,7 +237,8 @@ function makeMarkapPageRead(arrayNewsRead) {
       };
     
     const titleDate = e.target;
-    titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
+    titleDate.nextElementSibling.classList.toggle('is-open');
+    titleDate.nextElementSibling.nextElementSibling.classList.toggle('visually-hidden');
     
    };
 
