@@ -1,3 +1,4 @@
+/*
 import { getMarkupError } from './error';
 import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
 import { getMarkup } from './fetches/getMarkup';
@@ -243,3 +244,4 @@ function openListsReadNews(e) {
    };
 
 export { onBtnReadMore, makeArrNewsForPageRead };
+*/
