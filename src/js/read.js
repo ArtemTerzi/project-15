@@ -244,4 +244,5 @@ function makeMarkapPageRead(arrayNewsRead) {
     
    };
 
-   export { onBtnReadMore };
+export { onBtnReadMore, makeArrNewsForPageRead};
+
