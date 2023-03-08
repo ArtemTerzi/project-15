@@ -122,14 +122,13 @@ function onBtnReadMore(e) {
     }
 
     if (newsAllLocalStorage !== null) {
-      for (const news of newsAllLocalStorage) {
 
+    for (let i = 0; i < newsAllLocalStorage.length; i += 1) {
+        const news = newsAllLocalStorage[i];
         if (news.link === newsObj.link) {
-
-          news.dateOfRead = createNewData();
-          return;
+            news.dateOfRead = createNewData();
         };
-      };
+    }
 
       newsAllLocalStorage.push(newsObj);
       localStorage.setItem(

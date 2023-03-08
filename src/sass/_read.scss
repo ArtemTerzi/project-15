@@ -1,9 +1,9 @@
-// FOR GETMARKUP
+
 
 .readPage-list__item {
     position: relative;
 }
-
+//// FOR GETMARKUP
 .home__list-item {  
     border-radius: 4px;
 }
@@ -13,6 +13,7 @@
     box-shadow: 1px 1px 2px 3px #929292;
     ;
 }
+//// FOR GETMARKUP /////
 
 .isRead {
     opacity: 0.6;
@@ -25,6 +26,7 @@
 .isRead .home__list-is-read {
     opacity: 1;
 }
+
 
 .home__list-is-read {
     position: absolute;
@@ -42,6 +44,21 @@
 
 .readPage-list__title {
 
+    @media screen and (min-width: 480px) {
+        margin-top: 40px;
+        margin-bottom: 28px;
+      }
+
+      @media screen and (min-width: 768px) {
+        margin-top: 48px;
+        margin-bottom: 30px;
+      }
+
+      @media screen and (min-width: 1200px) {
+        margin-top: 60px;
+        margin-bottom: 40px;
+      }
+
     height: 33px;
     margin-top: 40px;
     margin-bottom: 28px;
@@ -58,7 +75,7 @@
     border-bottom: 1px solid #929292;
 }
 
-.readPage-list__title:hover,is-open
+.readPage-list__title:hover,
 .readPage-list__title:focus {
     box-shadow: 0px 4px 2px -2px #929292;
 }
