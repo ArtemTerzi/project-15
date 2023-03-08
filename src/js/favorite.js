@@ -162,6 +162,7 @@ export function onLoad() {
     const errorMarkup = getMarkupError();
     favoriteMain.innerHTML = errorMarkup;
   }
+  console.log(arr);
   return getMarkup(arr);
 }
 
