@@ -233,4 +233,13 @@ function openListsReadNews(e) {
   titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
 }
 
-export { onBtnReadMore };
+function openListsReadNews(e) {
+  if (e.target.nodeName !== 'H2') {
+    return;
+  }
+
+  const titleDate = e.target;
+  titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
+}
+
+export { onBtnReadMore, makeArrNewsForPageRead };

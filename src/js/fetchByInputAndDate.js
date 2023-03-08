@@ -3,7 +3,6 @@ import { options } from './refs.js';
 import axios from 'axios';
 import { Paginator } from './paginator.js';
 import Notiflix from 'notiflix';
-import dateString from './categoryListMaker.js';
 import { getNormalizeResponse } from './fetches/getNormalizeResponse';
 import { renderMarkupError } from './renderMarkupError';
 import { Paginator } from './paginator';
@@ -16,7 +15,12 @@ const searchForm = document.querySelector('.header__form');
 const span = document.querySelector('.calendar-date');
 let query = '';
 
-searchForm.addEventListener('submit', handleSubmit);
+// _________________________add function for remove eventListener
+
+if (window.location.pathname === '/index.html') {
+  searchForm.addEventListener('submit', handleSubmit);
+}
+
 
 function handleSubmit(e) {
   e.preventDefault();
@@ -26,7 +30,6 @@ function handleSubmit(e) {
     elements: { search },
   } = e.currentTarget;
   query = search.value.trim();
-  console.log(query);
   if (query === '') {
     Notiflix.Notify.warning('Please enter request');
     return;
