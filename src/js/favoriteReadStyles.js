@@ -47,12 +47,10 @@ function isReadForStyle(url) {
 
                 if (news.isRead) {
                     styleStateIsRead = "isRead";
-                    console.log(styleStateIsRead);
                     return styleStateIsRead;
                 };
             }
         };
-        console.log(styleStateIsRead);
         return styleStateIsRead;
 
     } catch(error) {

@@ -96,6 +96,7 @@ import { refs } from './refs';
 const container = document.querySelector('main');
 const listReadNews = document.querySelector('.readPage-list');
 
+
 function createNewData() {
   return new Date(Date.now()).toLocaleString().split(',')[0];
 }
@@ -103,10 +104,6 @@ function createNewData() {
 listReadNews.addEventListener('click', onBtnReadMore);
 
 function onBtnReadMore(e) {
-  // =======================  FOR TEST ==============================
-  // e.preventDefault();
-  // =======================  FOR TEST ==============================
-
   if (e.target.nodeName !== 'A') {
     return;
   }
@@ -125,12 +122,14 @@ function onBtnReadMore(e) {
     }
 
     if (newsAllLocalStorage !== null) {
-      for (const news of newsAllLocalStorage) {
+
+    for (let i = 0; i < newsAllLocalStorage.length; i += 1) {
+        const news = newsAllLocalStorage[i];
         if (news.link === newsObj.link) {
-          news.dateOfRead = createNewData();
-          return;
-        }
-      }
+            news.dateOfRead = createNewData();
+            news.isRead = true;
+        };
+    }
 
       newsAllLocalStorage.push(newsObj);
       localStorage.setItem(
@@ -139,7 +138,7 @@ function onBtnReadMore(e) {
       );
     }
   } catch (error) {
-    console.log(container);
+    console.error(error);
     container.innerHTML = getMarkupError();
   }
 }
@@ -167,9 +166,9 @@ function makeObjectNews(newsCard) {
     dateOfRead,
   };
 
-  console.log(newsObj);
   return newsObj;
 }
+
 
 makeArrNewsForPageRead();
 
@@ -189,7 +188,7 @@ function makeArrNewsForPageRead() {
 
     makeMarkapPageRead(arrNewsIsRead);
   } catch (error) {
-    console.log(container);
+    console.log(error);
     container.innerHTML = getMarkupError();
   }
 }
@@ -204,20 +203,15 @@ function makeMarkapPageRead(arrayNewsRead) {
     return getMarkup(arrFilterDataNews);
   }
 
-  const markapDatesRead = allDates
-    .map(
+  const markapDatesRead = allDates.map(
       date =>
-        `<li class="readPage-list__item"><h2 class="readPage-list__title">${date.replaceAll(
-          '.',
-          '/'
-        )}</h2><svg class="readPage-list__svg" aria-label="open news" width="20px" height="20px">
+        `<li class="readPage-list__item">
+        <h2 class="readPage-list__title">${date.replaceAll('.','/')}</h2>
+        <svg class="readPage-list__svg" aria-label="open news" width="15px" height="20px">
         <use href="/icons.adfc4680.svg#dilka-bottom"></use>
-    </svg><ul class="readPage-list__list  home__list">${makeArrNewsDate(
-      date,
-      arrayNewsRead
-    )}</ul></li>`
-    )
-    .join('');
+    </svg>
+    <ul class="readPage-list__list  home__list">${makeArrNewsDate(date, arrayNewsRead)}</ul>
+    </li>`).join('');
 
   listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
 }
@@ -238,8 +232,14 @@ function openListsReadNews(e) {
     return;
   }
 
-  const titleDate = e.target;
-  titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
-}
+    if (e.target.nodeName !== 'H2') {
+        return;
+      };
+    
+    const titleDate = e.target;
+    titleDate.nextElementSibling.classList.toggle('is-open');
+    titleDate.nextElementSibling.nextElementSibling.classList.toggle('visually-hidden');
+    
+   };
 
 export { onBtnReadMore, makeArrNewsForPageRead };

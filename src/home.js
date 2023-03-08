@@ -6,6 +6,7 @@ import { fetchMostPopular } from './js/fetchMostPopular';
 import { getNormalizeResponse } from './js/fetches/getNormalizeResponse';
 import { fetchByInputSerchAndDate } from './js/fetchByInputAndDate';
 import { getMarkup } from './js/fetches/getMarkup';
+import { refs } from './js/refs';
 import { fetchByChoosenCategories } from './js/fetchByCategories';
 import { renderMarkupError } from './js/renderMarkupError';
 import WeatherMarkupApi from './js/weather/waether-markup';
@@ -112,6 +113,73 @@ function onSearchCatehories(event) {
 }
 
 startWeather();
+
+//! start new function for localStorage for read 
+homeList.addEventListener('click', onBtnReadMore);
+
+function onBtnReadMore(e) {
+
+	if (e.target.nodeName !== 'A') {
+	  return;
+	};
+  
+	const newsCard = e.target.parentNode.parentNode;
+	const section = newsCard.querySelector('.home__list-section').textContent;
+	const img = newsCard.querySelector('.home__list-img').src;
+	const alt = newsCard.querySelector('.home__list-img').alt;
+	const title = newsCard.querySelector('.home__list-title').textContent;
+	const text = newsCard.querySelector('.home__lit-text').textContent;
+	const date = newsCard.querySelector('.home__list-date').textContent;
+	const link = newsCard.querySelector('.home__list-link').href;
+	const dateOfRead = createNewData();
+
+	const newsObj = {
+	  section,
+	  img,
+	  alt,
+	  title,
+	  text,
+	  date,
+	  link,
+  
+	  isRead: true,
+	  dateOfRead,
+	};
+
+	
+	try {
+	  const newsAllLocalStorage = JSON.parse(
+		localStorage.getItem(refs.KEY_LOCAL_STORAGE)
+	  );
+  
+	  if (newsAllLocalStorage === null) {
+		localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify([newsObj]));
+		return;
+	  }
+  
+	  if (newsAllLocalStorage !== null) {
+		for (let i = 0; i < newsAllLocalStorage.length; i += 1) {
+			const news = newsAllLocalStorage[i];
+			if (news.link === newsObj.link) {
+				news.dateOfRead = createNewData();
+        news.isRead = true;
+			};
+		};
+  
+		newsAllLocalStorage.push(newsObj);
+		localStorage.setItem(
+		  refs.KEY_LOCAL_STORAGE,
+		  JSON.stringify(newsAllLocalStorage)
+		);
+	  }
+	} catch (error) {
+  	  console.error(error);
+	}
+  
+	function createNewData() {
+		return new Date(Date.now()).toLocaleString().split(',')[0];
+	  }
+  };
 
 categoriesList.addEventListener("click", onSearchCatehories);
 categoryOthers.addEventListener("click", onSearchCatehories);
