@@ -1,5 +1,4 @@
 
-
 .readPage-list__item {
     position: relative;
 }
@@ -14,6 +13,8 @@
     ;
 }
 //// FOR GETMARKUP /////
+
+
 
 .isRead {
     opacity: 0.6;
@@ -41,6 +42,48 @@
 
     color: #00DD73;
 }
+
+
+.read-page-list__list {
+        display: grid;
+        gap: 30px;
+        grid-template-columns: 395px;
+        margin: 0 auto;
+      
+        @include tablet {
+          grid-template-columns: 353px 353px;
+          margin: 0;
+        }
+      
+        @include desktop {
+          grid-template-columns: 395px 395px 395px;
+        }
+      }
+
+.read-page-list__list .home__list-item {
+        @include tablet {
+          height: 670px;
+          display: flex;
+          flex-direction: column;
+      
+          &:nth-child(even) {
+            position: static;
+            top: 0;
+          }
+        }
+      
+        @include desktop {
+          max-width: 395px;
+          &:nth-child(even) {
+            position: static;
+            top: 0;
+          }
+          &:nth-child(3n) {
+            position: static;
+            top: 0;
+          }
+        }
+      }
 
 .readPage-list__title {
 
@@ -71,7 +114,7 @@
     line-height: 1.71;
     letter-spacing: 0.02em;
 
-    color: #111321;
+    color: inherit;
     border-bottom: 1px solid #929292;
 }
 
