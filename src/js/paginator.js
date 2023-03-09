@@ -10,6 +10,7 @@ import { getMarkup } from './fetches/getMarkup';
 import { getNormalizeResponse } from './fetches/getNormalizeResponse';
 import './fetchNewsCategories';
 import { options } from './refs.js';
+import { startWeather } from '../js/weather/weather';
 
 /*
  fetchByInputAndDate 
@@ -94,40 +95,52 @@ export class Paginator {
   }
 
   async makeFetchForSearchByQuery() {
-    await axios.get(this.URL).then(answer => {
-      const {
-        data: {
-          response: { docs },
-        },
-      } = answer;
-      const responseURL = answer.config.url;
-      this.data = getNormalizeResponse(docs, responseURL);
-      this.container.innerHTML = getMarkup(this.data);
-    });
+    await axios
+      .get(this.URL)
+      .then(answer => {
+        const {
+          data: {
+            response: { docs },
+          },
+        } = answer;
+        const responseURL = answer.config.url;
+        this.data = getNormalizeResponse(docs, responseURL);
+        this.container.innerHTML = getMarkup(this.data);
+      })
+      .then(startWeather);
   }
 
   async makeFetchForSearhByCategory() {
-    await axios.get(this.URL).then(response => {
-      const {
-        data: { results },
-      } = response;
-      this.URL = response.config.url;
-      this.data = getNormalizeResponse(results, this.URL);
-      this.container.innerHTML = getMarkup(this.data);
-    });
+    await axios
+      .get(this.URL)
+      .then(response => {
+        const {
+          data: { results },
+        } = response;
+        this.URL = response.config.url;
+        this.data = getNormalizeResponse(results, this.URL);
+        this.container.innerHTML = getMarkup(this.data);
+      })
+      .then(startWeather);
   }
 
   async makeFetchForSearhByPopular() {
-    await axios.get(this.URL).then(response => {
-      const {
-        data: { results },
-      } = response;
-      this.URL = response.config.url;
-      this.data = getNormalizeResponse(results, this.URL);
-      this.container.innerHTML = getMarkup(
-        this.data.splice(this.itemsPerPage * (this.page - 1), this.itemsPerPage)
-      );
-    });
+    await axios
+      .get(this.URL)
+      .then(response => {
+        const {
+          data: { results },
+        } = response;
+        this.URL = response.config.url;
+        this.data = getNormalizeResponse(results, this.URL);
+        this.container.innerHTML = getMarkup(
+          this.data.splice(
+            this.itemsPerPage * (this.page - 1),
+            this.itemsPerPage
+          )
+        );
+      })
+      .then(startWeather);
   }
 
   show() {
