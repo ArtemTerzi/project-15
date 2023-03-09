@@ -85,7 +85,7 @@ async function getDates() {
 
 function clearDates() {
   visibleDate.textContent = 'Set date';
-};
+}
 
 let calendarPosition = 0;
 
@@ -198,6 +198,8 @@ function handleDateClick(element) {
     updateMarkupDates();
     calendarFrame.parentNode.classList.remove('calendar-active');
   }
+
+  document.removeEventListener('click', onClickOutside);
 }
 
 function getDaysInMonth(month, year) {
