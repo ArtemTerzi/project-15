@@ -12,20 +12,22 @@ import { renderMarkupError } from './js/renderMarkupError';
 import WeatherMarkupApi from './js/weather/waether-markup';
 // import './js/firebaseData';
 
-const homeInner = document.querySelector(".home__inner");
-const categoriesList = document.querySelector(".category-list");
-const homeList = document.querySelector(".home__list");
-const categoryOthers = document.querySelector(".category-others");
+const homeInner = document.querySelector('.home__inner');
+const categoriesList = document.querySelector('.category-list');
+const homeList = document.querySelector('.home__list');
+const categoryOthers = document.querySelector('.category-others');
+
+const paginator = new Paginator();
 
 // homeInner.style.height = `${homeInner.style.height} - ${700}px`;
-homeInner.getBoundingClientRect().height = homeInner.getBoundingClientRect().height - 700;
+homeInner.getBoundingClientRect().height =
+  homeInner.getBoundingClientRect().height - 700;
 console.log(homeInner.getBoundingClientRect().height);
 
 // homeInner.style.height = `${homeInner.scrollHeight} - ${700}px`;
 
 // const URL =
 //   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=MCCbLUuNkLgrOf1uBr1c9zmSoKm3Mp9g&';
-
 
 function renderByDefault() {
   fetchMostPopular()
@@ -34,9 +36,14 @@ function renderByDefault() {
       const {
         data: { results },
       } = response;
+      const totalItems = response.data.num_results;
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
-      const paginator = new Paginator();
+
+      if (totalItems === 0) {
+        paginator.hide();
+        throw new Error(response.status);
+      }
       paginator.getRespForPagination(response, responseURL, data);
     })
     .catch(error => {
@@ -66,10 +73,14 @@ function renderByInputAndDate() {
           response: { docs },
         },
       } = answer;
+      const totalItems = answer.data.response.meta.hits;
       const responseURL = answer.config.url;
-      const paginator = new Paginator();
       const data = getNormalizeResponse(docs, responseURL);
-      paginator.getRespForPagination(answer, responseURL, data);
+      if (totalItems === 0) {
+        paginator.hide();
+        throw new Error(response.status);
+      }
+      paginator.getRespForPagination(responseURL, data);
     })
     .catch(error => {
       console.error(error);
@@ -90,7 +101,7 @@ function renderByInputAndDate() {
 // });
 
 function onSearchCatehories(event) {
-  if (event.target.nodeName !== "LI") {
+  if (event.target.nodeName !== 'LI') {
     return;
   }
 
@@ -101,85 +112,92 @@ function onSearchCatehories(event) {
       const {
         data: { results },
       } = response;
+      const totalItems = response.data.num_results;
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
-      homeList.innerHTML = getMarkup(data);
-      // weatherMarkupApi.getWeatherMurkup();
 
-    }).catch(error => {
+      if (totalItems === 0) {
+        throw new Error(response.status);
+      } else if (totalItems <= 10) {
+        list.innerHTML = getMarkup(data);
+      } else {
+        paginator.getRespForPagination(response, responseURL, data);
+      }
+      // weatherMarkupApi.getWeatherMurkup();
+    })
+    .catch(error => {
       console.log(error);
+      paginator.hide();
       renderMarkupError(homeList);
     });
 }
 
 startWeather();
 
-//! start new function for localStorage for read 
+//! start new function for localStorage for read
 homeList.addEventListener('click', onBtnReadMore);
 
 function onBtnReadMore(e) {
+  if (e.target.nodeName !== 'A') {
+    return;
+  }
 
-	if (e.target.nodeName !== 'A') {
-	  return;
-	};
-  
-	const newsCard = e.target.parentNode.parentNode;
-	const section = newsCard.querySelector('.home__list-section').textContent;
-	const img = newsCard.querySelector('.home__list-img').src;
-	const alt = newsCard.querySelector('.home__list-img').alt;
-	const title = newsCard.querySelector('.home__list-title').textContent;
-	const text = newsCard.querySelector('.home__lit-text').textContent;
-	const date = newsCard.querySelector('.home__list-date').textContent;
-	const link = newsCard.querySelector('.home__list-link').href;
-	const dateOfRead = createNewData();
+  const newsCard = e.target.parentNode.parentNode;
+  const section = newsCard.querySelector('.home__list-section').textContent;
+  const img = newsCard.querySelector('.home__list-img').src;
+  const alt = newsCard.querySelector('.home__list-img').alt;
+  const title = newsCard.querySelector('.home__list-title').textContent;
+  const text = newsCard.querySelector('.home__lit-text').textContent;
+  const date = newsCard.querySelector('.home__list-date').textContent;
+  const link = newsCard.querySelector('.home__list-link').href;
+  const dateOfRead = createNewData();
 
-	const newsObj = {
-	  section,
-	  img,
-	  alt,
-	  title,
-	  text,
-	  date,
-	  link,
-  
-	  isRead: true,
-	  dateOfRead,
-	};
+  const newsObj = {
+    section,
+    img,
+    alt,
+    title,
+    text,
+    date,
+    link,
 
-	
-	try {
-	  const newsAllLocalStorage = JSON.parse(
-		localStorage.getItem(refs.KEY_LOCAL_STORAGE)
-	  );
-  
-	  if (newsAllLocalStorage === null) {
-		localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify([newsObj]));
-		return;
-	  }
-  
-	  if (newsAllLocalStorage !== null) {
-		for (let i = 0; i < newsAllLocalStorage.length; i += 1) {
-			const news = newsAllLocalStorage[i];
-			if (news.link === newsObj.link) {
-				news.dateOfRead = createNewData();
-        news.isRead = true;
-			};
-		};
-  
-		newsAllLocalStorage.push(newsObj);
-		localStorage.setItem(
-		  refs.KEY_LOCAL_STORAGE,
-		  JSON.stringify(newsAllLocalStorage)
-		);
-	  }
-	} catch (error) {
-  	  console.error(error);
-	}
-  
-	function createNewData() {
-		return new Date(Date.now()).toLocaleString().split(',')[0];
-	  }
+    isRead: true,
+    dateOfRead,
   };
 
-categoriesList.addEventListener("click", onSearchCatehories);
-categoryOthers.addEventListener("click", onSearchCatehories);
+  try {
+    const newsAllLocalStorage = JSON.parse(
+      localStorage.getItem(refs.KEY_LOCAL_STORAGE)
+    );
+
+    if (newsAllLocalStorage === null) {
+      localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify([newsObj]));
+      return;
+    }
+
+    if (newsAllLocalStorage !== null) {
+      for (let i = 0; i < newsAllLocalStorage.length; i += 1) {
+        const news = newsAllLocalStorage[i];
+        if (news.link === newsObj.link) {
+          news.dateOfRead = createNewData();
+          news.isRead = true;
+        }
+      }
+
+      newsAllLocalStorage.push(newsObj);
+      localStorage.setItem(
+        refs.KEY_LOCAL_STORAGE,
+        JSON.stringify(newsAllLocalStorage)
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  function createNewData() {
+    return new Date(Date.now()).toLocaleString().split(',')[0];
+  }
+}
+
+categoriesList.addEventListener('click', onSearchCatehories);
+categoryOthers.addEventListener('click', onSearchCatehories);

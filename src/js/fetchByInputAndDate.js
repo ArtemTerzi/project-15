@@ -43,13 +43,19 @@ function handleSubmit(e) {
         },
       } = answer;
 
-      if (docs.length == 0) throw new Error(response.status);
+      const totalItems = answer.data.response.meta.hits;
       const responseURL = answer.config.url;
-      const paginator = new Paginator();
       const data = getNormalizeResponse(docs, responseURL);
+      const paginator = new Paginator();
+
+      if (totalItems === 0) {
+        paginator.hide();
+        throw new Error(answer.status);
+      }
       paginator.getRespForPagination(answer, responseURL, data);
     })
     .catch(error => {
+      console.log(error);
       renderMarkupError('.home__inner');
     });
 }
