@@ -1,6 +1,6 @@
 @media screen and (min-width: 768px) {
   .menu-container,
-  .modalBtn {
+  .modalbtn {
     display: none;
   }
 }
@@ -14,17 +14,19 @@
 
       top: 0;
       left: 0;
+      transition: all 0.3s ease 0s;
       width: 100vw;
       height: 100vh;
       padding: 16px;
       background-color: #f4f4f4;
-
+      
       z-index: 5;
     }
 
     .menu-container.is-closed {
       opacity: 0;
       visibility: hidden;
+      top: -100%;
     }
 
     .dark-theme .menu-container {
@@ -42,7 +44,8 @@
       padding-bottom: 24px;
 
       margin-bottom: 44px;
-      line-height: 0, 75;
+
+      line-height: 0,75;
     }
 
     .mobile-menu__button {
@@ -165,12 +168,15 @@
       color: inherit;
       padding-top: 3px;
       padding-bottom: 3px;
-      padding-right: 300px;
+      padding-right: 250px;
     }
 
-    .menu-container .theme-swapper {
-      margin-bottom: 16px;
-      margin-top: auto;
+    .mobile-menu__down{
+        display: inline-flex;
+        align-items: center;
+        gap: 10%;
+        margin-bottom: 16px;
+        margin-top: auto;
     }
 
 }

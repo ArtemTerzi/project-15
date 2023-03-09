@@ -1,6 +1,7 @@
 <div class="backdrop ">
-<div class="menu-container is-closed" data-menu>
-  <a class="logo-modal" href="./index.html">News</a>
+  <div class="menu-container is-closed" data-menu>
+    <a class="logo-modal" href="./index.html">News</a>
+    
     <ul class="mobile-menu ">
     <li class="mobile-menu__item">
       <svg class="mobile-menu__icon" width="32" height="32">
@@ -30,6 +31,8 @@
       </svg>
     </li>
   </ul>
+
+  <div class="mobile-menu__down">
   <div class="theme-swapper">
     <div class="theme-wrapper theme-wrapper--light  switch-on">
       <svg width="21px" height="21px" class="mobile-theme-svg mobile-theme-svg__light ">
@@ -40,13 +43,17 @@
     <div class="checkbox">
       <div class="checkbox__switcher"></div>
     </div>
-
+    
     <div class="theme-wrapper theme-wrapper--dark">
       <svg width="16px" height="16px" class="mobile-theme-svg mobile-theme-svg__dark">
         <use href="./images/symbol-defs.svg#icon_moon"></use>
       </svg>
       <span class="theme-swapper__title theme-swapper__title--dark ">Dark</span>
     </div>
+  </div>
+  <button type="submit" class="btn-open-sign-in" data-modal-open>Sign in</button>
+  <button type="submit" class="btn-open-sign-up">Sign up</button>
+  <button type="submit" class="sign-out is-hidden">Sign out</button>
   </div>
 </div>
 </div>
