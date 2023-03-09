@@ -294,3 +294,5 @@ if (onLoad() !== undefined) renderCards();
 //   cardContainer.innerHTML = onLoad();
 // }
 // ------------------------------------------------------------------------------------------------------
+
+cardContainer.children[0].remove();
