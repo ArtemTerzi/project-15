@@ -96,9 +96,7 @@ import { refs } from './refs';
 const container = document.querySelector('main');
 const listReadNews = document.querySelector('.readPage-list');
 
-function createNewData() {
-  return new Date(Date.now()).toLocaleString().split(',')[0];
-}
+makeArrNewsForPageRead();
 
 listReadNews.addEventListener('click', onBtnReadMore);
 
@@ -118,28 +116,34 @@ function onBtnReadMore(e) {
     if (newsAllLocalStorage === null) {
       localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify([newsObj]));
       return;
-    }
+    };
 
     if (newsAllLocalStorage !== null) {
-      for (let i = 0; i < newsAllLocalStorage.length; i += 1) {
-        const news = newsAllLocalStorage[i];
-        if (news.link === newsObj.link) {
-          news.dateOfRead = createNewData();
-          news.isRead = true;
-        }
+      if(newsAllLocalStorage.every(news => news.link !== newsObj.link)) {
+        newsAllLocalStorage.push(newsObj);
+        localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify(newsAllLocalStorage));
       }
 
-      newsAllLocalStorage.push(newsObj);
-      localStorage.setItem(
-        refs.KEY_LOCAL_STORAGE,
-        JSON.stringify(newsAllLocalStorage)
-      );
-    }
+
+      const newNewsAllLocalStorage = newsAllLocalStorage.reduce((newArr, news) => {
+        if (news.link === newsObj.link) {
+              news.dateOfRead = createNewData();
+              news.isRead = true;
+            };
+            newArr.push(news);
+            return newArr;
+      }, []);
+      localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify(newNewsAllLocalStorage));
+    };
   } catch (error) {
     console.error(error);
     container.innerHTML = getMarkupError();
-  }
-}
+  };
+
+  if(!newsCard.classList.contains('isRead')) {
+    newsCard.classList.add('isRead');
+   };
+};
 
 function makeObjectNews(newsCard) {
   const section = newsCard.querySelector('.home__list-section').textContent;
@@ -165,9 +169,11 @@ function makeObjectNews(newsCard) {
   };
 
   return newsObj;
-}
+};
 
-makeArrNewsForPageRead();
+function createNewData() {
+  return new Date(Date.now()).toLocaleString().split(',')[0];
+};
 
 function makeArrNewsForPageRead() {
   try {
@@ -188,7 +194,7 @@ function makeArrNewsForPageRead() {
     console.log(error);
     container.innerHTML = getMarkupError();
   }
-}
+};
 
 function makeMarkapPageRead(arrayNewsRead) {
   const allDates = arrayNewsRead
@@ -208,7 +214,7 @@ function makeMarkapPageRead(arrayNewsRead) {
         <svg class="readPage-list__svg" aria-label="open news" width="15px" height="20px">
         <use href="/icons.adfc4680.svg#dilka-bottom"></use>
     </svg>
-    <ul class="readPage-list__list  home__list">${makeArrNewsDate(
+    <ul class="read-page-list__list">${makeArrNewsDate(
       date,
       arrayNewsRead
     )}</ul>
@@ -217,18 +223,18 @@ function makeMarkapPageRead(arrayNewsRead) {
     .join('');
 
   listReadNews.insertAdjacentHTML('beforeend', markapDatesRead);
-}
+};
 
 listReadNews.addEventListener('click', openListsReadNews);
 
 function openListsReadNews(e) {
   if (e.target.nodeName !== 'H2') {
     return;
-  }
+  };
 
   const titleDate = e.target;
   titleDate.nextSibling.nextSibling.classList.toggle('visually-hidden');
-}
+};
 
 function openListsReadNews(e) {
   if (e.target.nodeName !== 'H2') {
@@ -244,6 +250,6 @@ function openListsReadNews(e) {
   titleDate.nextElementSibling.nextElementSibling.classList.toggle(
     'visually-hidden'
   );
-}
+};
 
 export { onBtnReadMore, makeArrNewsForPageRead };

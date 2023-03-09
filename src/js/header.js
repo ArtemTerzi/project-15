@@ -1,16 +1,11 @@
 const search = document.querySelector('.header__form');
-const header = document.querySelector('.header');
+const searchMobile = document.querySelector('.search__mobile');
 
-search.addEventListener('click', function(e) {
-    e.stopPropagation();
-    this.classList.add('search--active')
-});
+const searchInput = document.querySelector('input[name="search"]');
 
-header.addEventListener('click', function() {
-    search.classList.remove('search--active')
-});
-
-
+function onSearchMobile() {
+  search.classList.add('search--active');
+}
 
 const menu = document.getElementById('navigation');
 const currentPage = location.pathname;
@@ -20,3 +15,18 @@ menu.querySelectorAll('a').forEach(link => {
     link.classList.add('navigation__link--current');
   }
 });
+
+function removeActiveSearch(event) {
+  if (
+    event.target.nodeName === searchInput.nodeName ||
+    event.target.className.baseVal === 'search__mobile-logo' ||
+    event.target.className.baseVal === '/icons.adfc4680.svg#search' ||
+    event.target.className.animVal === '/icons.adfc4680.svg#search'
+  ) {
+    return;
+  }
+  search.classList.remove('search--active');
+}
+
+searchMobile.addEventListener('click', onSearchMobile);
+document.addEventListener('click', removeActiveSearch);
