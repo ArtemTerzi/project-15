@@ -206,5 +206,9 @@ export class Paginator {
       }
       return pagination;
     });
+
+    pagination.on('afterMove', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }
