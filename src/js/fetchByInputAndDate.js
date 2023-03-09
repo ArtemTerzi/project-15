@@ -86,4 +86,12 @@ export function fetchByInputSerchAndDate(query, date) {
   return axios.get(
     `${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`
   );
-}
+};
+
+export function fetchByInputSerch(query) {
+  // query = 'Ukraine',
+  // date = dayAwaliableForBackend
+  return axios.get(
+    `${NEWS_URL}&q=${query}`
+  );
+};
