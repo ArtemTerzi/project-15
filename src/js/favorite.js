@@ -17,7 +17,7 @@ const favoriteMain = document.querySelector('.favorite-main');
 //   }, 300)
 // );
 
-export function onArticleLike(e) {
+function onArticleLike(e) {
   e.preventDefault();
 
   const form = e.currentTarget;
@@ -27,14 +27,21 @@ export function onArticleLike(e) {
 
   let bodyRef = e.target;
   let myCard = bodyRef.parentNode.parentNode;
-  let liRef = myCard.querySelector('.wrapper');
+  let liRef = myCard.querySelector('.home__list-item');
 
-  let titleRef = myCard.querySelector('.card-header');
-  let cardTextRef = myCard.querySelector('.card-text');
-  let imgUrlRef = myCard.querySelector('.box > img[src]');
-  let imgNameRef = myCard.querySelector('.box > img[alt]');
-  let publishDateRef = myCard.querySelector('.card-details > .card-date');
-  let mainURLRef = myCard.querySelector('.card-details > .card-link');
+  let titleRef = myCard.querySelector('.home__list-title');
+  let cardTextRef = myCard.querySelector('.home__list-text');
+  let imgUrlRef = myCard.querySelector('.home__list-top > img[src]');
+  let imgNameRef = myCard.querySelector('.home__list-top > img[alt]');
+  let publishDateRef = myCard.querySelector(
+    '.home__list-footer > .home__list-date'
+  );
+  let mainURLRef = myCard.querySelector(
+    '.home__list-footer > .home__list-link'
+  );
+
+  let sectionRef = myCard.querySelector('.home__list-section');
+  let section = sectionRef.textContent;
 
   let img = imgUrlRef.getAttribute('src');
   let imgName = imgNameRef.textContent;
@@ -42,7 +49,6 @@ export function onArticleLike(e) {
   let text = cardTextRef.textContent;
   let date = publishDateRef.textContent;
   let link = mainURLRef.getAttribute('href');
-  let section = myCard.querySelector('.box > p');
 
   let myObject = {
     img,
@@ -56,21 +62,22 @@ export function onArticleLike(e) {
     isFavourite: false,
   };
 
-  const cardObject = `<div class="wrapper">
-<div class="box home__list-top">
-<p class="home__list-section">${myObject.section}</p>
-<img class="box-img"
-src="${myObject.img}"
-alt="${myObject.imgName}" width="353" height="395">
-        <button type="button" id="like" class="add-button remove-button">Add to favorite</button>
-</div>
-<h1 class="card-header">${myObject.title}</h1>
-<p class="card-text">${myObject.text}</p>
-<div class="card-details">
-<p class="card-date">${myObject.date}</p>
-    <a class="card-link" href="">${myObject.link}</a>
-</div>
-</div>`;
+  const cardObject = `<li class="home__list-item">
+  <div class="home__list-top">
+      <p class="home__list-section">${myObject.section}</p>
+      <p class="home__list-is-read">Already read &#10004;</p>
+      <img width="353" height="395" class="home__list-img" src=${myObject.img} alt=${myObject.imgName}>
+      <button type="button" id="like" class="add-button remove-button">Add to favorite</button>
+  </div>
+  <div class="home__list-description">
+    <h2 class="home__list-title">${myObject.title}</h2>
+    <p class="home__list-text">${myObject.text}</p>
+  </div>
+  <div class="home__list-footer">
+    <p class="home__list-date">${myObject.date}</p>
+    <a href=${myObject.link} class="home__list-link">Read more</a>
+  </div>
+</li>`;
   cardContainer.insertAdjacentHTML('beforeend', cardObject);
 }
 
@@ -79,14 +86,14 @@ card.addEventListener('click', onLike);
 
 let arr = [];
 
-function onLike(e) {
+export function onLike(e) {
   let bodyRef = e.target;
   let myCard = bodyRef.parentNode.parentNode;
   let liRef = myCard.querySelector('.home__list-item');
 
   let titleRef = myCard.querySelector('.home__list-title');
   let cardTextRef = myCard.querySelector('.home__list-text');
-  let imgUrlRef = myCard.querySelector('.home__list');
+  let imgUrlRef = myCard.querySelector('.home__list-top > img');
   let imgNameRef = myCard.querySelector('.home__list-top > img[alt]');
   let publishDateRef = myCard.querySelector(
     '.home__list-footer > .home__list-date'
@@ -94,13 +101,14 @@ function onLike(e) {
   let mainURLRef = myCard.querySelector(
     '.home__list-footer > .home__list-link'
   );
-  let section = myCard.querySelector('.home__list-section');
+  let sectionRef = myCard.querySelector('.home__list-section');
 
   let img = imgUrlRef.getAttribute('src');
   let title = titleRef.textContent;
   let text = cardTextRef.textContent;
   let date = publishDateRef.textContent;
   let link = mainURLRef.getAttribute('href');
+  let section = sectionRef.textContent;
 
   let myObject = {
     img,
@@ -109,6 +117,7 @@ function onLike(e) {
     date,
     link,
     section,
+    isFavorite: true,
   };
 
   if (e.target.classList.contains('remove-button')) {
@@ -166,7 +175,7 @@ export function onLoad() {
   return getMarkup(arr);
 }
 
-export function renderCards() {
+function renderCards() {
   cardContainer.innerHTML = onLoad();
 }
 
@@ -177,35 +186,42 @@ if (onLoad() !== undefined) renderCards();
 // function onLike(e) {
 //   let bodyRef = e.target;
 //   let myCard = bodyRef.parentNode.parentNode;
-//   let liRef = myCard.querySelector('.wrapper');
+//   let liRef = myCard.querySelector('.home__list-item');
 
-//   let titleRef = myCard.querySelector('.card-header');
-//   let cardTextRef = myCard.querySelector('.card-text');
-//   let imgUrlRef = myCard.querySelector('.box > img[src]');
-//   let imgNameRef = myCard.querySelector('.box > img[alt]');
-//   let publishDateRef = myCard.querySelector('.card-details > .card-date');
-//   let mainURLRef = myCard.querySelector('.card-details > .card-link');
+//   let titleRef = myCard.querySelector('.home__list-title');
+//   let cardTextRef = myCard.querySelector('.home__list-text');
+//   let imgUrlRef = myCard.querySelector('.home__list-top > img');
+//   let imgNameRef = myCard.querySelector('.home__list-top > img[alt]');
+//   let publishDateRef = myCard.querySelector(
+//     '.home__list-footer > .home__list-date'
+//   );
+//   let mainURLRef = myCard.querySelector(
+//     '.home__list-footer > .home__list-link'
+//   );
+//   let sectionRef = myCard.querySelector('.home__list-section');
 
 //   let img = imgUrlRef.getAttribute('src');
-//   let imgName = imgNameRef.textContent;
 //   let title = titleRef.textContent;
 //   let text = cardTextRef.textContent;
 //   let date = publishDateRef.textContent;
 //   let link = mainURLRef.getAttribute('href');
+//   let section = sectionRef.textContent;
 
 //   let myObject = {
 //     img,
-//     imgName,
 //     title,
 //     text,
 //     date,
 //     link,
+//     section,
+
 //     isFavorite: true,
 //   };
 
 //   if (e.target.classList.contains('remove-button')) {
 //     e.target.classList.toggle('remove-button');
 //     e.target.textContent = 'Remove from favorite';
+
 //     try {
 //       const newsArr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
 //       if (newsArr === null) {
@@ -255,22 +271,22 @@ if (onLoad() !== undefined) renderCards();
 //     } else acc;
 //   }, '');
 //   function cardMarkup({ img, imgName, title, text, date, link, section }) {
-//     return `<div class="wrapper">
-//     <div class="box home__list-top">
-//     <p class="home__list-section">${section}</p>
-//         <img class="box-img"
-//             src="${img}"
-//             alt="${imgName}" width="353" height="395">
-//             <button type="button" id="like" class="add-button remove-button">Add to favorite</button>
+//     return `<li class="home__list-item">
+//     <div class="home__list-top">
+//         <p class="home__list-section">${section}</p>
+//         <p class="home__list-is-read">Already read &#10004;</p>
+//         <img width="353" height="395" class="home__list-img" src=${img} alt=${imgName}>
+//         <button type="button" id="like" class="add-button remove-button">Add to favorite</button>
 //     </div>
-//     <h1 class="card-header">${title}</h1>
-//     <p class="card-text">${text}</p>
-//     <div class="card-details">
-//         <p class="card-date">${date}</p>
-//         <a id='news-link' class="card-link" href="">${link}</a>
+//     <div class="home__list-description">
+//       <h2 class="home__list-title">${title}</h2>
+//       <p class="home__list-text">${text}</p>
 //     </div>
-//   </div>
-//   `;
+//     <div class="home__list-footer">
+//       <p class="home__list-date">${date}</p>
+//       <a href=${link} class="home__list-link">Read more</a>
+//     </div>
+//   </li>`;
 //   }
 //   return markup;
 // }
