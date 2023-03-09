@@ -16,6 +16,7 @@ const homeInner = document.querySelector('.home__inner');
 const categoriesList = document.querySelector('.category-list');
 const homeList = document.querySelector('.home__list');
 const categoryOthers = document.querySelector('.category-others');
+const paginator = new Paginator();
 
 // homeInner.style.height = `${homeInner.style.height} - ${700}px`;
 homeInner.getBoundingClientRect().height =
@@ -34,9 +35,14 @@ function renderByDefault() {
       const {
         data: { results },
       } = response;
+      const totalItems = response.data.num_results;
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
-      const paginator = new Paginator();
+
+      if (totalItems === 0) {
+        paginator.hide();
+        throw new Error(response.status);
+      }
       paginator.getRespForPagination(response, responseURL, data);
     })
     .catch(error => {
@@ -66,10 +72,14 @@ function renderByInputAndDate() {
           response: { docs },
         },
       } = answer;
+      const totalItems = answer.data.response.meta.hits;
       const responseURL = answer.config.url;
-      const paginator = new Paginator();
       const data = getNormalizeResponse(docs, responseURL);
-      paginator.getRespForPagination(answer, responseURL, data);
+      if (totalItems === 0) {
+        paginator.hide();
+        throw new Error(response.status);
+      }
+      paginator.getRespForPagination(responseURL, data);
     })
     .catch(error => {
       console.error(error);
@@ -101,13 +111,23 @@ function onSearchCatehories(event) {
       const {
         data: { results },
       } = response;
+      const totalItems = response.data.num_results;
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
-      homeList.innerHTML = getMarkup(data);
+      
+      if (totalItems === 0) {
+        throw new Error(response.status);
+      } else if (totalItems <= 10) {
+        list.innerHTML = getMarkup(data);
+      } else {
+        paginator.getRespForPagination(response, responseURL, data);
+      }
+
       // weatherMarkupApi.getWeatherMurkup();
     })
     .catch(error => {
       console.log(error);
+      paginator.hide();
       renderMarkupError(homeList);
     });
 }
@@ -123,7 +143,6 @@ function onBtnReadMore(e) {
   }
 
   const newsCard = e.target.parentNode.parentNode;
-
   const section = newsCard.querySelector('.home__list-section').textContent;
   const img = newsCard.querySelector('.home__list-img').src;
   const alt = newsCard.querySelector('.home__list-img').alt;

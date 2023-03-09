@@ -59,22 +59,21 @@ export class Paginator {
 
     if (this.isSearchQuery) {
       this.totalItems = response.data.response.meta.hits;
-      if (this.totalItems <= this.itemsPerPage) this.hide();
+      this.checkNumItems();
       this.updatePageNumberToURL();
       this.makeFetchForSearchByQuery();
     } else if (this.isCategorySearch) {
       this.totalItems = response.data.num_results;
-      if (this.totalItems <= this.itemsPerPage) this.hide();
+      this.checkNumItems();
 
       this.makeFetchForSearhByCategory();
       this.updateURLWithOffset();
     } else if (this.isMostPopularSearch) {
       this.totalItems = response.data.num_results;
-      if (this.totalItems <= this.itemsPerPage) this.hide();
-
+      this.checkNumItems();
       this.makeFetchForSearhByPopular();
     }
-    if (this.totalItems <= 10) this.hide();
+    this.checkNumItems();
 
     this.initPagination(this.page);
   }
@@ -89,11 +88,8 @@ export class Paginator {
   }
 
   checkNumItems() {
-    if (this.totalItems <= 10) this.hide();
+    if (this.totalItems <= this.itemsPerPage) this.hide();
   }
-  // forMobile() {
-  //   if (window.frames.innerWidth <= 320) this.visiblePages = 1;
-  // }
 
   async makeFetchForSearchByQuery() {
     await axios.get(this.URL).then(answer => {
@@ -133,11 +129,11 @@ export class Paginator {
   }
 
   show() {
-    containerPagination.removeClassList('visually-hidden');
+    containerPagination.classList.remove('visually-hidden');
   }
 
   hide() {
-    containerPagination.addClassList('visually-hidden');
+    containerPagination.classList.add('visually-hidden');
   }
 
   getURL(URL) {
@@ -195,11 +191,6 @@ export class Paginator {
       try {
         const { page } = event;
         this.page = pagination.getCurrentPage();
-        if (window.frames.innerWidth >= 320) {
-          this.visiblePages = 3;
-        } else {
-          this.visiblePages = 1;
-        }
 
         if (this.isSearchQuery) {
           this.updatePageNumberToURL();
@@ -214,6 +205,10 @@ export class Paginator {
         console.log(err);
       }
       return pagination;
+    });
+
+    pagination.on('afterMove', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 }
