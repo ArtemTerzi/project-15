@@ -1,4 +1,8 @@
-import { isFavoriteForStyle, isReadForStyle } from '../favoriteReadStyles';
+import {
+  isFavoriteForStyle,
+  isReadForStyle,
+  isFavoriteForText,
+} from '../favoriteReadStyles';
 
 export function getMarkup(arr) {
   return (
@@ -12,9 +16,9 @@ export function getMarkup(arr) {
           <p class="home__list-section">${section}</p>
           <p class="home__list-is-read">Already read &#10004;</p>
           <img width="353" height="395" class="home__list-img" src=${img} alt=${title}>
-          <button type="button" id="like" class="add-button remove-button ${isFavoriteForStyle(
+          <button type="button" id="like" class="${isFavoriteForStyle(
             link
-          )}">Add to favorite</button>
+          )}">${isFavoriteForText(link)}</button>
           <button type="button" id="dislike" class="remove-button invisible-button">Remove from favorite</button>
       </div>
       <div class="home__list-description">
