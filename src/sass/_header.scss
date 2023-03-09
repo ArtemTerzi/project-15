@@ -248,3 +248,11 @@
 
 body.dark-theme svg {fill:white}
 body.dark-theme input {border: 1px solid white}
+
+.firebase-block {
+    display: flex;
+    gap: 1px;
+    @include desktop {
+        gap: 10px;
+    }
+}

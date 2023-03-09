@@ -1,9 +1,12 @@
 import { isFavoriteForStyle, isReadForStyle } from '../favoriteReadStyles';
 
 export function getMarkup(arr) {
-  return arr
-    .map(({ img, title, text, date, link, section }) => {
-      return `
+  return (
+    `        <li class="home__list-item weather-container">
+          <aside class="weather"></aside>` +
+    arr
+      .map(({ img, title, text, date, link, section }) => {
+        return `
     <li class="home__list-item ${isReadForStyle(link)}">
       <div class="home__list-top">
           <p class="home__list-section">${section}</p>
@@ -24,6 +27,7 @@ export function getMarkup(arr) {
       </div>
     </li>
     `;
-    })
-    .join('');
+      })
+      .join('')
+  );
 }

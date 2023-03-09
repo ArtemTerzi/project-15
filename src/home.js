@@ -133,7 +133,7 @@ function onSearchCatehories(event) {
     });
 }
 
-startWeather();
+// startWeather();
 
 //! start new function for localStorage for read
 homeList.addEventListener('click', onBtnReadMore);
