@@ -117,18 +117,15 @@ function onSearchCatehories(event) {
       const data = getNormalizeResponse(results, responseURL);
 
       if (totalItems === 0) {
+        paginator.hide();
         throw new Error(response.status);
-      } else if (totalItems <= 10) {
-        list.innerHTML = getMarkup(data);
-      } else {
-        paginator.getRespForPagination(response, responseURL, data);
       }
+      paginator.getRespForPagination(response, responseURL, data);
 
       // weatherMarkupApi.getWeatherMurkup();
     })
     .catch(error => {
       console.log(error);
-      paginator.hide();
       renderMarkupError(homeList);
     });
 }

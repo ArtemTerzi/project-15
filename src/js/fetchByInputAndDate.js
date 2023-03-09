@@ -47,7 +47,6 @@ function handleSubmit(e) {
       const responseURL = answer.config.url;
       const data = getNormalizeResponse(docs, responseURL);
       const paginator = new Paginator();
-
       if (totalItems === 0) {
         paginator.hide();
         throw new Error(answer.status);
@@ -56,6 +55,8 @@ function handleSubmit(e) {
     })
     .catch(error => {
       console.log(error);
+      const paginator = new Paginator();
+      paginator.hide();
       renderMarkupError('.home__inner');
     });
 }
@@ -86,12 +87,10 @@ export function fetchByInputSerchAndDate(query, date) {
   return axios.get(
     `${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`
   );
-};
+}
 
 export function fetchByInputSerch(query) {
   // query = 'Ukraine',
   // date = dayAwaliableForBackend
-  return axios.get(
-    `${NEWS_URL}&q=${query}`
-  );
-};
+  return axios.get(`${NEWS_URL}&q=${query}`);
+}
