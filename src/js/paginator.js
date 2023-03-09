@@ -10,6 +10,7 @@ import { getMarkup } from './fetches/getMarkup';
 import { getNormalizeResponse } from './fetches/getNormalizeResponse';
 import './fetchNewsCategories';
 import { options } from './refs.js';
+import { startWeather } from '../js/weather/weather';
 
 /*
  fetchByInputAndDate 
@@ -102,6 +103,7 @@ export class Paginator {
       this.data = getNormalizeResponse(docs, responseURL);
       this.container.innerHTML = getMarkup(this.data);
     });
+    // .then(startWeather);
   }
 
   async makeFetchForSearhByCategory() {
@@ -113,6 +115,7 @@ export class Paginator {
       this.data = getNormalizeResponse(results, this.URL);
       this.container.innerHTML = getMarkup(this.data);
     });
+    // .then(startWeather);
   }
 
   async makeFetchForSearhByPopular() {
@@ -126,6 +129,7 @@ export class Paginator {
         this.data.splice(this.itemsPerPage * (this.page - 1), this.itemsPerPage)
       );
     });
+    // .then(startWeather);
   }
 
   show() {

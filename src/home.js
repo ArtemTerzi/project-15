@@ -114,7 +114,7 @@ function onSearchCatehories(event) {
       const totalItems = response.data.num_results;
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
-      
+
       if (totalItems === 0) {
         throw new Error(response.status);
       } else if (totalItems <= 10) {
@@ -132,7 +132,7 @@ function onSearchCatehories(event) {
     });
 }
 
-startWeather();
+// startWeather();
 
 //! start new function for localStorage for read
 homeList.addEventListener('click', onBtnReadMore);
