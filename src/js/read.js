@@ -2,6 +2,7 @@ import { getMarkupError } from './error';
 import { isFavoriteForStyle, isReadForStyle } from './favoriteReadStyles';
 import { getMarkup } from './fetches/getMarkup';
 import { refs } from './refs';
+import { onSearchFilter } from './inputFilterFunc';
 
 // =======================  FOR TEST ==============================
 
