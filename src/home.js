@@ -10,6 +10,7 @@ import { refs } from './js/refs';
 import { fetchByChoosenCategories } from './js/fetchByCategories';
 import { renderMarkupError } from './js/renderMarkupError';
 import WeatherMarkupApi from './js/weather/waether-markup';
+import onLike from './js/onLike';
 // import './js/firebaseData';
 
 const homeInner = document.querySelector('.home__inner');
@@ -114,7 +115,7 @@ function onSearchCatehories(event) {
       const totalItems = response.data.num_results;
       const responseURL = response.config.url;
       const data = getNormalizeResponse(results, responseURL);
-      
+
       if (totalItems === 0) {
         throw new Error(response.status);
       } else if (totalItems <= 10) {
@@ -216,3 +217,4 @@ function onBtnReadMore(e) {
 
 categoriesList.addEventListener('click', onSearchCatehories);
 categoryOthers.addEventListener('click', onSearchCatehories);
+homeList.addEventListener('click', onLike);
