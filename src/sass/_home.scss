@@ -37,6 +37,12 @@
   min-height: 675px;
   display: flex;
   flex-direction: column;
+  padding-bottom: 15px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    scale: 1.03;
+  }
 
   @include tablet {
     flex-basis: calc(100% / 2 - 30px);
@@ -118,6 +124,11 @@
   color: #ffffff;
 }
 
+.home__list-description {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .home__list-title {
   font-weight: 700;
   font-size: 22px;
@@ -144,6 +155,8 @@
   margin-top: auto;
   display: flex;
   justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .home__list-date {
