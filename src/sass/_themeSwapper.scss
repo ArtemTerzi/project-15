@@ -9,7 +9,7 @@ body {
 }
 
 .theme-swapper {
-  display: none;
+  display: flex;
   gap: 10px;
   align-items: center;
 
@@ -24,6 +24,7 @@ body {
   }
 
   &--header {
+    display: none;
     @include tablet {
       display: flex;
     }
