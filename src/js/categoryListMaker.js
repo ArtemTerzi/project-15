@@ -83,10 +83,23 @@ async function getDates() {
   calendarMarkup(myDates);
 }
 
+function clearDates() {
+  visibleDate.textContent = 'Set date';
+};
+
+let calendarPosition = 0;
+
 function onCalendar(event) {
   const parent = event.currentTarget.parentNode;
   parent.classList.toggle('calendar-active');
   document.addEventListener('click', onClickOutside);
+  if (calendarPosition === 0) {
+    getDates();
+    calendarPosition = 1;
+  } else if (calendarPosition === 1) {
+    clearDates();
+    calendarPosition = 0;
+  }
 }
 
 function onClickOutside(event) {
@@ -97,6 +110,13 @@ function onClickOutside(event) {
     const parent = calendarFrame.parentNode;
     parent.classList.remove('calendar-active');
     document.removeEventListener('click', onClickOutside);
+    if (calendarPosition === 0) {
+      getDates();
+      calendarPosition = 1;
+    } else if (calendarPosition === 1) {
+      clearDates();
+      calendarPosition = 0;
+    }
   }
 }
 
@@ -310,8 +330,6 @@ function onCalendarChange(event) {
 
 calendarFrame.addEventListener('click', onCalendar);
 calendarModal.addEventListener('click', onCalendarChange);
-
-getDates();
 
 // CATEGORIES PART
 import throttle from 'lodash.throttle';
