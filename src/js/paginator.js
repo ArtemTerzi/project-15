@@ -59,17 +59,19 @@ export class Paginator {
 
     if (this.isSearchQuery) {
       this.totalItems = response.data.response.meta.hits;
+      this.page = 1;
       this.checkNumItems();
       this.updatePageNumberToURL();
       this.makeFetchForSearchByQuery();
     } else if (this.isCategorySearch) {
       this.totalItems = response.data.num_results;
+      this.page = 1;
       this.checkNumItems();
-
       this.makeFetchForSearhByCategory();
       this.updateURLWithOffset();
     } else if (this.isMostPopularSearch) {
       this.totalItems = response.data.num_results;
+      this.page = 1;
       this.checkNumItems();
       this.makeFetchForSearhByPopular();
     }
