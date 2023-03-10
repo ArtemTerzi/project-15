@@ -35,6 +35,8 @@ export default function onLike(e) {
   };
 
   if (e.target.classList.contains('remove-button')) {
+    let btn = e.target;
+    console.log(btn);
     e.target.classList.toggle('remove-button');
     e.target.textContent = 'Remove from favorite';
     try {
@@ -47,29 +49,55 @@ export default function onLike(e) {
         return;
       }
       if (newsArr !== null) {
-        for (const news of newsArr) {
+        if (newsArr.every(news => news.link !== myObject.link)) {
+          newsArr.push(myObject);
+          localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify(newsArr));
+        }
+        const newNewsArray = newsArr.reduce((newArray, news) => {
           if (news.link === myObject.link) {
             news.isFavorite = true;
-            return;
           }
-        }
+          newArray.push(news);
+          return newArray;
+        }, []);
+        localStorage.setItem(
+          refs.KEY_LOCAL_STORAGE,
+          JSON.stringify(newNewsArray)
+        );
       }
-      newsArr.push(myObject);
-      localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify(newsArr));
     } catch (error) {
       console.log(error);
     }
   } else if (e.target.classList.contains('add-button')) {
+    let btn = e.target;
     e.target.classList.toggle('remove-button');
     e.target.textContent = 'Add to favorite';
     try {
       const newsArr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
-      for (const news of newsArr) {
-        if (news.link === myObject.link) {
-          news.isFavorite = false;
-        }
+      if (newsArr === null) {
+        localStorage.setItem(
+          refs.KEY_LOCAL_STORAGE,
+          JSON.stringify([myObject])
+        );
+        return;
       }
-      localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify(newsArr));
+      if (newsArr !== null) {
+        if (newsArr.every(news => news.link !== myObject.link)) {
+          newsArr.push(myObject);
+          localStorage.setItem(refs.KEY_LOCAL_STORAGE, JSON.stringify(newsArr));
+        }
+        const newNewsArray = newsArr.reduce((newArray, news) => {
+          if (news.link === myObject.link) {
+            news.isFavorite = false;
+          }
+          newArray.push(news);
+          return newArray;
+        }, []);
+        localStorage.setItem(
+          refs.KEY_LOCAL_STORAGE,
+          JSON.stringify(newNewsArray)
+        );
+      }
     } catch (error) {
       console.error(error);
     }
