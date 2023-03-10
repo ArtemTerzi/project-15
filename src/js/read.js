@@ -263,13 +263,16 @@ function openListsReadNews(e) {
 
 export { onBtnReadMore, makeArrNewsForPageRead };
 
+const checkData = {
+  items: listReadNews,
+  removeClass: "weather-container",
+  innerList: ".read-page-list__list"
+}
 
-function checkWeatherInReadPage(items) {
-  const removeClass = "weather-container";
-
+function checkWeatherInReadPage({ items, removeClass, innerList }) {
   for (let list of items.children) {
-    const innerList = list.querySelector(".read-page-list__list");
-    for (let item of innerList.children) {
+    const innerItems = list.querySelector(innerList);
+    for (let item of innerItems.children) {
       if (item.classList.contains(removeClass)) {
         item.remove();
       }
@@ -277,4 +280,4 @@ function checkWeatherInReadPage(items) {
   }
 }
 
-checkWeatherInReadPage(listReadNews);
+checkWeatherInReadPage(checkData);
