@@ -19,6 +19,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  text-transform: capitalize;
 }
 
 .category-btn {
@@ -32,10 +33,10 @@
   color: #4b48db;
   text-align: center;
   border-radius: 20px;
-  border: 1px solid #4440F6;
+  border: 1px solid #4440f6;
   cursor: pointer;
   &:hover {
-    background-color: #4440F6;
+    background-color: #4440f6;
     color: #fff;
     .category-icon-expand {
       fill: #fff;
@@ -103,7 +104,7 @@
   }
 
   .category-icon-expand {
-    fill: #4440F6;
+    fill: #4440f6;
   }
 
   &-active {
@@ -130,7 +131,7 @@
   .category-others-tablet {
     display: none;
   }
-  background-color: #4440F6;
+  background-color: #4440f6;
   color: #fff;
   .category-icon-expand {
     fill: #fff;
@@ -154,7 +155,7 @@
 
 .calendar-tool {
   cursor: pointer;
-  fill: #4440F6;
+  fill: #4440f6;
 }
 
 .calendar-month-prev,
@@ -228,7 +229,7 @@
 }
 
 .calendar-modal-day-curr {
-  background-color: #4440F6;
+  background-color: #4440f6;
   color: #fff;
 }
 
@@ -259,10 +260,10 @@
 
 .dark-theme {
   .calendar-date {
-    color: #F4F4F4;
+    color: #f4f4f4;
   }
   .calendar-icon-expand {
-    fill: #F4F4F4;
+    fill: #f4f4f4;
   }
 }
 
@@ -279,18 +280,18 @@
   cursor: pointer;
 
   .dark-theme & {
-    border: 1px solid #F4F4F4;
+    border: 1px solid #f4f4f4;
   }
 
   @include tablet {
     width: 168px;
   }
   .calendar-icon-frame {
-    fill: #4440F6;
+    fill: #4440f6;
   }
 
   &:hover {
-    background-color: #4440F6;
+    background-color: #4440f6;
     .dark-theme & {
       border: none;
     }
@@ -315,7 +316,7 @@
 
   &-active {
     .calendar-frame {
-      background-color: #4440F6;
+      background-color: #4440f6;
       .dark-theme & {
         border: none;
       }
