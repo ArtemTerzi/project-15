@@ -15,7 +15,7 @@ function isFavoriteForStyle(url) {
     for (const news of arrlocalStorage) {
       if (news.link === url) {
         if (news.isFavorite) {
-          styleStateIsFavorite = 'add-button';
+          styleStateIsFavorite = 'add-button is-liked';
           return styleStateIsFavorite;
         }
       }

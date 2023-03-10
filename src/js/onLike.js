@@ -39,6 +39,7 @@ export default function onLike(e) {
     console.log(btn);
     e.target.classList.toggle('remove-button');
     e.target.textContent = 'Remove from favorite';
+    e.target.classList.add('is-liked');
     try {
       const newsArr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
       if (newsArr === null) {
@@ -69,9 +70,9 @@ export default function onLike(e) {
       console.log(error);
     }
   } else if (e.target.classList.contains('add-button')) {
-    let btn = e.target;
     e.target.classList.toggle('remove-button');
     e.target.textContent = 'Add to favorite';
+    e.target.classList.remove('is-liked');
     try {
       const newsArr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
       if (newsArr === null) {
