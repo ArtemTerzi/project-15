@@ -150,6 +150,7 @@ export function onLike(e) {
           JSON.stringify(newNewsArray)
         );
       }
+      location.reload();
     } catch (error) {
       const errorMarkup = getMarkupError();
       favoriteMain.innerHTML = errorMarkup;
@@ -184,6 +185,7 @@ export function onLike(e) {
           JSON.stringify(newNewsArray)
         );
       }
+      location.reload();
     } catch (error) {
       const errorMarkup = getMarkupError();
       favoriteMain.innerHTML = errorMarkup;
@@ -213,14 +215,15 @@ export function onLoad() {
     const favoriteArr = arr.reduce((arrNews, news) => {
       if (news.isFavorite) {
         arrNews.push(news);
-      } else if (!news.isFavorite) {
-        const errorMarkup = getMarkupError();
-        favoriteMain.innerHTML = errorMarkup;
-        return;
       }
       return arrNews;
     }, []);
-    return getMarkup(favoriteArr);
+    if (favoriteArr.length !== 0) {
+      return getMarkup(favoriteArr);
+    } else {
+      const errorMarkup = getMarkupError();
+      favoriteMain.innerHTML = errorMarkup;
+    }
   } catch (error) {
     const errorMarkup = getMarkupError();
     favoriteMain.innerHTML = errorMarkup;
