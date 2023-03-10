@@ -68,8 +68,8 @@ export class Paginator {
       this.totalItems = response.data.num_results;
       this.page = 1;
       this.checkNumItems();
-      this.makeFetchForSearhByCategory();
       this.updateURLWithOffset();
+      this.makeFetchForSearhByCategory();
     } else if (this.isMostPopularSearch) {
       this.totalItems = response.data.num_results;
       this.page = 1;
