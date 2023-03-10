@@ -43,7 +43,7 @@ export class Paginator {
     this.isCategorySearch = false;
     this.isMostPopularSearch = false;
     this.offset = null;
-    this.itemsPerPage = 10;
+    this.itemsPerPage = 8;
     this.visiblePages = 1;
     this.container = list;
     this.data = [];
@@ -52,7 +52,7 @@ export class Paginator {
     this.URL = responseURL;
     this.data = data;
 
-    if (window.frames.innerWidth >= 320) this.visiblePages = 3;
+    if (window.frames.innerWidth >= 480) this.visiblePages = 3;
 
     if (this.URL.includes('articlesearch')) this.isSearchQuery = true;
     if (this.URL.includes('v3/content/')) this.isCategorySearch = true;
@@ -68,8 +68,8 @@ export class Paginator {
       this.totalItems = response.data.num_results;
       this.page = 1;
       this.checkNumItems();
-      this.makeFetchForSearhByCategory();
       this.updateURLWithOffset();
+      this.makeFetchForSearhByCategory();
     } else if (this.isMostPopularSearch) {
       this.totalItems = response.data.num_results;
       this.page = 1;
