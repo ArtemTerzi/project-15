@@ -263,5 +263,12 @@ function openListsReadNews(e) {
 
 export { onBtnReadMore, makeArrNewsForPageRead };
 
-let list = document.querySelector('.read-page-list__list');
-list.children[0].remove();
+let list = document.querySelector('.read-page-list__list').children;
+
+const removeClass = "weather-container";
+
+for (let item of list) {
+  if (item.classList.contains(removeClass)) {
+    item.remove()
+  }
+}
