@@ -40,6 +40,10 @@
   padding-bottom: 15px;
   transition: all 0.3s ease;
 
+  &.weather-container {
+    padding-bottom: 0;
+  }
+
   &:hover {
     scale: 1.03;
   }
