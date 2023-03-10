@@ -375,11 +375,11 @@ function onCategoryChose(event) {
       deactivateCategory();
       if (isVisibleCat) {
         event.target.classList.add('category-item-active');
-        setCategory(event.target.textContent);
+        // setCategory(event.target.textContent); //! Doubled fetch
       } else {
         otherCategoryItem.textContent = event.target.textContent;
         otherCategoryItem.parentNode.classList.add('category-item-active');
-        setCategory(event.target.textContent);
+        // setCategory(event.target.textContent);  //! Doubled fetch
       }
     }
   }

@@ -63,30 +63,30 @@ renderByDefault();
 // 	list.insertAdjacentHTML("beforeend", getMarkup(data));
 // });
 
-function renderByInputAndDate() {
-  fetchByInputSerchAndDate()
-    .then(answer => {
-      if (answer.status != 200) throw new Error(response.status);
+// function renderByInputAndDate() {
+//   fetchByInputSerchAndDate()
+//     .then(answer => {
+//       if (answer.status != 200) throw new Error(response.status);
 
-      const {
-        data: {
-          response: { docs },
-        },
-      } = answer;
-      const totalItems = answer.data.response.meta.hits;
-      const responseURL = answer.config.url;
-      const data = getNormalizeResponse(docs, responseURL);
-      if (totalItems === 0) {
-        paginator.hide();
-        throw new Error(response.status);
-      }
-      paginator.getRespForPagination(responseURL, data);
-    })
-    .catch(error => {
-      console.error(error);
-      renderMarkupError('.home__inner');
-    });
-}
+//       const {
+//         data: {
+//           response: { docs },
+//         },
+//       } = answer;
+//       const totalItems = answer.data.response.meta.hits;
+//       const responseURL = answer.config.url;
+//       const data = getNormalizeResponse(docs, responseURL);
+//       if (totalItems === 0) {
+//         paginator.hide();
+//         throw new Error(response.status);
+//       }
+//       paginator.getRespForPagination(responseURL, data);
+//     })
+//     .catch(error => {
+//       console.error(error);
+//       renderMarkupError('.home__inner');
+//     });
+// }
 
 // renderByInputAndDate();
 
