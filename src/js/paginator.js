@@ -52,7 +52,7 @@ export class Paginator {
     this.URL = responseURL;
     this.data = data;
 
-    if (window.frames.innerWidth >= 320) this.visiblePages = 3;
+    if (window.frames.innerWidth >= 480) this.visiblePages = 3;
 
     if (this.URL.includes('articlesearch')) this.isSearchQuery = true;
     if (this.URL.includes('v3/content/')) this.isCategorySearch = true;
