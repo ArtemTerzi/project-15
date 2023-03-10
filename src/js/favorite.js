@@ -123,6 +123,7 @@ export function onLike(e) {
   if (e.target.classList.contains('remove-button')) {
     e.target.classList.toggle('remove-button');
     e.target.textContent = 'Remove from favorite';
+    e.target.classList.add('is-liked');
     try {
       const newsArr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
       if (newsArr === null) {
@@ -156,6 +157,7 @@ export function onLike(e) {
   } else if (e.target.classList.contains('add-button')) {
     e.target.classList.toggle('remove-button');
     e.target.textContent = 'Add to favorite';
+    e.target.classList.remove('is-liked');
     try {
       const newsArr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
       if (newsArr === null) {
@@ -189,12 +191,32 @@ export function onLike(e) {
   }
 }
 
+// export function onLoad() {
+//   try {
+//     const arr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
+//     const favoriteArr = arr.reduce((arrNews, news) => {
+//       if (news.isFavorite) {
+//         arrNews.push(news);
+//       }
+//       return arrNews;
+//     }, []);
+//     return getMarkup(favoriteArr);
+//   } catch (error) {
+//     const errorMarkup = getMarkupError();
+//     favoriteMain.innerHTML = errorMarkup;
+//   }
+// }
+
 export function onLoad() {
   try {
     const arr = JSON.parse(localStorage.getItem(refs.KEY_LOCAL_STORAGE));
     const favoriteArr = arr.reduce((arrNews, news) => {
       if (news.isFavorite) {
         arrNews.push(news);
+      } else if (!news.isFavorite) {
+        const errorMarkup = getMarkupError();
+        favoriteMain.innerHTML = errorMarkup;
+        return;
       }
       return arrNews;
     }, []);
