@@ -27,7 +27,7 @@ export function getMarkup(arr) {
       </div>
       <div class="home__list-footer">
         <p class="home__list-date">${date}</p>
-        <a href=${link} class="home__list-link">Read more</a>
+        <a href=${link} class="home__list-link" target="_blank">Read more</a>
       </div>
     </li>
     `;
