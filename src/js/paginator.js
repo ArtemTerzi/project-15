@@ -43,7 +43,7 @@ export class Paginator {
     this.isCategorySearch = false;
     this.isMostPopularSearch = false;
     this.offset = null;
-    this.itemsPerPage = 10;
+    this.itemsPerPage = 8;
     this.visiblePages = 1;
     this.container = list;
     this.data = [];
