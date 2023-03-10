@@ -22,7 +22,7 @@ function isFavoriteForStyle(url) {
     }
     return styleStateIsFavorite;
   } catch (error) {
-    console.log('Error parse date local storage');
+    console.error('Error parse date local storage');
   }
 }
 
@@ -48,7 +48,7 @@ function isReadForStyle(url) {
     }
     return styleStateIsRead;
   } catch (error) {
-    console.log('Error parse date local storage');
+    console.error('Error parse date local storage');
   }
 }
 
@@ -74,7 +74,7 @@ function isFavoriteForText(url) {
     }
     return textStateIsFavorite;
   } catch (error) {
-    console.log('Error parse date local storage');
+    console.error('Error parse date local storage');
   }
 }
 

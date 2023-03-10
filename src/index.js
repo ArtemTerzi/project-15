@@ -4,4 +4,3 @@ import './js/firebaseSignUp';
 
 import './js/themeSwaper';
 import './js/modal';
-// import './js/inputFilterFunc'

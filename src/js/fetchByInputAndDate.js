@@ -1,4 +1,3 @@
-// Поиск происходит по дате и ключевому слову начальная дата и конечная дата совпадают так как по макету у нас поиск по дате, а не по диапазону дат.
 import { options } from './refs.js';
 import axios from 'axios';
 import { Paginator } from './paginator.js';
@@ -14,12 +13,6 @@ const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-k
 const searchForm = document.querySelector('.header__form');
 const span = document.querySelector('.calendar-date');
 let query = '';
-
-// _________________________add function for remove eventListener
-
-// if (window.location.pathname === '/index.html') {
-//   searchForm.addEventListener('submit', handleSubmit);
-// }
 
 searchForm.addEventListener('submit', handleSubmit);
 
@@ -43,7 +36,7 @@ export function onSearchMarkup(query, date) {
         paginator.getRespForPagination(answer, responseURL, data);
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
         const paginator = new Paginator();
         paginator.hide();
         renderMarkupError('.home__inner');
@@ -83,20 +76,14 @@ const dayAwaliableForBackend = `${today.year()}${today.month()}${today.date()}`;
 const URL =
   'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=lviv&api-key=8RdNRAJ2BzjK5i7Pxc73lS6mPRf4flGA&';
 
-//Дата передается в виде строки 00000000. По порядку: где 0000 - год, 00- месяц , 00- день Например: 20210122
-// Приходит 10 новостей
 
 export function fetchByInputSerchAndDate(query, date) {
-  // query = 'Ukraine',
-  // date = dayAwaliableForBackend
   return axios.get(
     `${NEWS_URL}&q=${query}&begin_date=${date}&end_date=${date}`
   );
 }
 
 export function fetchByInputSerch(query) {
-  // query = 'Ukraine',
-  // date = dayAwaliableForBackend
   return axios.get(`${NEWS_URL}&q=${query}`);
 }
 

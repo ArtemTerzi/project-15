@@ -217,7 +217,7 @@ export class Paginator {
           this.makeFetchForSearhByPopular();
         }
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
       return pagination;
     });

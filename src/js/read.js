@@ -4,7 +4,7 @@ import { getMarkup } from './fetches/getMarkup';
 import { refs } from './refs';
 import { onSearchFilter } from './inputFilterFunc';
 import onLike from './onLike';
-
+import { onSearchMarkup } from './fetchByInputAndDate';
 
 const container = document.querySelector('main');
 const listReadNews = document.querySelector('.readPage-list');
@@ -13,7 +13,6 @@ makeArrNewsForPageRead();
 
 listReadNews.addEventListener('click', onBtnReadMore);
 listReadNews.addEventListener('click', onLike);
-
 
 function onBtnReadMore(e) {
   if (e.target.nodeName !== 'A') {
@@ -179,9 +178,9 @@ export { onBtnReadMore, makeArrNewsForPageRead };
 
 const checkData = {
   items: listReadNews,
-  removeClass: "weather-container",
-  innerList: ".read-page-list__list"
-}
+  removeClass: 'weather-container',
+  innerList: '.read-page-list__list',
+};
 
 function checkWeatherInReadPage({ items, removeClass, innerList }) {
   for (let list of items.children) {

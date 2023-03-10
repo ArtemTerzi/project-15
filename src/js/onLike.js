@@ -36,7 +36,6 @@ export default function onLike(e) {
 
   if (e.target.classList.contains('remove-button')) {
     let btn = e.target;
-    console.log(btn);
     e.target.classList.toggle('remove-button');
     e.target.textContent = 'Remove from favorite';
     e.target.classList.add('is-liked');
@@ -67,7 +66,7 @@ export default function onLike(e) {
         );
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   } else if (e.target.classList.contains('add-button')) {
     e.target.classList.toggle('remove-button');
