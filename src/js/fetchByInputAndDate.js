@@ -23,6 +23,33 @@ let query = '';
 
 searchForm.addEventListener('submit', handleSubmit);
 
+export function onSearchMarkup(query, date) {
+    startingFetch(query, date)
+      .then(answer => {
+        const {
+          data: {
+            response: { docs },
+          },
+        } = answer;
+
+        const totalItems = answer.data.response.meta.hits;
+        const responseURL = answer.config.url;
+        const data = getNormalizeResponse(docs, responseURL);
+        const paginator = new Paginator();
+        if (totalItems === 0) {
+          paginator.hide();
+          throw new Error(answer.status);
+        }
+        paginator.getRespForPagination(answer, responseURL, data);
+      })
+      .catch(error => {
+        console.log(error);
+        const paginator = new Paginator();
+        paginator.hide();
+        renderMarkupError('.home__inner');
+      });
+  };
+
 function handleSubmit(e) {
   e.preventDefault();
   const date = span.textContent.split('/').reverse().join('').toString();
@@ -34,31 +61,9 @@ function handleSubmit(e) {
   if (query === '') {
     Notiflix.Notify.warning('Please enter request');
     return;
-  }
-  startingFetch(query, date)
-    .then(answer => {
-      const {
-        data: {
-          response: { docs },
-        },
-      } = answer;
+  };
 
-      const totalItems = answer.data.response.meta.hits;
-      const responseURL = answer.config.url;
-      const data = getNormalizeResponse(docs, responseURL);
-      const paginator = new Paginator();
-      if (totalItems === 0) {
-        paginator.hide();
-        throw new Error(answer.status);
-      }
-      paginator.getRespForPagination(answer, responseURL, data);
-    })
-    .catch(error => {
-      console.log(error);
-      const paginator = new Paginator();
-      paginator.hide();
-      renderMarkupError('.home__inner');
-    });
+  onSearchMarkup(query, date);
 }
 //! ----------------------------------
 

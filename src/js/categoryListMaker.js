@@ -1,5 +1,6 @@
 // CALENDAR PART!!!
 import CalendarDates from 'calendar-dates';
+import { onSearchMarkup } from './fetchByInputAndDate.js';
 
 const calendarDates = new CalendarDates();
 const datesBlock = document.querySelector('.calendar-modal-days');
@@ -8,6 +9,7 @@ const yearBlock = document.querySelector('.calendar-year');
 const visibleDate = document.querySelector('.calendar-date');
 const calendarFrame = document.querySelector('.calendar-frame');
 const calendarModal = document.querySelector('.calendar-modal');
+const searchInput = document.querySelector('.search__input');
 
 let searchYear = new Date().getFullYear();
 let searchMonth = new Date().getMonth();
@@ -85,6 +87,9 @@ async function getDates() {
 
 function clearDates() {
   visibleDate.textContent = 'Set date';
+  if (searchInput.value !== '') {
+    onSearchMarkup(searchInput.value, 'Set date');
+  }
 }
 
 let calendarPosition = 0;
@@ -138,6 +143,9 @@ function updateDate(day, month, year) {
   dateString = `${searchYear}${(searchMonth + 1)
     .toString()
     .padStart(2, '0')}${searchDay.toString().padStart(2, '0')}`;
+  if (searchInput.value !== '') {
+    onSearchMarkup(searchInput.value, dateString);
+  }
 }
 
 function handleDateClick(element) {
