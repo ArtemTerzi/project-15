@@ -1,21 +1,22 @@
 .footer__list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .footer__logo {
-    @include mobile {
-        width: 50px;
-    }
-    
-    @include tablet {
-        width: 70px;
-    }
-    
-    @include desktop {
-    }
+  @include mobile {
+    width: 50px;
+  }
+
+  @include tablet {
+    width: 70px;
+  }
+
+  @include desktop {
+  }
 }
 
 
