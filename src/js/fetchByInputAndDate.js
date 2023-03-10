@@ -6,6 +6,7 @@ import Notiflix from 'notiflix';
 import { getNormalizeResponse } from './fetches/getNormalizeResponse';
 import { renderMarkupError } from './renderMarkupError';
 import { Paginator } from './paginator';
+import { deactivateCategory } from './categoryListMaker';
 
 const { API_KEY } = options;
 const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}`;
@@ -52,6 +53,7 @@ export function onSearchMarkup(query, date) {
 
 function handleSubmit(e) {
   e.preventDefault();
+  deactivateCategory();
   const date = span.textContent.split('/').reverse().join('').toString();
 
   const {

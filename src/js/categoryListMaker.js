@@ -358,7 +358,7 @@ let categories = [];
 let selectedCategory = '';
 window.selectedCategory = selectedCategory;
 
-export default function deactivateCategory() {
+export function deactivateCategory() {
   const currentActive = document.querySelector('.category-item-active');
   if (currentActive) {
     currentActive.classList.remove('category-item-active');
@@ -368,6 +368,8 @@ export default function deactivateCategory() {
 }
 function setCategory(newItem) {
   selectedCategory = newItem;
+  searchInput.value = '';
+  clearDates();
   fetchByChoosenCategories(selectedCategory);
 }
 
