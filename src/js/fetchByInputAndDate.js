@@ -35,7 +35,7 @@ function handleSubmit(e) {
     Notiflix.Notify.warning('Please enter request');
     return;
   }
-  fetchByInputSerchAndDate(query, date)
+  startingFetch(query, date)
     .then(answer => {
       const {
         data: {
@@ -93,4 +93,12 @@ export function fetchByInputSerch(query) {
   // query = 'Ukraine',
   // date = dayAwaliableForBackend
   return axios.get(`${NEWS_URL}&q=${query}`);
+}
+
+export function startingFetch(query, date) {
+  if (date === 'Set date') {
+   return fetchByInputSerch(query)
+  } else {
+   return fetchByInputSerchAndDate(query,date)
+  }
 }
