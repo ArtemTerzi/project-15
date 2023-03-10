@@ -198,7 +198,7 @@ export function onLoad() {
       }
       return arrNews;
     }, []);
-    return getMarkup(arr);
+    return getMarkup(favoriteArr);
   } catch (error) {
     const errorMarkup = getMarkupError();
     favoriteMain.innerHTML = errorMarkup;
