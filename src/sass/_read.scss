@@ -66,22 +66,12 @@
           display: flex;
           flex-direction: column;
       
-          &:nth-child(even) {
-            position: static;
-            top: 0;
-          }
+
         }
       
         @include desktop {
           max-width: 395px;
-          &:nth-child(even) {
-            position: static;
-            top: 0;
-          }
-          &:nth-child(3n) {
-            position: static;
-            top: 0;
-          }
+
         }
       }
 
@@ -137,4 +127,8 @@
 
 .is-open {
     transform: rotate(0);
+}
+
+.home__list-link:visited {
+  color: #4440F6;
 }
