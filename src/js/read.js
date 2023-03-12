@@ -111,6 +111,9 @@ function makeArrNewsForPageRead() {
       return arrNews;
     }, []);
 
+    if (arrNewsIsRead.length === 0) {
+      container.innerHTML = getMarkupError();
+    }
     makeMarkapPageRead(arrNewsIsRead);
   } catch (error) {
     console.log(error);
