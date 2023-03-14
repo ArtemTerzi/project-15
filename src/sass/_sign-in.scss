@@ -1,12 +1,12 @@
 .btn-open-sign-in {
   font-family: 'Manrope';
   font-style: normal;
-  
+
   display: inline-block;
   justify-content: center;
   box-sizing: border-box;
   outline: none;
-  border: none; 
+  border: none;
   border-radius: 20px;
   height: 31px;
   min-width: 65px;
@@ -56,56 +56,11 @@
 
   transform: translate(-50%, -50%);
   width: 400px;
-  height: 275px;
+  height: 350px;
   padding: 40px;
   background: #fff;
   background-color: #4b48db;
   border-radius: 4px;
-}
-
-.email-sign-in {
-  display: block;
-  width: 100%;
-  height: 40px;
-  padding: 12px 11px;
-  outline: none;
-  border: 1px solid rgba(33, 33, 33, 0.2);
-  border-radius: 4px;
-  margin-top: 15px;
-}
-
-.password-sign-in {
-  display: block;
-  width: 100%;
-  height: 40px;
-  padding: 12px 11px;
-  outline: none;
-  border: 1px solid rgba(33, 33, 33, 0.2);
-  border-radius: 4px;
-}
-
-.sign-in {
-  margin: 35px auto 0;
-  display: block;
-  width: 200px;
-  height: 40px;
-  color: white;
-  border: none;
-  outline: none;
-  font-size: 18px;
-  font-weight: 500;
-  background: linear-gradient(90deg, #343287 0%, #2724a8 100%);
-
-  &:hover {
-    background: linear-gradient(90deg, #2c2b77 0%, #201e9d 100%);
-  }
-
-  &:disabled {
-    background-color: darkgrey;
-    opacity: 0.5;
-    cursor: not-allowed;
-    color: black;
-  }
 }
 
 .btn-close-sign-in {
@@ -135,10 +90,48 @@
   transform: rotate(-45deg);
 }
 
-.valid-data {
+.password-sign-in {
   display: block;
-  margin-bottom: 15px;
-  font-size: 15px;
+  width: 100%;
+  height: 40px;
+  padding: 12px 11px;
+  outline: none;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+}
+
+.email-sign-in {
+  display: block;
+  width: 100%;
+  margin-bottom: 25px;
+  height: 40px;
+  padding: 12px 11px;
+  outline: none;
+  border: 1px solid rgba(33, 33, 33, 0.2);
+  border-radius: 4px;
+  margin-top: 15px;
+}
+
+.sign-in {
+  margin: 35px auto 0;
+  display: block;
+  width: 200px;
+  height: 40px;
   color: white;
-  margin-top: 5px;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #343287 0%, #2724a8 100%);
+
+  &:hover {
+    background: linear-gradient(90deg, #2c2b77 0%, #201e9d 100%);
+  }
+
+  &:disabled {
+    background-color: darkgrey;
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: black;
+  }
 }
