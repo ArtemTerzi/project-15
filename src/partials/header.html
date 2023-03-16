@@ -1,64 +1,83 @@
 <header class="header">
-    <div class="container">
-        <div class="header__inner">
-            <a class="header__inner-link" href="./index.html">News</a>
-            <ul class="navigation__list" id="navigation">
-                <li class="navigation__item">
-                    <a class="navigation__link" href="./index.html">Home</a>
-                </li>
-                <li class="navigation__item">
-                    <a class="navigation__link" href="./favorite.html">Favorite</a>
-                </li>
-                <li class="navigation__item">
-                    <a class="navigation__link" href="./read.html">Read</a>
-                </li>
-            </ul>
-            <form class="header__form">
-                <div class="search">
-                    <button class="search__btn-ds" type="submit">
-                        <svg class="search__logo" width="20" height="20">
-                            <use href="./images/icons.svg#search"></use>
-                        </svg>
-                    </button>
-                    <label for="search__input">
-                        <input name="search" class="search__input" type="text" placeholder="Search" id="search__input">
-                    </label>
-                </div>
-                <div class="search__mobile">
-                    <svg class="search__mobile-logo" width="20" height="20">
-                        <use href="./images/icons.svg#search"></use>
-                    </svg>
-                </div>
-            </form>
-            <div class="theme-swapper theme-swapper--header">
-                <div class="theme-wrapper theme-wrapper--light  switch-on">
-                    <svg width="21px" height="21px" class="mobile-theme-svg mobile-theme-svg__light ">
-                        <use href="./images/symbol-defs.svg#sun_icon"></use>
-                    </svg>
-                    <span class="theme-swapper__title theme-swapper__title--light ">Light</span>
-                </div>
-                <div class="checkbox">
-                    <div class="checkbox__switcher"></div>
-                </div>
-                </span>
-                <div class="theme-wrapper theme-wrapper--dark">
-                    <svg width="16px" height="16px" class="mobile-theme-svg mobile-theme-svg__dark">
-                        <use href="./images/symbol-defs.svg#icon_moon"></use>
-                    </svg>
-                    <span class="theme-swapper__title theme-swapper__title--dark ">Dark</span>
-                </div>
-            </div>
-            <div class="firebase-block">
-                <button type="submit" class="btn-open-sign-in" data-modal-open>Sign in</button>
-                <button type="submit" class="btn-open-sign-up">Sign up</button>
-                <button type="submit" class="sign-out is-hidden">Sign out</button>
-            </div>
-            <div class="modalbtn">
-                <button type="button" class="mobile-menu__button " data-menu-btn>
-                    <span></span>
-                </button>
-            </div>
+  <div class="container">
+    <div class="header__inner">
+      <a class="header__inner-link" href="./index.html">News</a>
+      <ul class="navigation__list" id="navigation">
+        <li class="navigation__item">
+          <a class="navigation__link" href="./index.html">Home</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="./favorite.html">Favorite</a>
+        </li>
+        <li class="navigation__item">
+          <a class="navigation__link" href="./read.html">Read</a>
+        </li>
+      </ul>
+      <form class="header__form">
+        <div class="search">
+          <button class="search__btn-ds" type="submit">
+            <svg class="search__logo" width="20" height="20">
+              <use href="./images/icons.svg#search"></use>
+            </svg>
+          </button>
+          <label for="search__input">
+            <input
+              name="search"
+              class="search__input"
+              type="text"
+              placeholder="Search"
+              id="search__input"
+            />
+          </label>
         </div>
+        <div class="search__mobile">
+          <svg class="search__mobile-logo" width="20" height="20">
+            <use href="./images/icons.svg#search"></use>
+          </svg>
+        </div>
+      </form>
+      <div class="theme-swapper theme-swapper--header">
+        <div class="theme-wrapper theme-wrapper--light switch-on">
+          <svg
+            width="21px"
+            height="21px"
+            class="mobile-theme-svg mobile-theme-svg__light"
+          >
+            <use href="./images/symbol-defs.svg#sun_icon"></use>
+          </svg>
+          <span class="theme-swapper__title theme-swapper__title--light"
+            >Light</span
+          >
+        </div>
+        <div class="checkbox">
+          <div class="checkbox__switcher"></div>
+        </div>
+        <div class="theme-wrapper theme-wrapper--dark">
+          <svg
+            width="16px"
+            height="16px"
+            class="mobile-theme-svg mobile-theme-svg__dark"
+          >
+            <use href="./images/symbol-defs.svg#icon_moon"></use>
+          </svg>
+          <span class="theme-swapper__title theme-swapper__title--dark"
+            >Dark</span
+          >
+        </div>
+      </div>
+      <div class="firebase-block">
+        <button type="submit" class="btn-open-sign-up" data-modal-open>
+          Sign up
+        </button>
+        <button type="submit" class="btn-open-sign-in">Sign in</button>
+        <button type="submit" class="sign-out is-hidden">Sign out</button>
+      </div>
+      <div class="modalbtn">
+        <button type="button" class="mobile-menu__button" data-menu-btn>
+          <span></span>
+        </button>
+      </div>
     </div>
-    <script src="./js/header.js"></script>
+  </div>
+  <script src="./js/header.js"></script>
 </header>

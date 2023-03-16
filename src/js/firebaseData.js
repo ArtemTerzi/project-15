@@ -1,5 +1,27 @@
+//themeswiper
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import {
+  doc,
+  setDoc,
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+} from 'firebase/firestore';
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+  GoogleAuthProvider,
+  getRedirectResult,
+} from 'firebase/auth';
+
+import { app, firebaseConfig, auth } from './firebaseSignUp.js';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyCkFvds2hJc9mUmc-_oFpHYsUcBiyM7opU',
   authDomain: 'my-awesome-project-news.firebaseapp.com',
@@ -8,21 +30,9 @@ const firebaseConfig = {
   messagingSenderId: '220245139302',
   appId: '1:220245139302:web:1c8b0e871bf6f9c36032a7',
 };
-
+const provider = new GoogleAuthProvider();
 const app = initializeApp(firebaseConfig);
+const auth = getAuth();
 const db = getFirestore(app);
 
-export async function addDataDB() {
-  try {
-    const docRef = await addDoc(collection(db, 'users'), {
-      theme: 'Ada',
-      array: 'Lovelace',
-    });
-  } catch (e) {
-    console.error('Error adding document: ', e);
-  }
-}
-async function readDataDB() {
-  const querySnapshot = await getDocs(collection(db, 'users'));
-  querySnapshot.forEach(doc => {});
-}
+export { firebaseConfig, app, auth, db, provider };

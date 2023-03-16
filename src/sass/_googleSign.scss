@@ -1,0 +1,21 @@
+.google-btn {
+  position: relative;
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  margin: 0 auto;
+  padding: 13px 45px;
+  background-color: #fff;
+  box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.69);
+  transition: scale 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.38) inset;
+    scale: 1.02;
+  }
+}
+
+.google-btn-img {
+  position: absolute;
+  top: 14px;
+  left: 6px;
+}
